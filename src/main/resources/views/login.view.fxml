@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane
+        maxHeight="-Infinity"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        prefHeight="200.0"
+        prefWidth="400.0"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.LoginViewController">
+    <children>
+
+        <GridPane
+                layoutX="112.0"
+                layoutY="155.0"
+                AnchorPane.bottomAnchor="0.0"
+                AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0"
+                AnchorPane.topAnchor="0.0">
+
+            <columnConstraints>
+                <ColumnConstraints
+                        hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+
+            <children>
+                <Label
+                        text="Введите имя пользователя и пароль">
+                    <font> <Font size="18.0" /> </font>
+                    <GridPane.margin> <Insets left="25.0" /> </GridPane.margin>
+                </Label>
+
+                <GridPane GridPane.rowIndex="1">
+
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+
+                    <children>
+                        <ComboBox
+                                fx:id="loginCBox"
+                                maxWidth="300.0"
+                                GridPane.halignment="RIGHT">
+
+                            <GridPane.margin> <Insets right="15.0" /> </GridPane.margin>
+                        </ComboBox>
+
+                        <PasswordField
+                                fx:id="passTextField"
+                                maxWidth="300.0"
+                                promptText="Пароль"
+                                GridPane.halignment="RIGHT"
+                                GridPane.rowIndex="1">
+
+                            <GridPane.margin> <Insets right="15.0" /> </GridPane.margin>
+                        </PasswordField>
+
+                        <Label
+                                text="Логин">
+                            <GridPane.margin> <Insets left="15.0" /> </GridPane.margin>
+                            <font> <Font size="14.0" /> </font>
+                        </Label>
+
+                        <Label
+                                text="Пароль"
+                                GridPane.rowIndex="1">
+                            <font> <Font size="14.0" /> </font>
+                            <GridPane.margin> <Insets left="15.0" /> </GridPane.margin>
+                        </Label>
+                    </children>
+                </GridPane>
+
+                <GridPane GridPane.rowIndex="2">
+
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+
+                    <children>
+                        <Button
+                                mnemonicParsing="false"
+                                onAction="#registration"
+                                prefWidth="100.0"
+                                text="Регистрация"
+                                GridPane.halignment="CENTER" />
+
+                        <Button
+                                defaultButton="true"
+                                mnemonicParsing="false"
+                                onAction="#enter"
+                                prefWidth="100.0"
+                                text="Вход"
+                                GridPane.columnIndex="1"
+                                GridPane.halignment="CENTER" />
+
+                        <Button
+                                cancelButton="true"
+                                mnemonicParsing="false"
+                                onAction="#exit"
+                                prefWidth="100.0"
+                                text="Выход"
+                                GridPane.columnIndex="2"
+                                GridPane.halignment="CENTER" />
+                    </children>
+                </GridPane>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
