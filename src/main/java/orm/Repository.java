@@ -1,0 +1,23 @@
+package orm;
+
+import entity.UserEntity;
+import javafx.collections.ObservableList;
+
+/**
+ * Created by User on 19.04.2016.
+ */
+public enum Repository {
+    INSTANCE;
+
+    //todo class Repository
+
+    private ObservableList userData;
+
+    public ObservableList getUserData() {
+        return userData;
+    }
+
+    public UserEntity getUser(String login) {
+        return null;
+    }
+}
