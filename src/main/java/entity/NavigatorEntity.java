@@ -56,7 +56,7 @@ public class NavigatorEntity {
     }
 
     @ManyToOne
-    @Column(name = "idAudience")
+    @JoinColumn(name = "idAudience")
     public AudienceEntity getAudience() {
         return audience;
     }
@@ -66,7 +66,7 @@ public class NavigatorEntity {
     }
 
     @ManyToOne
-    @Column(name = "idMentor")
+    @JoinColumn(name = "idMentor")
     public MentorEntity getMentor() {
         return mentor;
     }
