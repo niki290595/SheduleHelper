@@ -20,4 +20,8 @@ public enum Repository {
     public UserEntity getUser(String login) {
         return null;
     }
+
+    public void removeUser(UserEntity user) {
+        
+    }
 }
