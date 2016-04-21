@@ -7,12 +7,12 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by User on 21.04.2016.
  */
-public class HibernateGenericDao<T, PK extends Serializable>
-        implements GenericDao<T, PK> {
+public class HibernateGenericDao<T, PK extends Serializable> implements GenericDao<T, PK> {
 
     private Class<T> type;
     private static final SessionFactory sessionFactory;
@@ -40,13 +40,13 @@ public class HibernateGenericDao<T, PK extends Serializable>
     }
 
     @Override
-    public PK create(T o) {
-        return (PK) getSession().save(o);
+    public PK create(T newInstance) {
+        return (PK) getSession().save(newInstance);
     }
 
     @Override
     public T read(PK id) {
-        return (T) getSession().get(type, id);
+        return getSession().get(type, id);
     }
 
     @Override
@@ -57,6 +57,12 @@ public class HibernateGenericDao<T, PK extends Serializable>
     @Override
     public void delete(T o) {
         getSession().delete(o);
-
     }
+
+    @Override
+    public List<T> readCollection() {
+        return getSession().createCriteria(type).list();
+    }
+
+
 }
