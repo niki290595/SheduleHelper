@@ -12,9 +12,9 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
     public static enum CategoryType {
         ADMIN, OWNER, STAFF;
 
-        static int admin = "admin".hashCode();
-        static int owner = "owner".hashCode();
-        static int staff = "staff".hashCode();
+        static int admin = "ADMIN".hashCode();
+        static int owner = "OWNER".hashCode();
+        static int staff = "STAFF".hashCode();
 
         public static CategoryType get(String s) {
             int hashCode = s.hashCode();
@@ -49,11 +49,7 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
     }
 
     public CategoryType categoryType() {
-        int hashCode = this.getDescription().hashCode();
-        if (hashCode == CategoryType.admin) return CategoryType.ADMIN;
-        if (hashCode == CategoryType.owner) return CategoryType.OWNER;
-        if (hashCode == CategoryType.staff) return CategoryType.STAFF;
-        return null;
+        return CategoryType.get(getDescription());
     }
 
 

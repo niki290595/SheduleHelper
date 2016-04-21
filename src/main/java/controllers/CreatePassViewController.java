@@ -41,7 +41,7 @@ public class CreatePassViewController implements Initializable {
 
     public CreatePassViewController(Stage parentStage, UserEntity user) throws IOException {
         CreatePassViewController.user = user;
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/create-pass.form.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/create-pass.view.fxml"));
         stage = new Stage();
         stage.setTitle("Новый пароль");
         stage.setScene(new Scene(root, 400, 200));

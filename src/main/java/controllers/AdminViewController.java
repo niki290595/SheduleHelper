@@ -37,7 +37,7 @@ public class AdminViewController implements Initializable {
     public AdminViewController() {}
 
     public AdminViewController(Stage stage, String login) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/admin.form.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/admin.view.fxml"));
         stage = new Stage();
         stage.setTitle("Добро пожаловать " + login);
         stage.setScene(new Scene(root, 400, 200));

@@ -39,7 +39,7 @@ public class RegistrationViewController implements Initializable {
     }
 
     public RegistrationViewController(Stage parentStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/registration.form.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/registration.view.fxml"));
         stage = new Stage();
         stage.setTitle("Регистрация");
         stage.setScene(new Scene(root, 400, 200));

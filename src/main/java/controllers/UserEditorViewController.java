@@ -41,7 +41,7 @@ public class UserEditorViewController implements Initializable {
 
     private UserEditorViewController(Stage parentStage, String title, UserEntity user) throws IOException {
         UserEditorViewController.user = user;
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/user-editor.form.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/user-editor.view.fxml"));
         stage = new Stage();
         stage.setTitle(title);
         stage.setScene(new Scene(root, 400, 200));
