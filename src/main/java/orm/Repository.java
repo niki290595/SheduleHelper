@@ -4,6 +4,8 @@ import entity.CategoryEntity;
 import entity.UserEntity;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 /**
  * Created by User on 19.04.2016.
  */
@@ -13,7 +15,7 @@ public enum Repository {
     //todo class Repository
 
     private ObservableList userData;
-    private CategoryEntity[] categoryData;
+    private ObservableList<CategoryEntity> categoryData;
 
     public ObservableList getUserData() {
         return userData;
@@ -31,11 +33,19 @@ public enum Repository {
 
     }
 
-    public CategoryEntity[] getCategoryData() {
+    public ObservableList<CategoryEntity> getCategoryData() {
         return categoryData;
     }
 
     public void addUser(String login, String hash, CategoryEntity category, String salt) {
+
+    }
+
+    public void addUser(String text, CategoryEntity selectedItem) {
+
+    }
+
+    public void editUser(UserEntity user, String text, CategoryEntity selectedItem) {
 
     }
 }
