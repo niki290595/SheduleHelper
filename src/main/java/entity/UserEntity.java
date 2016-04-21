@@ -8,7 +8,7 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = "user", schema = "scheduledb", catalog = "")
-public class UserEntity {
+public class UserEntity implements Comparable<UserEntity> {
     private Integer id;
     private String login;
     private String pass;
