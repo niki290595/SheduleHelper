@@ -1,6 +1,7 @@
 package orm;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by User on 21.04.2016.
@@ -20,4 +21,7 @@ public interface GenericDao<T, PK extends Serializable> {
 
     /** Удалить объект из базы данных */
     void delete(T persistentObject);
+
+    /** Извлечь все коллекцию объектов */
+    List<T> readCollection();
 }
