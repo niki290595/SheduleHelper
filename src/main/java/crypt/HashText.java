@@ -27,4 +27,8 @@ public class HashText {
         }
         return hashCodeBuffer.toString();
     }
+
+    public static void main(String[] args) {
+        System.out.println(getHash("1111", "2j21gm1f2jcigroq5mm0g1noe4"));
+    }
 }
