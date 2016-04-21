@@ -54,7 +54,7 @@ public class LoginViewController implements Initializable {
         new RegistrationViewController(stage);
     }
 
-    public void enter(ActionEvent actionEvent) {
+    public void enter(ActionEvent actionEvent) throws IOException {
         UserEntity user = loginCBox.getSelectionModel().getSelectedItem();
         String pass = passTextField.getText();
 
@@ -67,7 +67,7 @@ public class LoginViewController implements Initializable {
         tryAuthorization(user, pass);
     }
 
-    private void tryAuthorization(UserEntity user, String pass) {
+    private void tryAuthorization(UserEntity user, String pass) throws IOException {
         if (user == null) {
             new Alert(Alert.AlertType.ERROR, "Пользователь не выбран", ButtonType.OK).showAndWait();
             return;
