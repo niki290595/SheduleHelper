@@ -20,7 +20,7 @@ public class HibernateGenericDao<T, PK extends Serializable> implements GenericD
     static {
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         try {
-            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+            sessionFactory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory(registry);
         } catch (Throwable ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
