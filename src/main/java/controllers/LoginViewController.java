@@ -50,7 +50,7 @@ public class LoginViewController implements Initializable {
         loginCBox.setItems(db.getUserData());
     }
 
-    public void registration(ActionEvent actionEvent) {
+    public void registration(ActionEvent actionEvent) throws IOException {
         new RegistrationViewController(stage);
     }
 
