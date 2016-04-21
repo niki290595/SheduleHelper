@@ -1,5 +1,6 @@
 package orm;
 
+import entity.CategoryEntity;
 import entity.UserEntity;
 import javafx.collections.ObservableList;
 
@@ -12,6 +13,7 @@ public enum Repository {
     //todo class Repository
 
     private ObservableList userData;
+    private CategoryEntity[] categoryData;
 
     public ObservableList getUserData() {
         return userData;
@@ -26,6 +28,14 @@ public enum Repository {
     }
 
     public void editUser(UserEntity user, String newPass) {
-        
+
+    }
+
+    public CategoryEntity[] getCategoryData() {
+        return categoryData;
+    }
+
+    public void addUser(String login, String hash, CategoryEntity category, String salt) {
+
     }
 }
