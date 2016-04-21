@@ -1,0 +1,68 @@
+/* 
+    Document   : Styles
+    Created on : Oct 16, 2012, 6:28:59 PM
+    Author     : Nikitin Ilya
+    Description:
+        Light Metro style sheet
+*/
+
+
+.root {
+	-fx-background-image: url("image/background.jpg");
+}
+
+.label {
+	-fx-font-size: 11pt;
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+	-fx-font-weight: bold;
+	-fx-opacity: 0.8;
+}
+
+.text-field,
+.combo-box {
+	-fx-font-size: 11pt;
+	-fx-font-family: "Segoe UI Semibold";
+	-fx-text-fill: rgba(21, 21, 21, 0.7);
+	-fx-opacity: 0.6;
+}
+
+.text-field:focused,
+.combo-box:focused {
+	-fx-opacity: 0.4;
+	-fx-background-insets: -1;
+}
+
+.combo-box .list-view {
+	-fx-opacity: 0.6;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+	-fx-text-fill: white;
+	-fx-background-color: rgba(55, 55, 55, 0.7);
+}
+
+.combo-box-popup .list-view .list-cell:selected {
+	-fx-background-color: green;
+}
+
+.button {
+	-fx-border-image-width: 1;
+	-fx-background-radius: 0;
+	-fx-opacity: 0.6;
+
+	-fx-background-color: #cbcbcb;
+
+	-fx-font-family: "SSegoe UI Semibold";
+	-fx-font-weight: bolder;
+	-fx-font-size: 11pt;
+	-fx-text-fill: #ffffff;
+}
+
+.button:pressed {
+	-fx-opacity: 1;
+}
+
+.button:focused {
+	-fx-background-color: green;
+}
