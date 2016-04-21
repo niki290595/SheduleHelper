@@ -22,6 +22,10 @@ public enum Repository {
     }
 
     public void removeUser(UserEntity user) {
+
+    }
+
+    public void editUser(UserEntity user, String newPass) {
         
     }
 }
