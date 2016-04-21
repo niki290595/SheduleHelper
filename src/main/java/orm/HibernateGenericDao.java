@@ -6,10 +6,15 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import java.io.Serializable;
+
 /**
- * Created by User on 20.04.2016.
+ * Created by User on 21.04.2016.
  */
-public class HibernateUtil {
+public class HibernateGenericDao<T, PK extends Serializable>
+        implements GenericDao<T, PK> {
+
+    private Class<T> type;
     private static final SessionFactory sessionFactory;
 
     static {
@@ -22,11 +27,36 @@ public class HibernateUtil {
         }
     }
 
+    public HibernateGenericDao(Class<T> type) {
+        this.type = type;
+    }
+
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
     public static Session getSession() {
         return sessionFactory.openSession();
+    }
+
+    @Override
+    public PK create(T o) {
+        return (PK) getSession().save(o);
+    }
+
+    @Override
+    public T read(PK id) {
+        return (T) getSession().get(type, id);
+    }
+
+    @Override
+    public void update(T o) {
+        getSession().update(o);
+    }
+
+    @Override
+    public void delete(T o) {
+        getSession().delete(o);
+
     }
 }
