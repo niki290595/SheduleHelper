@@ -25,7 +25,7 @@ public class CreatePassViewController implements Initializable {
     private static Stage stage;
     private static Repository db;
     private static UserEntity user;
-    public static String newPass;
+    private static String newPass;
 
     static {
         db = Repository.INSTANCE;
@@ -46,6 +46,10 @@ public class CreatePassViewController implements Initializable {
         stage.setTitle("Новый пароль");
         stage.setScene(new Scene(root, 400, 200));
         stage.showAndWait();
+    }
+
+    public static String getPass() {
+        return newPass;
     }
 
     @Override
