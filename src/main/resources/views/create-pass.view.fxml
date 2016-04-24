@@ -7,19 +7,14 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane
-        maxHeight="-Infinity"
-        maxWidth="-Infinity"
-        minHeight="-Infinity"
-        minWidth="-Infinity"
         prefHeight="200.0"
         prefWidth="400.0"
         xmlns="http://javafx.com/javafx/8"
         xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="@../Styles.css"
         fx:controller="controllers.CreatePassViewController">
     <children>
         <GridPane
-                layoutX="72.0"
-                layoutY="47.0"
                 AnchorPane.bottomAnchor="0.0"
                 AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0"
@@ -38,8 +33,7 @@
             <children>
                 <PasswordField
                         fx:id="passTEdit"
-                        maxWidth="300.0"
-                        prefWidth="300.0"
+                        maxWidth="250.0"
                         promptText="Пароль"
                         GridPane.halignment="CENTER"
                         GridPane.valignment="CENTER">
@@ -48,8 +42,7 @@
 
                 <PasswordField
                         fx:id="repeatPassTEdit"
-                        maxWidth="300.0"
-                        prefWidth="300.0"
+                        maxWidth="250.0"
                         promptText="Повторите пароль"
                         GridPane.halignment="CENTER"
                         GridPane.rowIndex="1"
