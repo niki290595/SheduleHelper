@@ -10,17 +10,105 @@
 
 
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <HBox
         xmlns="http://javafx.com/javafx/8"
         xmlns:fx="http://javafx.com/fxml/1"
         stylesheets="@../Styles.css"
-        fx:controller="controllers.LoginViewController">
+        fx:controller="controllers.LoginViewController"
+        spacing="10">
+
+    <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
 
     <TreeView/>
 
-    <VBox>
+    <VBox
+            HBox.hgrow="ALWAYS"
+            prefWidth="600"
+            spacing="10">
+
         <ToggleButton
-            text="Четная/нечетная неделя"/>
+                text="Четная/нечетная неделя"/>
+
+        <GridPane
+                gridLinesVisible="true"
+                HBox.hgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="19"/>
+                <ColumnConstraints percentWidth="27"/>
+                <ColumnConstraints percentWidth="27"/>
+                <ColumnConstraints percentWidth="27"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+                <RowConstraints prefHeight="30"/>
+            </rowConstraints>
+        </GridPane>
+
+        <GridPane
+                HBox.hgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+                <ColumnConstraints percentWidth="25"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="50"/>
+                <RowConstraints prefHeight="50"/>
+            </rowConstraints>
+            <children>
+                <Button
+                        text="Преподаватели"
+                        prefWidth="140"/>
+                <Button
+                        text="Аудитории"
+                        prefWidth="140"
+                        GridPane.columnIndex="1"/>
+                <Button
+                        text="Время"
+                        prefWidth="140"
+                        GridPane.columnIndex="2"/>
+                <Button
+                        text="Запрос"
+                        prefWidth="140"
+                        GridPane.rowIndex="1"/>
+                <Button
+                        text="Дисциплины"
+                        prefWidth="140"
+                        GridPane.columnIndex="1"
+                        GridPane.rowIndex="1"/>
+                <Button
+                        text="Группы"
+                        prefWidth="140"
+                        GridPane.columnIndex="2"
+                        GridPane.rowIndex="1"/>
+                <Button
+                        text="Выход"
+                        prefWidth="140"
+                        GridPane.columnIndex="3"
+                        GridPane.rowIndex="1"/>
+            </children>
+        </GridPane>
     </VBox>
 
 </HBox>
