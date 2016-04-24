@@ -46,7 +46,8 @@
 	-fx-background-color: green;
 }
 
-.button {
+.button,
+.toggle-button{
 	-fx-border-image-width: 1;
 	-fx-background-radius: 0;
 	-fx-opacity: 0.6;
@@ -59,10 +60,16 @@
 	-fx-text-fill: #ffffff;
 }
 
-.button:pressed {
+.button:pressed{
 	-fx-opacity: 1;
 }
 
-.button:focused {
+.button:focused,
+.toggle-button:selected{
 	-fx-background-color: green;
+}
+
+.button:hover,
+.toggle-button:hover{
+	-fx-opacity: 0.8;
 }
