@@ -1,13 +1,15 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by User on 20.04.2016.
  */
 @Entity
 @Table(name = "scheduleitem", schema = "scheduledb")
-public class ScheduleitemEntity {
+public class ScheduleItemEntity {
     private Integer id;
     private NavigatorEntity navigator;
     private GroupEntity group;
@@ -47,7 +49,7 @@ public class ScheduleitemEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ScheduleitemEntity that = (ScheduleitemEntity) o;
+        ScheduleItemEntity that = (ScheduleItemEntity) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (navigator != null ? !navigator.equals(that.navigator) : that.navigator != null) return false;
@@ -62,5 +64,11 @@ public class ScheduleitemEntity {
         result = 31 * result + (navigator != null ? navigator.hashCode() : 0);
         result = 31 * result + (group != null ? group.hashCode() : 0);
         return result;
+    }
+
+    public List<GroupEntity> groupList() {
+        List<GroupEntity> groups = new ArrayList<>();
+        //todo getGroupEntity
+        return groups;
     }
 }

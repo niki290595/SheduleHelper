@@ -19,7 +19,7 @@
     <mapping class="entity.GroupEntity"/>
     <mapping class="entity.MentorEntity"/>
     <mapping class="entity.NavigatorEntity"/>
-    <mapping class="entity.ScheduleitemEntity"/>
+    <mapping class="entity.ScheduleItemEntity"/>
     <mapping class="entity.TeacherEntity"/>
     <mapping class="entity.TimeTableEntity"/>
     <mapping class="entity.UserEntity"/>
