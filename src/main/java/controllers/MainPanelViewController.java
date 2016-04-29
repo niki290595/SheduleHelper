@@ -178,4 +178,8 @@ public class MainPanelViewController implements Initializable {
         menu = new ContextMenu(menuItems);
     }
 */
+
+    public void openTeachersPanel(ActionEvent actionEvent) throws IOException {
+        new TeachersPanelViewController(stage);
+    }
 }

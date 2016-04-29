@@ -81,6 +81,7 @@
             <children>
                 <Button
                         text="Преподаватели"
+                        onAction="#openTeachersPanel"
                         prefWidth="140"/>
                 <Button
                         text="Аудитории"

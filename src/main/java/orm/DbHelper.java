@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by User on 21.04.2016.
@@ -16,7 +15,101 @@ public enum DbHelper {
 
     private Collection groupData;
 
-    //region USER_ENTITY
+    //region ACADEMIC PLAN ENTITY
+    //endregion
+
+    //region AUDIENCE ENTITY
+    //endregion
+
+    //region AUDIENCE TYPE ENTITY
+    //endregion
+
+    //region CATEGORY ENTITY
+    public Collection getCategoryData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(CategoryEntity.class).list();
+        }
+    }
+    //endregion
+
+    //region DIRECTION ENTITY
+    public Collection getDirectionData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(DirectionEntity.class).list();
+        }
+    }
+    //endregion
+
+    //region DISCIPLINE ENTITY
+    //endregion
+
+    //region DISCIPLINE TYPE ENTITY
+    //endregion
+
+    //region GROUP ENTITY
+    public Collection getGroupData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(GroupEntity.class).list();
+        }
+    }
+    //endregion
+
+    //region MENTOR ENTITY
+    //endregion
+
+    //region NAVIGATOR ENTITY
+    //endregion
+
+    //region SCHEDULE ITEM ENTITY
+    //endregion
+
+    //region TEACHER ENTITY
+    public Collection getTeacherData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(TeacherEntity.class).list();
+        }
+    }
+
+    public TeacherEntity addTeacher(String fio, String academicDegree, String position, String phone) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            TeacherEntity teacher = new TeacherEntity(fio, academicDegree, position, phone);
+            teacher.setId((Integer) session.save(teacher));
+            session.getTransaction().commit();
+            return teacher;
+        }
+    }
+
+    public void alterTeacher(TeacherEntity teacher, TeacherEntity newTeacher) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            teacher = session.get(TeacherEntity.class, teacher.getId());
+            teacher.setFio(newTeacher.getFio());
+            teacher.setAcademicDegree(newTeacher.getAcademicDegree());
+            teacher.setPosition(newTeacher.getPosition());
+            teacher.setPhone(newTeacher.getPhone());
+            session.getTransaction().commit();
+        }
+    }
+
+    public void removeTeacher(TeacherEntity teacher) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(teacher);
+            session.getTransaction().commit();
+        }
+    }
+    //endregion
+
+    //region TIME TABLE ENTITY
+    public Collection getTimeTableData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(TimeTableEntity.class).list();
+        }
+    }
+    //endregion
+
+    //region USER ENTITY
     public Collection getUsersData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(UserEntity.class).list();
@@ -46,15 +139,15 @@ public enum DbHelper {
         }
     }
 
-    public UserEntity editUser(UserEntity user, String newLogin, CategoryEntity newCategory) {
-        return editUser(user, newLogin, null, newCategory, null);
+    public UserEntity alterUser(UserEntity user, String newLogin, CategoryEntity newCategory) {
+        return alterUser(user, newLogin, null, newCategory, null);
     }
 
-    public UserEntity editUser(UserEntity user, String pass, String salt) {
-        return editUser(user, null, pass, null, salt);
+    public UserEntity alterUser(UserEntity user, String pass, String salt) {
+        return alterUser(user, null, pass, null, salt);
     }
 
-    private UserEntity editUser(UserEntity user, String login, String pass, CategoryEntity category, String salt) {
+    private UserEntity alterUser(UserEntity user, String login, String pass, CategoryEntity category, String salt) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
             user = session.get(UserEntity.class, user.getId());
@@ -73,38 +166,6 @@ public enum DbHelper {
             session.beginTransaction();
             session.delete(user);
             session.getTransaction().commit();
-        }
-    }
-    //endregion
-
-    //region CATEGORY_ENTITY
-    public Collection getCategoryData() {
-        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
-            return session.createCriteria(CategoryEntity.class).list();
-        }
-    }
-    //endregion
-
-    //region TIME_TABLE_ENTITY
-    public Collection getTimeTableData() {
-        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
-            return session.createCriteria(TimeTableEntity.class).list();
-        }
-    }
-    //endregion
-
-    //region DIRECTION_ENTITY
-    public Collection getDirectionData() {
-        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
-            return session.createCriteria(DirectionEntity.class).list();
-        }
-    }
-    //endregion
-
-    //region GROUP_ENTITY
-    public Collection getGroupData() {
-        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
-            return session.createCriteria(GroupEntity.class).list();
         }
     }
     //endregion

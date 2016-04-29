@@ -7,12 +7,30 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "teacher", schema = "scheduledb")
-public class TeacherEntity {
+public class TeacherEntity implements Comparable<TeacherEntity> {
     private Integer id;
     private String fio;
     private String academicDegree;
     private String position;
     private String phone;
+
+    public TeacherEntity() {
+    }
+
+    public TeacherEntity(String fio, String academicDegree, String position, String phone) {
+        this.fio = fio;
+        this.academicDegree = academicDegree;
+        this.position = position;
+        this.phone = phone;
+    }
+
+    public TeacherEntity(Integer id, String fio, String academicDegree, String position, String phone) {
+        this.id = id;
+        this.fio = fio;
+        this.academicDegree = academicDegree;
+        this.position = position;
+        this.phone = phone;
+    }
 
     @Id
     @Column(name = "id")
@@ -89,5 +107,22 @@ public class TeacherEntity {
         result = 31 * result + (position != null ? position.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
+    }
+
+    public String shortName() {
+        String[] name = fio.split(" ");
+        return name[0] + " " + name[1].substring(0,1) + ". " + name[2].substring(0,1) + ".";
+    }
+
+    public String firstName() {
+        String[] name = fio.split(" ");
+        return name[0];
+    }
+
+    @Override
+    public int compareTo(TeacherEntity o) {
+        String s1 = this.shortName();
+        String s2 = o.shortName();
+        return s1.compareTo(s2);
     }
 }
