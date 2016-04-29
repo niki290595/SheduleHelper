@@ -47,7 +47,7 @@
 }
 
 .button,
-.toggle-button{
+.toggle-button {
 	-fx-border-image-width: 1;
 	-fx-background-radius: 0;
 	-fx-opacity: 0.6;
@@ -60,7 +60,7 @@
 	-fx-text-fill: #ffffff;
 }
 
-.button:pressed{
+.button:pressed {
 	-fx-opacity: 1;
 }
 
@@ -70,6 +70,11 @@
 }
 
 .button:hover,
-.toggle-button:hover{
+.toggle-button:hover {
 	-fx-opacity: 0.8;
+}
+
+.tree-cell,
+.tree-view {
+	-fx-opacity: 0.2;
 }
