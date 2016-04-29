@@ -58,7 +58,7 @@ public class TeachersPanelViewController implements Initializable {
     }
 
     public void add(ActionEvent actionEvent) throws IOException {
-        new TeacherEditViewController(stage);
+        new TeacherEditorViewController(stage);
     }
 
     public void modify(ActionEvent actionEvent) throws IOException {
@@ -69,7 +69,7 @@ public class TeachersPanelViewController implements Initializable {
                     .setMsg("Учитель не выбран").show();
         } else {
             TeacherEntity teacher = teachersTable.getItems().get(row);
-            new TeacherEditViewController(stage, teacher);
+            new TeacherEditorViewController(stage, teacher);
             new DialogController(stage, DialogController.Type.INFO)
                 .setTitle("Уведомление")
                 .setMsg("Данные успешно изменены").show();

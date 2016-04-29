@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<VBox
+        stylesheets="@../Styles.css"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.TeacherEditorViewController"
+        spacing="10">
+
+    <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
+
+    <TextField
+            fx:id="fio"
+            promptText="ФИО"/>
+
+    <TextField
+            fx:id="academicDegree"
+            promptText="Ученая степень"/>
+
+    <TextField
+            fx:id="position"
+            promptText="Должность"/>
+
+    <TextField
+            fx:id="phone"
+            promptText="Телефон"/>
+
+    <HBox
+            spacing="10">
+        <Button
+                text="Применить"
+                onAction="#apply"
+                defaultButton="true"/>
+        <Button
+                text="Отмена"
+                onAction="#cancel"
+                cancelButton="true"/>
+    </HBox>
+</VBox>
