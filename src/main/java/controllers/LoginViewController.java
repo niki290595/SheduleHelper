@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import orm.Repository;
 
@@ -74,7 +71,6 @@ public class LoginViewController implements Initializable {
         }
 
         if (user.getPass().equals(HashText.getHash(pass, user.getSalt()))) {
-            new Alert(Alert.AlertType.INFORMATION, "Добро пожаловать " + user.getLogin(), ButtonType.OK).showAndWait();
 
             switch (user.getCategory().categoryType()) {
                 case ADMIN:
@@ -83,8 +79,7 @@ public class LoginViewController implements Initializable {
                     break;
                 case OWNER:
                 case STAFF:
-                    new Alert(Alert.AlertType.INFORMATION, "Работа программы завершена", ButtonType.OK).showAndWait();
-                    System.exit(0);
+                    new MainPanelViewController(stage, user);
             }
         } else {
             new Alert(Alert.AlertType.ERROR, "Авторизация не пройдена, пароль введен неверно", ButtonType.OK).showAndWait();
