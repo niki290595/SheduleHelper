@@ -1,12 +1,12 @@
 package orm;
 
-import entity.CategoryEntity;
-import entity.UserEntity;
+import entity.*;
 import org.hibernate.Session;
 
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by User on 21.04.2016.
@@ -14,6 +14,9 @@ import java.util.Collection;
 public enum DbHelper {
     INSTANCE;
 
+    private Collection groupData;
+
+    //region USER_ENTITY
     public Collection getUsersData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(UserEntity.class).list();
@@ -72,10 +75,37 @@ public enum DbHelper {
             session.getTransaction().commit();
         }
     }
+    //endregion
 
+    //region CATEGORY_ENTITY
     public Collection getCategoryData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(CategoryEntity.class).list();
         }
     }
+    //endregion
+
+    //region TIME_TABLE_ENTITY
+    public Collection getTimeTableData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(TimeTableEntity.class).list();
+        }
+    }
+    //endregion
+
+    //region DIRECTION_ENTITY
+    public Collection getDirectionData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(DirectionEntity.class).list();
+        }
+    }
+    //endregion
+
+    //region GROUP_ENTITY
+    public Collection getGroupData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(GroupEntity.class).list();
+        }
+    }
+    //endregion
 }
