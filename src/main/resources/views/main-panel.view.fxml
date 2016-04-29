@@ -19,7 +19,7 @@
         xmlns="http://javafx.com/javafx/8"
         xmlns:fx="http://javafx.com/fxml/1"
         stylesheets="@../Styles.css"
-        fx:controller="controllers.LoginViewController"
+        fx:controller="controllers.MainPanelViewController"
         spacing="10">
 
     <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
@@ -32,9 +32,11 @@
             spacing="10">
 
         <ToggleButton
+                fx:id="switchEvenBtn"
                 text="Четная/нечетная неделя"/>
 
         <GridPane
+                fx:id="scheduleGridPane"
                 gridLinesVisible="true"
                 HBox.hgrow="ALWAYS">
             <columnConstraints>
