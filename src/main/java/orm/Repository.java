@@ -21,6 +21,7 @@ public enum Repository {
         dbHelper = DbHelper.INSTANCE;
     }
 
+    private ObservableList<AudienceEntity> audienceData;
     private ObservableList<CategoryEntity> categoryData;
     private ObservableList<DirectionEntity> directionData;
     private ObservableMap<DirectionEntity, ObservableList<GroupEntity>> directionGroupData;
@@ -39,6 +40,34 @@ public enum Repository {
     //endregion
 
     //region AUDIENCE ENTITY
+    public ObservableList<AudienceEntity> getAudienceData() {
+        return audienceData == null ? initAudienceData() : audienceData;
+    }
+
+    private ObservableList<AudienceEntity> initAudienceData() {
+        audienceData = addCollection(dbHelper.getAudienceData());
+        return audienceData;
+    }
+
+    public void addAudience(String id, AudienceTypeEntity type, int capacity) {
+        AudienceEntity audience = dbHelper.insertAudience(id, type, capacity);
+        audienceData.add(audience);
+        Collections.sort(audienceData);
+    }
+
+    public void editAudience(AudienceEntity audience, String id, AudienceTypeEntity type, int capacity) {
+        AudienceEntity newAudience = new AudienceEntity(id, type, capacity);
+        dbHelper.alterAudience(audience, newAudience);
+        audienceData.remove(audience);
+        audienceData.add(newAudience);
+        Collections.sort(audienceData);
+    }
+
+
+    public void removeAudience(AudienceEntity audience) {
+        dbHelper.deleteAudience(audience);
+        audienceData.remove(audience);
+    }
     //endregion
 
     //region AUDIENCE TYPE ENTITY
@@ -160,14 +189,14 @@ public enum Repository {
     }
 
     public UserEntity addUser(String login, String hash, CategoryEntity category, String salt) {
-        UserEntity newUser = dbHelper.addUser(login, hash, category, salt);
+        UserEntity newUser = dbHelper.insertUser(login, hash, category, salt);
         userData.add(newUser);
         Collections.sort(userData);
         return newUser;
     }
 
     public UserEntity addUser(String login, CategoryEntity category) {
-        UserEntity newUser = dbHelper.addUser(login, category);
+        UserEntity newUser = dbHelper.insertUser(login, category);
         userData.add(newUser);
         Collections.sort(userData);
         return newUser;
@@ -189,7 +218,7 @@ public enum Repository {
     }
 
     public void removeUser(UserEntity user) {
-        dbHelper.removeUser(user);
+        dbHelper.deleteUser(user);
         userData.remove(user);
     }
     //endregion

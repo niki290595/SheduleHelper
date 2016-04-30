@@ -7,18 +7,27 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "audience", schema = "scheduledb")
-public class AudienceEntity {
-    private Integer id;
+public class AudienceEntity implements Comparable<AudienceEntity> {
+    private String id;
     private AudienceTypeEntity audienceType;
     private Integer capacity;
 
+    public AudienceEntity() {
+    }
+
+    public AudienceEntity(String id, AudienceTypeEntity audienceType, Integer capacity) {
+        this.id = id;
+        this.audienceType = audienceType;
+        this.capacity = capacity;
+    }
+
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -63,5 +72,17 @@ public class AudienceEntity {
         result = 31 * result + (audienceType != null ? audienceType.hashCode() : 0);
         result = 31 * result + (capacity != null ? capacity.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return id;
+    }
+
+    @Override
+    public int compareTo(AudienceEntity o) {
+        String s1 = this.getId();
+        String s2 = o.getId();
+        return s1.compareTo(s2);
     }
 }

@@ -19,6 +19,40 @@ public enum DbHelper {
     //endregion
 
     //region AUDIENCE ENTITY
+    public Collection getAudienceData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(AudienceEntity.class).list();
+        }
+    }
+
+    public AudienceEntity insertAudience(String id, AudienceTypeEntity type, int capacity) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            AudienceEntity audience = new AudienceEntity(id, type, capacity);
+            session.save(audience);
+            session.getTransaction().commit();
+            return audience;
+        }
+    }
+
+    public void alterAudience(AudienceEntity audience, AudienceEntity newAudience) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            audience = session.get(AudienceEntity.class, audience.getId());
+            audience.setId(newAudience.getId());
+            audience.setAudienceType(newAudience.getAudienceType());
+            audience.setCapacity(newAudience.getCapacity());
+            session.getTransaction().commit();
+        }
+    }
+
+    public void deleteAudience(AudienceEntity audience) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(audience);
+            session.getTransaction().commit();
+        }
+    }
     //endregion
 
     //region AUDIENCE TYPE ENTITY
@@ -116,7 +150,7 @@ public enum DbHelper {
         }
     }
 
-    public UserEntity addUser(String login, String pass, CategoryEntity category, String salt) {
+    public UserEntity insertUser(String login, String pass, CategoryEntity category, String salt) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
             UserEntity user = new UserEntity(login, pass, category, salt, new Date(Calendar.getInstance().getTime().getTime()));
@@ -126,7 +160,7 @@ public enum DbHelper {
         }
     }
 
-    public UserEntity addUser(String login, CategoryEntity category) {
+    public UserEntity insertUser(String login, CategoryEntity category) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
             UserEntity user = new UserEntity();
@@ -161,7 +195,7 @@ public enum DbHelper {
         }
     }
 
-    public void removeUser(UserEntity user) {
+    public void deleteUser(UserEntity user) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
             session.delete(user);

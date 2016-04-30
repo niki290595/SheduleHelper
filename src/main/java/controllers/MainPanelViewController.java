@@ -182,4 +182,8 @@ public class MainPanelViewController implements Initializable {
     public void openTeachersPanel(ActionEvent actionEvent) throws IOException {
         new TeachersPanelViewController(stage);
     }
+
+    public void openAudiencesPanel(ActionEvent actionEvent) throws IOException {
+        new AudiencesPanelViewController(stage);
+    }
 }

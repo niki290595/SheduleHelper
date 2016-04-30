@@ -85,6 +85,7 @@
                         prefWidth="140"/>
                 <Button
                         text="Аудитории"
+                        onAction="#openAudiencesPanel"
                         prefWidth="140"
                         GridPane.columnIndex="1"/>
                 <Button
