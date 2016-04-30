@@ -65,6 +65,7 @@ public class TeacherEditorViewController implements Initializable {
     }
 
     public void apply(ActionEvent actionEvent) {
+        //todo запретить вставку пустых полей, exception
         String FIO = fio.getText();
         String academicDegree = this.academicDegree.getText();
         String position = this.position.getText();
