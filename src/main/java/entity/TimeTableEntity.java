@@ -64,4 +64,31 @@ public class TimeTableEntity {
         result = 31 * result + (timeEnd != null ? timeEnd.hashCode() : 0);
         return result;
     }
+
+    public String timeBeginString() {
+        if (timeBegin == null) {
+            return "";
+        }
+        return shortFormat(timeBegin.toString());
+    }
+
+    private String shortFormat(String time) {
+        return time.substring(0, time.indexOf(':') + 1) + time.substring(time.indexOf(':') + 1, time.lastIndexOf(':'));
+    }
+
+    public String timeEndString() {
+        if (timeEnd == null) {
+            return "";
+        }
+        return shortFormat(timeEnd.toString());
+    }
+
+    public Time durationTime() {
+        return timeBegin;
+    }
+
+    @Override
+    public String toString() {
+        return shortFormat(timeBegin.toString()) + " - " + shortFormat(timeEnd.toString());
+    }
 }

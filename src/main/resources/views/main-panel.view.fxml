@@ -90,6 +90,7 @@
                         GridPane.columnIndex="1"/>
                 <Button
                         text="Время"
+                        onAction="#openTimePanel"
                         prefWidth="140"
                         GridPane.columnIndex="2"/>
                 <Button

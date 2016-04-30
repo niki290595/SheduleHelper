@@ -185,6 +185,13 @@ public enum Repository {
         }
         return this.timeTableData;
     }
+
+    public void editTimeTable(Integer id, String beginTime, String endTime) {
+        TimeTableEntity newItem = dbHelper.alterTimeTable(id, beginTime, endTime);
+        timeTableData.remove(id);
+        timeTableData.put(id, newItem);
+    }
+
     //endregion
 
     //region USER ENTITY

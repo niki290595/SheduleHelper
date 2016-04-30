@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -70,8 +71,8 @@ public class MainPanelViewController implements Initializable {
         Map<Integer, TimeTableEntity> timeTableData = db.getTimeTableData();
         for (Integer id : timeTableData.keySet()) {
             TimeTableEntity item = timeTableData.get(id);
-            timeTable[0][id - 1].setText(item.getTimeBegin() + " - " + item.getTimeEnd());
-            timeTable[1][id - 1].setText(item.getTimeBegin() + " - " + item.getTimeEnd());
+            timeTable[0][id - 1].setText(item.toString());
+            timeTable[1][id - 1].setText(item.toString());
         }
     }
 
@@ -89,7 +90,7 @@ public class MainPanelViewController implements Initializable {
         Label label = new Label();
         label.setText(text);
         label.setVisible(true);
-        label.setAlignment(Pos.CENTER);
+        GridPane.setHalignment(label, HPos.CENTER);
         return label;
     }
 
@@ -185,5 +186,10 @@ public class MainPanelViewController implements Initializable {
 
     public void openAudiencesPanel(ActionEvent actionEvent) throws IOException {
         new AudiencesPanelViewController(stage);
+    }
+
+    public void openTimePanel(ActionEvent actionEvent) throws IOException {
+        new TimePanelViewController(stage);
+        initTimeTable();
     }
 }

@@ -4,6 +4,7 @@ import entity.*;
 import org.hibernate.Session;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -142,6 +143,17 @@ public enum DbHelper {
     public Collection getTimeTableData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(TimeTableEntity.class).list();
+        }
+    }
+
+    public TimeTableEntity alterTimeTable(Integer id, String beginTime, String endTime) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            TimeTableEntity time = session.get(TimeTableEntity.class, id);
+            time.setTimeBegin(Time.valueOf(beginTime + ":00"));
+            time.setTimeEnd(Time.valueOf(endTime + ":00"));
+            session.getTransaction().commit();
+            return time;
         }
     }
     //endregion
