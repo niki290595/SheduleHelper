@@ -52,11 +52,11 @@ public class AudiencesPanelViewController implements Initializable {
         audienceTable.setItems(db.getAudienceData());
     }
 
-    public void add(ActionEvent actionEvent) {
+    public void add(ActionEvent actionEvent) throws IOException {
         new AudienceEditorViewController(stage);
     }
 
-    public void modify(ActionEvent actionEvent) {
+    public void modify(ActionEvent actionEvent) throws IOException {
         int row =  audienceTable.getSelectionModel().getSelectedIndex();
         if (row == -1) {
             new DialogController(stage, DialogController.Type.INFO)

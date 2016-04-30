@@ -13,8 +13,6 @@ import java.util.Collection;
 public enum DbHelper {
     INSTANCE;
 
-    private Collection groupData;
-
     //region ACADEMIC PLAN ENTITY
     //endregion
 
@@ -56,6 +54,11 @@ public enum DbHelper {
     //endregion
 
     //region AUDIENCE TYPE ENTITY
+    public Collection getAudienceTypeData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(AudienceTypeEntity.class).list();
+        }
+    }
     //endregion
 
     //region CATEGORY ENTITY

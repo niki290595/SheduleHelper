@@ -22,6 +22,7 @@ public enum Repository {
     }
 
     private ObservableList<AudienceEntity> audienceData;
+    private ObservableList<AudienceTypeEntity> audienceTypeData;
     private ObservableList<CategoryEntity> categoryData;
     private ObservableList<DirectionEntity> directionData;
     private ObservableMap<DirectionEntity, ObservableList<GroupEntity>> directionGroupData;
@@ -71,6 +72,23 @@ public enum Repository {
     //endregion
 
     //region AUDIENCE TYPE ENTITY
+    public ObservableList<AudienceTypeEntity> getAudienceTypeData() {
+        return audienceTypeData == null ? initAudienceTypeData() : audienceTypeData;
+    }
+
+    private ObservableList<AudienceTypeEntity> initAudienceTypeData() {
+        audienceTypeData = addCollection(dbHelper.getAudienceTypeData());
+        return audienceTypeData;
+    }
+
+    public AudienceTypeEntity getAudienceType(AudienceEntity audience) {
+        for (AudienceTypeEntity type : getAudienceTypeData()) {
+            if (type.getName().equals(audience.getAudienceType().getName())) {
+                return type;
+            }
+        }
+        return null;
+    }
     //endregion
 
     //region CATEGORY ENTITY
