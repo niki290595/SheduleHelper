@@ -99,6 +99,7 @@
                         GridPane.rowIndex="1"/>
                 <Button
                         text="Дисциплины"
+                        onAction="#openDisciplinesPanel"
                         prefWidth="140"
                         GridPane.columnIndex="1"
                         GridPane.rowIndex="1"/>

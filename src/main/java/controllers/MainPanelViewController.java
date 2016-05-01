@@ -192,4 +192,8 @@ public class MainPanelViewController implements Initializable {
         new TimePanelViewController(stage);
         initTimeTable();
     }
+
+    public void openDisciplinesPanel(ActionEvent actionEvent) {
+        new DisciplinesPanelViewController(stage);
+    }
 }

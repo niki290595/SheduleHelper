@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+
+<GridPane
+        stylesheets="@../Styles.css"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.DisciplinesPanelViewController">
+   <children>
+      <ComboBox/>
+      <Button text="Добавить"
+              GridPane.columnIndex="1"/>
+      <Button text="Изменить"
+              GridPane.columnIndex="2"/>
+      <Button text="Удалить"
+              GridPane.columnIndex="3"/>
+
+       <Button text="Добавить"
+               GridPane.rowIndex="1"/>
+       <Button text="Изменить"
+               GridPane.rowIndex="2"/>
+       <Button text="Удалить"
+               GridPane.rowIndex="3"/>
+
+      <ListView
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="1"
+              GridPane.rowSpan="3"/>
+
+      <Button text="&gt;&gt;"
+              GridPane.columnIndex="2"
+              GridPane.rowIndex="1"/>
+      <Button text="&lt;&lt;"
+              GridPane.columnIndex="2"
+              GridPane.rowIndex="2"/>
+
+      <ListView
+              GridPane.columnIndex="3"
+              GridPane.rowIndex="1"
+              GridPane.rowSpan="3"/>
+   </children>
+</GridPane>
