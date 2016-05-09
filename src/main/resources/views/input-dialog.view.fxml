@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<VBox
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="@../Styles.css"
+        fx:controller="controllers.DialogController"
+        prefWidth="240"
+        prefHeight="160"
+        spacing="10"
+        alignment="BOTTOM_CENTER">
+
+    <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
+
+    <Label fx:id="msgLabel"
+           wrapText="true"/>
+
+    <TextField fx:id="inputTextField"/>
+
+    <HBox
+        spacing="10">
+
+        <Button text="OK"
+                prefWidth="140"
+                onAction="#apply"/>
+        <Button text="Выход"
+                prefWidth="140"
+                onAction="#close"/>
+    </HBox>
+
+</VBox>
+

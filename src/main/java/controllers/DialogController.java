@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,6 +21,7 @@ import java.util.ResourceBundle;
  */
 public class DialogController implements Initializable {
 
+    @FXML TextField inputTextField;
     @FXML Label msgLabel;
 
     public enum Type {
@@ -43,11 +45,16 @@ public class DialogController implements Initializable {
     public DialogController(Stage parentStage, Type type) {
         DialogController.type = type;
         DialogController.parentStage = parentStage;
+        title = null;
+        msg = null;
+        input = null;
+        result = null;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         msgLabel.setText(msg);
+        if (input != null) inputTextField.setText(input);
     }
 
     public String getTitle() {
@@ -73,6 +80,8 @@ public class DialogController implements Initializable {
             try {
                 if (type.equals(Type.INFO))
                     root = FXMLLoader.load(this.getClass().getClassLoader().getResource("views/info-dialog.view.fxml"));
+                if (type.equals(Type.INPUT))
+                    root = FXMLLoader.load(this.getClass().getClassLoader().getResource("views/input-dialog.view.fxml"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -98,6 +107,12 @@ public class DialogController implements Initializable {
     public DialogController setInput(String input) {
         DialogController.input = input;
         return this;
+    }
+
+    public void apply(ActionEvent actionEvent) {
+        input = inputTextField.getText();
+        result = DialogResult.OK;
+        stage.close();
     }
 
     public void close(ActionEvent actionEvent) {
