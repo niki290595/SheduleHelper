@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by User on 21.04.2016.
@@ -15,6 +16,42 @@ public enum DbHelper {
     INSTANCE;
 
     //region ACADEMIC PLAN ENTITY
+    public Collection getAcademicPlanData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(AcademicPlanEntity.class).list();
+        }
+    }
+
+    public AcademicPlanEntity addDiscipline(DisciplineEntity discipline, DirectionEntity direction) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            AcademicPlanEntity academicPlan = new AcademicPlanEntity();
+            academicPlan.setDirection(direction);
+            academicPlan.setDiscipline(discipline);
+            academicPlan.setId((Integer) session.save(academicPlan));
+            session.getTransaction().commit();
+            return academicPlan;
+        }
+    }
+
+    public void deleteDiscipline(DisciplineEntity discipline, DirectionEntity direction) {
+        Collection<AcademicPlanEntity> academicPlanList = getAcademicPlanData();
+        AcademicPlanEntity academicPlanForDelete = null;
+        for (AcademicPlanEntity academicPlan : academicPlanList) {
+            if (academicPlan.getDirection().equals(direction) &&
+                    academicPlan.getDiscipline().equals(discipline)) {
+                academicPlanForDelete = academicPlan;
+                break;
+            }
+        }
+        if (academicPlanForDelete == null) return;
+
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(academicPlanForDelete);
+            session.getTransaction().commit();
+        }
+    }
     //endregion
 
     //region AUDIENCE ENTITY
@@ -76,9 +113,70 @@ public enum DbHelper {
             return session.createCriteria(DirectionEntity.class).list();
         }
     }
+
+    public DirectionEntity insertDirection(String name) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            DirectionEntity direction = new DirectionEntity();
+            direction.setId((Integer) session.save(direction));
+            session.getTransaction().commit();
+            return direction;
+        }
+    }
+
+    public DirectionEntity alterDirection(DirectionEntity direction, String name) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            direction = session.get(DirectionEntity.class, direction.getId());
+            direction.setName(name);
+            session.getTransaction().commit();
+            return direction;
+        }
+    }
+
+    public void deleteDirection(DirectionEntity direction) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(direction);
+            session.getTransaction().commit();
+        }
+    }
     //endregion
 
     //region DISCIPLINE ENTITY
+    public Collection getDisciplineData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(DisciplineEntity.class).list();
+        }
+    }
+
+    public DisciplineEntity insertDiscipline(String name) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            DisciplineEntity discipline = new DisciplineEntity();
+            discipline.setName(name);
+            discipline.setId((Integer) session.save(discipline));
+            session.getTransaction().commit();
+            return discipline;
+        }
+    }
+
+    public DisciplineEntity alterDiscipline(DisciplineEntity discipline, String newName) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            discipline = session.get(DisciplineEntity.class, discipline.getId());
+            discipline.setName(newName);
+            return discipline;
+        }
+    }
+
+    public void deleteDiscipline(DisciplineEntity discipline) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(discipline);
+            session.getTransaction().commit();
+        }
+    }
     //endregion
 
     //region DISCIPLINE TYPE ENTITY

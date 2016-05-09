@@ -7,9 +7,16 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "direction", schema = "scheduledb")
-public class DirectionEntity {
+public class DirectionEntity implements Comparable<DirectionEntity> {
     private Integer id;
     private String name;
+
+    public DirectionEntity() {
+    }
+
+    public DirectionEntity(String name) {
+        this.name = name;
+    }
 
     @Id
     @Column(name = "id")
@@ -49,5 +56,11 @@ public class DirectionEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    public int compareTo(DirectionEntity o) {
+        String s1 = this.getName();
+        String s2 = o.getName();
+        return s1.compareTo(s2);
     }
 }

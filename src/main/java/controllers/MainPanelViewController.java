@@ -193,7 +193,7 @@ public class MainPanelViewController implements Initializable {
         initTimeTable();
     }
 
-    public void openDisciplinesPanel(ActionEvent actionEvent) {
+    public void openDisciplinesPanel(ActionEvent actionEvent) throws IOException {
         new DisciplinesPanelViewController(stage);
     }
 }

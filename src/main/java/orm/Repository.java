@@ -26,6 +26,9 @@ public enum Repository {
     private ObservableList<CategoryEntity> categoryData;
     private ObservableList<DirectionEntity> directionData;
     private ObservableMap<DirectionEntity, ObservableList<GroupEntity>> directionGroupData;
+    private ObservableMap<DirectionEntity, ObservableList<DisciplineEntity>> directionDisciplineData;
+    private ObservableList<DisciplineEntity> disciplineData;
+    private ObservableList<DisciplineEntity> noUseDisciplineData;
     private ObservableList<TeacherEntity> teacherData;
     private ObservableMap<Integer, TimeTableEntity> timeTableData;
     private ObservableList<UserEntity> userData;
@@ -111,9 +114,90 @@ public enum Repository {
         directionData = addCollection(dbHelper.getDirectionData());
         return directionData;
     }
+
+    public DirectionEntity addDirection(String name) {
+        DirectionEntity newDirection = dbHelper.insertDirection(name);
+        directionData.add(newDirection);
+        Collections.sort(directionData);
+        return newDirection;
+    }
+
+    public DirectionEntity editDirection(DirectionEntity direction, String directionName) {
+        DirectionEntity alterDirection = dbHelper.alterDirection(direction, directionName);
+        directionData.remove(direction);
+        directionData.add(alterDirection);
+        Collections.sort(directionData);
+        return alterDirection;
+    }
+
+    public void removeDirection(DirectionEntity direction) {
+        dbHelper.deleteDirection(direction);
+        directionData.remove(direction);
+    }
     //endregion
 
     //region DISCIPLINE ENTITY
+    public ObservableList<DisciplineEntity> getDisciplineData() {
+        return disciplineData == null ? initDisciplineData() : disciplineData;
+    }
+
+    private ObservableList<DisciplineEntity> initDisciplineData() {
+        disciplineData = addCollection(dbHelper.getDisciplineData());
+        return disciplineData;
+    }
+
+    public DisciplineEntity addDiscipline(String name) {
+        DisciplineEntity discipline = dbHelper.insertDiscipline(name);
+        getDisciplineData().add(discipline);
+        noUseDisciplineData.add(discipline);
+        Collections.sort(disciplineData);
+        Collections.sort(noUseDisciplineData);
+        return discipline;
+    }
+
+    public void addDisciplineToDirection(DisciplineEntity discipline, DirectionEntity direction) {
+        dbHelper.addDiscipline(discipline, direction);
+        directionDisciplineData.get(direction).add(discipline);
+        this.noUseDisciplineData.remove(discipline);
+        Collections.sort(directionDisciplineData.get(direction));
+    }
+
+    public DisciplineEntity editDiscipline(ObservableList<DisciplineEntity> disciplineList, DisciplineEntity discipline, String newName) {
+        DisciplineEntity newDiscipline = dbHelper.alterDiscipline(discipline, newName);
+        this.disciplineData.remove(discipline);
+        this.disciplineData.add(newDiscipline);
+        disciplineList.remove(discipline);
+        disciplineList.add(newDiscipline);
+        this.directionDisciplineData.keySet().stream().filter((direction) -> {
+            return ((ObservableList)this.directionDisciplineData.get(direction)).contains(discipline);
+        }).forEach((direction) -> {
+            ((ObservableList)this.directionDisciplineData.get(direction)).remove(discipline);
+            ((ObservableList)this.directionDisciplineData.get(direction)).add(newDiscipline);
+        });
+        Collections.sort(this.disciplineData);
+        Collections.sort(disciplineList);
+        return discipline;
+    }
+
+    public void removeDiscipline(DisciplineEntity discipline) {
+        dbHelper.deleteDiscipline(discipline);
+        this.disciplineData.remove(discipline);
+        this.noUseDisciplineData.remove(discipline);
+        this.directionDisciplineData.keySet().stream().filter((direction) -> {
+            return this.directionDisciplineData.get(direction) != null;
+        }).filter((direction) -> {
+            return ((ObservableList)this.directionDisciplineData.get(direction)).contains(discipline);
+        }).forEach((direction) -> {
+            ((ObservableList)this.directionDisciplineData.get(direction)).remove(discipline);
+        });
+    }
+
+    public void removeDisciplineFromDirection(DisciplineEntity discipline, DirectionEntity direction) {
+        dbHelper.deleteDiscipline(discipline, direction);
+        directionDisciplineData.get(direction).remove(discipline);
+        noUseDisciplineData.add(discipline);
+        Collections.sort(noUseDisciplineData);
+    }
     //endregion
 
     //region DISCIPLINE TYPE ENTITY

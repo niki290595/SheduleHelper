@@ -8,7 +8,8 @@
 
 
 .root,
-.table-view {
+.table-view,
+.list-view {
 	-fx-background-image: url("image/background.jpg");
 }
 

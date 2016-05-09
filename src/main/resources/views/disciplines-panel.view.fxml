@@ -16,38 +16,81 @@
         stylesheets="@../Styles.css"
         xmlns="http://javafx.com/javafx/8"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="controllers.DisciplinesPanelViewController">
-   <children>
-      <ComboBox/>
-      <Button text="Добавить"
-              GridPane.columnIndex="1"/>
-      <Button text="Изменить"
-              GridPane.columnIndex="2"/>
-      <Button text="Удалить"
-              GridPane.columnIndex="3"/>
+        fx:controller="controllers.DisciplinesPanelViewController"
+        hgap="20"
+        vgap="20">
+
+    <padding><Insets top="10" bottom="10" left="10" right="10"/></padding>
+
+    <columnConstraints>
+        <ColumnConstraints prefWidth="150"/>
+        <ColumnConstraints prefWidth="250"/>
+        <ColumnConstraints prefWidth="100"/>
+        <ColumnConstraints prefWidth="250"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints prefHeight="50"/>
+        <RowConstraints prefHeight="100"/>
+        <RowConstraints prefHeight="100"/>
+        <RowConstraints prefHeight="100"/>
+    </rowConstraints>
+    <children>
+        <ComboBox fx:id="directions"
+                prefWidth="150"/>
+        <Button text="Добавить"
+                onAction="#addDirection"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"
+                prefWidth="140"/>
+        <Button text="Изменить"
+                onAction="#editDirection"
+                GridPane.columnIndex="2"
+                prefWidth="140"/>
+        <Button text="Удалить"
+                onAction="#deleteDirection"
+                GridPane.columnIndex="3"
+                GridPane.halignment="CENTER"
+                prefWidth="140"/>
 
        <Button text="Добавить"
-               GridPane.rowIndex="1"/>
+                onAction="#addDiscipline"
+                GridPane.rowIndex="1"
+                GridPane.halignment="CENTER"
+                GridPane.valignment="BOTTOM"
+                prefWidth="140"/>
        <Button text="Изменить"
-               GridPane.rowIndex="2"/>
+                onAction="#editDiscipline"
+                GridPane.rowIndex="2"
+                GridPane.halignment="CENTER"
+                prefWidth="140"/>
        <Button text="Удалить"
-               GridPane.rowIndex="3"/>
+                onAction="#deleteDiscipline"
+                GridPane.rowIndex="3"
+                GridPane.halignment="CENTER"
+                GridPane.valignment="TOP"
+                prefWidth="140"/>
 
-      <ListView
-              GridPane.columnIndex="1"
-              GridPane.rowIndex="1"
-              GridPane.rowSpan="3"/>
+        <ListView fx:id="noUseDisciplineList"
+                GridPane.columnIndex="1"
+                GridPane.rowIndex="1"
+                GridPane.rowSpan="3"/>
 
-      <Button text="&gt;&gt;"
-              GridPane.columnIndex="2"
-              GridPane.rowIndex="1"/>
-      <Button text="&lt;&lt;"
-              GridPane.columnIndex="2"
-              GridPane.rowIndex="2"/>
+        <Button text="&gt;&gt;"
+                onAction="#addToUseList"
+                GridPane.columnIndex="2"
+                GridPane.rowIndex="1"
+                GridPane.halignment="CENTER"
+                GridPane.valignment="BOTTOM"/>
+        <Button text="&lt;&lt;"
+                onAction="#removeFromUseList"
+                GridPane.columnIndex="2"
+                GridPane.rowIndex="2"
+                GridPane.halignment="CENTER"
+                GridPane.valignment="TOP"/>
 
-      <ListView
-              GridPane.columnIndex="3"
-              GridPane.rowIndex="1"
-              GridPane.rowSpan="3"/>
-   </children>
+        <ListView fx:id="useDisciplineList"
+                GridPane.columnIndex="3"
+                GridPane.rowIndex="1"
+                GridPane.rowSpan="3"/>
+    </children>
 </GridPane>

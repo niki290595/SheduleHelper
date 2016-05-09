@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.jnlp.ApiDialog.DialogResult;
 import javafx.stage.Stage;
 
 /**
@@ -8,7 +9,8 @@ import javafx.stage.Stage;
 public class DialogController {
 
     public enum Type {
-        INFO;
+        INFO,
+        INPUT;
     }
 
     private String title;
@@ -36,7 +38,20 @@ public class DialogController {
         return this;
     }
 
-    public void show() {
+    public DialogController show() {
         //todo show msg;
+        return this;
+    }
+
+    public DialogResult dialogResult() {
+        return null;
+    }
+
+    public String getResultString() {
+        return null;
+    }
+
+    public DialogController setInput(String input) {
+        return this;
     }
 }
