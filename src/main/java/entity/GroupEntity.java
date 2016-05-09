@@ -23,7 +23,8 @@ public class GroupEntity implements Comparable<GroupEntity>{
     }
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
