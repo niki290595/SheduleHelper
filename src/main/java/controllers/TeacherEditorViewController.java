@@ -83,7 +83,7 @@ public class TeacherEditorViewController implements Initializable {
             this.position.setText("");
             this.phone.setText("");
         } else { //change
-            db.alterTeacher(teacher, FIO, academicDegree, position, phone);
+            db.editTeacher(teacher, FIO, academicDegree, position, phone);
             stage.close();
         }
     }

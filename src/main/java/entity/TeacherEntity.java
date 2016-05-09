@@ -24,14 +24,6 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
         this.phone = phone;
     }
 
-    public TeacherEntity(Integer id, String fio, String academicDegree, String position, String phone) {
-        this.id = id;
-        this.fio = fio;
-        this.academicDegree = academicDegree;
-        this.position = position;
-        this.phone = phone;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

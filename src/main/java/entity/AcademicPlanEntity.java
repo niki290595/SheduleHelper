@@ -15,6 +15,14 @@ public class AcademicPlanEntity {
     private Integer practiсe;
     private Integer lab;
 
+    public AcademicPlanEntity() {
+    }
+
+    public AcademicPlanEntity(DirectionEntity direction, DisciplineEntity discipline) {
+        this.direction = direction;
+        this.discipline = discipline;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

@@ -246,15 +246,16 @@ public enum DbHelper {
         }
     }
 
-    public void alterTeacher(TeacherEntity teacher, TeacherEntity newTeacher) {
+    public TeacherEntity alterTeacher(TeacherEntity teacher, String fio, String academicDegree, String position, String phone) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
             teacher = session.get(TeacherEntity.class, teacher.getId());
-            teacher.setFio(newTeacher.getFio());
-            teacher.setAcademicDegree(newTeacher.getAcademicDegree());
-            teacher.setPosition(newTeacher.getPosition());
-            teacher.setPhone(newTeacher.getPhone());
+            teacher.setFio(fio);
+            teacher.setAcademicDegree(academicDegree);
+            teacher.setPosition(position);
+            teacher.setPhone(phone);
             session.getTransaction().commit();
+            return teacher;
         }
     }
 

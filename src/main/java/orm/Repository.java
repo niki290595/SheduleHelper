@@ -262,11 +262,11 @@ public enum Repository {
         Collections.sort(teacherData);
     }
 
-    public void alterTeacher(TeacherEntity teacher, String fio, String academicDegree, String position, String phone) {
-        TeacherEntity newTeacher = new TeacherEntity(teacher.getId(), fio, academicDegree, position, phone);
-        dbHelper.alterTeacher(teacher, newTeacher);
+    public void editTeacher(TeacherEntity teacher, String fio, String academicDegree, String position, String phone) {
+
+        TeacherEntity alterTeacher = dbHelper.alterTeacher(teacher, fio, academicDegree, position, phone);
         teacherData.remove(teacher);
-        teacherData.add(newTeacher);
+        teacherData.add(alterTeacher);
         Collections.sort(teacherData);
     }
 

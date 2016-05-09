@@ -11,6 +11,13 @@ public class AudienceTypeEntity {
     private Integer id;
     private String name;
 
+    public AudienceTypeEntity() {
+    }
+
+    public AudienceTypeEntity(String name) {
+        this.name = name;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

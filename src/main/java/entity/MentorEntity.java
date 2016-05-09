@@ -13,6 +13,15 @@ public class MentorEntity {
     private DisciplineTypeEntity disciplineType;
     private TeacherEntity teacher;
 
+    public MentorEntity() {
+    }
+
+    public MentorEntity(DisciplineEntity discipline, DisciplineTypeEntity disciplineType, TeacherEntity teacher) {
+        this.discipline = discipline;
+        this.disciplineType = disciplineType;
+        this.teacher = teacher;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

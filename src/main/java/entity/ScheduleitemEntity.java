@@ -14,6 +14,14 @@ public class ScheduleItemEntity {
     private NavigatorEntity navigator;
     private GroupEntity group;
 
+    public ScheduleItemEntity() {
+    }
+
+    public ScheduleItemEntity(NavigatorEntity navigator, GroupEntity group) {
+        this.navigator = navigator;
+        this.group = group;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

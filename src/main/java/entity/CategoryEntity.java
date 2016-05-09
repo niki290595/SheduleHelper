@@ -28,6 +28,13 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
     private Integer id;
     private String description;
 
+    public CategoryEntity() {
+    }
+
+    public CategoryEntity(String description) {
+        this.description = description;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

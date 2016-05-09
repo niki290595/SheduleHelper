@@ -13,6 +13,14 @@ public class TimeTableEntity {
     private Time timeBegin;
     private Time timeEnd;
 
+    public TimeTableEntity() {
+    }
+
+    public TimeTableEntity(Time timeBegin, Time timeEnd) {
+        this.timeBegin = timeBegin;
+        this.timeEnd = timeEnd;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

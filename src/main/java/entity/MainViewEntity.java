@@ -29,6 +29,8 @@ public class MainViewEntity {
     private Integer practice;
     private Integer lab;
 
+
+
     @Basic
     @Column(name = "Day Of Week")
     public Integer getDayOfWeek() {

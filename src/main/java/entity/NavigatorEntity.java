@@ -15,6 +15,17 @@ public class NavigatorEntity {
     private AudienceEntity audience;
     private MentorEntity mentor;
 
+    public NavigatorEntity() {
+    }
+
+    public NavigatorEntity(Integer dayOfWeek, TimeTableEntity time, Integer weekOdd, AudienceEntity audience, MentorEntity mentor) {
+        this.dayOfWeek = dayOfWeek;
+        this.time = time;
+        this.weekOdd = weekOdd;
+        this.audience = audience;
+        this.mentor = mentor;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

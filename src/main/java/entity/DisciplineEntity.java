@@ -11,6 +11,13 @@ public class DisciplineEntity implements Comparable<DisciplineEntity> {
     private Integer id;
     private String name;
 
+    public DisciplineEntity() {
+    }
+
+    public DisciplineEntity(String name) {
+        this.name = name;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {

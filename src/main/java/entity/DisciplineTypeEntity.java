@@ -11,6 +11,13 @@ public class DisciplineTypeEntity {
     private Integer id;
     private String name;
 
+    public DisciplineTypeEntity() {
+    }
+
+    public DisciplineTypeEntity(String name) {
+        this.name = name;
+    }
+
     @Id
     @Column(name = "id")
     public Integer getId() {
