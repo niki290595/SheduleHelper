@@ -28,6 +28,12 @@ public class UserEntity implements Comparable<UserEntity> {
         this.dateCreation = dateCreation;
     }
 
+    public UserEntity(String login, CategoryEntity category, Date dateCreation) {
+        this.login = login;
+        this.category = category;
+        this.dateCreation = dateCreation;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

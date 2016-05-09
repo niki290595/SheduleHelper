@@ -15,7 +15,7 @@ import java.util.List;
 public enum DbHelper {
     INSTANCE;
 
-    //region ACADEMIC PLAN ENTITY
+    //region !ACADEMIC PLAN ENTITY
     public Collection getAcademicPlanData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(AcademicPlanEntity.class).list();
@@ -25,9 +25,7 @@ public enum DbHelper {
     public AcademicPlanEntity addDiscipline(DisciplineEntity discipline, DirectionEntity direction) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
-            AcademicPlanEntity academicPlan = new AcademicPlanEntity();
-            academicPlan.setDirection(direction);
-            academicPlan.setDiscipline(discipline);
+            AcademicPlanEntity academicPlan = new AcademicPlanEntity(direction, discipline);
             academicPlan.setId((Integer) session.save(academicPlan));
             session.getTransaction().commit();
             return academicPlan;
@@ -54,7 +52,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region AUDIENCE ENTITY
+    //region !AUDIENCE ENTITY
     public Collection getAudienceData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(AudienceEntity.class).list();
@@ -91,7 +89,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region AUDIENCE TYPE ENTITY
+    //region !AUDIENCE TYPE ENTITY
     public Collection getAudienceTypeData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(AudienceTypeEntity.class).list();
@@ -99,7 +97,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region CATEGORY ENTITY
+    //region !CATEGORY ENTITY
     public Collection getCategoryData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(CategoryEntity.class).list();
@@ -107,7 +105,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region DIRECTION ENTITY
+    //region !DIRECTION ENTITY
     public Collection getDirectionData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(DirectionEntity.class).list();
@@ -117,7 +115,7 @@ public enum DbHelper {
     public DirectionEntity insertDirection(String name) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
-            DirectionEntity direction = new DirectionEntity();
+            DirectionEntity direction = new DirectionEntity(name);
             direction.setId((Integer) session.save(direction));
             session.getTransaction().commit();
             return direction;
@@ -143,7 +141,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region DISCIPLINE ENTITY
+    //region !DISCIPLINE ENTITY
     public Collection getDisciplineData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(DisciplineEntity.class).list();
@@ -153,8 +151,7 @@ public enum DbHelper {
     public DisciplineEntity insertDiscipline(String name) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
-            DisciplineEntity discipline = new DisciplineEntity();
-            discipline.setName(name);
+            DisciplineEntity discipline = new DisciplineEntity(name);
             discipline.setId((Integer) session.save(discipline));
             session.getTransaction().commit();
             return discipline;
@@ -182,7 +179,7 @@ public enum DbHelper {
     //region DISCIPLINE TYPE ENTITY
     //endregion
 
-    //region GROUP ENTITY
+    //region !GROUP ENTITY
     public Collection getGroupData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(GroupEntity.class).list();
@@ -229,7 +226,7 @@ public enum DbHelper {
     //region SCHEDULE ITEM ENTITY
     //endregion
 
-    //region TEACHER ENTITY
+    //region !TEACHER ENTITY
     public Collection getTeacherData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(TeacherEntity.class).list();
@@ -268,7 +265,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region TIME TABLE ENTITY
+    //region !TIME TABLE ENTITY
     public Collection getTimeTableData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(TimeTableEntity.class).list();
@@ -287,7 +284,7 @@ public enum DbHelper {
     }
     //endregion
 
-    //region USER ENTITY
+    //region !USER ENTITY
     public Collection getUsersData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(UserEntity.class).list();
@@ -307,10 +304,8 @@ public enum DbHelper {
     public UserEntity insertUser(String login, CategoryEntity category) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
-            UserEntity user = new UserEntity();
-            user.setLogin(login);
-            user.setCategory(category);
-            user.setDateCreation(new Date(Calendar.getInstance().getTime().getTime()));
+            UserEntity user = new UserEntity(login, category,
+                    new Date(Calendar.getInstance().getTime().getTime()));
             user.setId((Integer) session.save(user));
             session.getTransaction().commit();
             return user;
