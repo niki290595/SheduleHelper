@@ -7,11 +7,20 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "group", schema = "scheduledb")
-public class GroupEntity {
+public class GroupEntity implements Comparable<GroupEntity>{
     private Integer id;
     private String name;
     private DirectionEntity direction;
     private Integer studentsNumber;
+
+    public GroupEntity() {
+    }
+
+    public GroupEntity(String name, DirectionEntity direction, Integer studentsNumber) {
+        this.name = name;
+        this.direction = direction;
+        this.studentsNumber = studentsNumber;
+    }
 
     @Id
     @Column(name = "id")
@@ -76,5 +85,12 @@ public class GroupEntity {
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
         result = 31 * result + (studentsNumber != null ? studentsNumber.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(GroupEntity o) {
+        String s1 = this.getName();
+        String s2 = o.getName();
+        return s1.compareTo(s2);
     }
 }

@@ -6,6 +6,7 @@ import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.scene.Group;
 
 import java.util.*;
 
@@ -214,6 +215,20 @@ public enum Repository {
     private void initGroupData(DirectionEntity direction) {
         ObservableList<GroupEntity> groupObservableList = addCollection(dbHelper.getGroupData());
         directionGroupData.put(direction, groupObservableList);
+    }
+
+    public void addGroup(DirectionEntity direction, String name, int studentNumber) {
+        GroupEntity group = dbHelper.insertGroup(direction, name, studentNumber);
+        directionGroupData.get(group.getDirection()).add(group);
+        Collections.sort(directionGroupData.get(group.getDirection()));
+    }
+
+    public void editGroup(GroupEntity group, DirectionEntity direction, String name, int studentNumber) {
+        GroupEntity newGroup = dbHelper.alterGroup(group, direction, name, studentNumber);
+        directionGroupData.get(direction).remove(group);
+        directionGroupData.get(direction).add(newGroup);
+        Collections.sort(directionGroupData.get(direction));
+
     }
 
     public void removeGroup(GroupEntity group) {

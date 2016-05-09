@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<VBox
+        stylesheets="@../Styles.css"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.GroupEditorViewController"
+        spacing="10">
+
+    <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
+
+    <ComboBox promptText="Направление"
+              fx:id="directions"
+              prefWidth="280"/>
+    <TextField promptText="Название"
+            fx:id="name"/>
+    <TextField promptText="Кол-во человек"
+            fx:id="count"/>
+
+    <HBox>
+        <Button text="Применить"
+                onAction="#apply"
+                prefWidth="140"/>
+        <Button text="Отмена"
+                onAction="#cancel"
+                prefWidth="140"/>
+    </HBox>
+
+</VBox>

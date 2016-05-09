@@ -86,12 +86,12 @@ public class GroupsPanelViewController implements Initializable {
         db.removeDirection(direction);
     }
 
-    public void addGroup(ActionEvent actionEvent) {
+    public void addGroup(ActionEvent actionEvent) throws IOException {
         DirectionEntity direction = directions.getSelectionModel().getSelectedItem();
         new GroupEditorViewController(stage, direction);
     }
 
-    public void editGroup(ActionEvent actionEvent) {
+    public void editGroup(ActionEvent actionEvent) throws IOException {
         GroupEntity group = groups.getSelectionModel().getSelectedItem();
         if (group == null) return;
         new GroupEditorViewController(stage, group);

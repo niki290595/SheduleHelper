@@ -189,6 +189,28 @@ public enum DbHelper {
         }
     }
 
+    public GroupEntity insertGroup(DirectionEntity direction, String name, int studentNumber) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            GroupEntity group = new GroupEntity(name, direction, studentNumber);
+            group.setId((Integer) session.save(group));
+            session.getTransaction().commit();
+            return group;
+        }
+    }
+
+    public GroupEntity alterGroup(GroupEntity group, DirectionEntity direction, String name, int studentNumber) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            group = session.get(GroupEntity.class, group.getId());
+            group.setName(name);
+            group.setDirection(direction);
+            group.setStudentsNumber(studentNumber);
+            session.getTransaction().commit();
+            return group;
+        }
+    }
+
     public void deleteGroup(GroupEntity group) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
