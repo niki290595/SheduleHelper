@@ -111,6 +111,7 @@
                         GridPane.rowIndex="1"/>
                 <Button
                         text="Выход"
+                        onAction="#exit"
                         prefWidth="140"
                         GridPane.columnIndex="3"
                         GridPane.rowIndex="1"/>

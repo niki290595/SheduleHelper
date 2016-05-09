@@ -196,4 +196,8 @@ public class MainPanelViewController implements Initializable {
     public void openGroupPanel(ActionEvent actionEvent) throws IOException {
         new GroupsPanelViewController(stage);
     }
+
+    public void exit(ActionEvent actionEvent) {
+        stage.close();
+    }
 }
