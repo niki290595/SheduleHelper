@@ -37,7 +37,7 @@
                 onAction="#apply"
                 defaultButton="true"/>
         <Button
-                text="Отмена"
+                text="Выход"
                 onAction="#cancel"
                 cancelButton="true"/>
     </HBox>

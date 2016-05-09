@@ -37,7 +37,7 @@
                 defaultButton="true"
                 minWidth="140"/>
         <Button
-                text="Отмена"
+                text="Выход"
                 onAction="#cancel"
                 cancelButton="true"
                 minWidth="140"/>
