@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<VBox
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="@../Styles.css"
+        fx:controller="controllers.DialogController"
+        prefWidth="240"
+        prefHeight="120"
+        spacing="10"
+        alignment="CENTER">
+
+    <Label fx:id="msgLabel"
+            wrapText="true"/>
+    <Button text="OK"
+            prefWidth="140"
+            onAction="#close"/>
+
+</VBox>
+

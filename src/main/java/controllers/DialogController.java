@@ -1,23 +1,53 @@
 package controllers;
 
 import com.sun.jnlp.ApiDialog.DialogResult;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by User on 25.04.2016.
  */
-public class DialogController {
+public class DialogController implements Initializable {
+
+    @FXML Label msgLabel;
 
     public enum Type {
         INFO,
         INPUT;
     }
 
-    private String title;
-    private String msg;
+    //private static DialogController currDialogParam;
+    //private DialogController dialogParam;
+    private static String title;
+    private static String msg;
+    private static String input;
+    private static Type type;
+    private static Stage stage;
+    private static Stage parentStage;
+    private static DialogResult result;
+
+    public DialogController() {
+    }
 
     public DialogController(Stage parentStage, Type type) {
+        DialogController.type = type;
+        DialogController.parentStage = parentStage;
+    }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        msgLabel.setText(msg);
     }
 
     public String getTitle() {
@@ -25,7 +55,7 @@ public class DialogController {
     }
 
     public DialogController setTitle(String title) {
-        this.title = title;
+        DialogController.title = title;
         return this;
     }
 
@@ -34,24 +64,44 @@ public class DialogController {
     }
 
     public DialogController setMsg(String msg) {
-        this.msg = msg;
+        DialogController.msg = msg;
         return this;
     }
 
     public DialogController show() {
-        //todo show msg;
+        Parent root = null;
+            try {
+                if (type.equals(Type.INFO))
+                    root = FXMLLoader.load(this.getClass().getClassLoader().getResource("views/info-dialog.view.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        if (root == null) return this;
+
+        stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle(title);
+        stage.initOwner(parentStage);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
         return this;
     }
 
     public DialogResult dialogResult() {
-        return null;
+        return DialogController.result;
     }
 
     public String getResultString() {
-        return null;
+        return DialogController.input;
     }
 
     public DialogController setInput(String input) {
+        DialogController.input = input;
         return this;
+    }
+
+    public void close(ActionEvent actionEvent) {
+        DialogController.result = DialogResult.CANCEL;
+        DialogController.stage.close();
     }
 }
