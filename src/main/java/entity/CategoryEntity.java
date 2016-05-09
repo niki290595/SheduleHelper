@@ -36,7 +36,8 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
     }
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
     }
