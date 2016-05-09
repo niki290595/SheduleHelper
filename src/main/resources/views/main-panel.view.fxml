@@ -105,6 +105,7 @@
                         GridPane.rowIndex="1"/>
                 <Button
                         text="Группы"
+                        onAction="#openGroupPanel"
                         prefWidth="140"
                         GridPane.columnIndex="2"
                         GridPane.rowIndex="1"/>

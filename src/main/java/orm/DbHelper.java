@@ -188,6 +188,14 @@ public enum DbHelper {
             return session.createCriteria(GroupEntity.class).list();
         }
     }
+
+    public void deleteGroup(GroupEntity group) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(group);
+            session.getTransaction().commit();
+        }
+    }
     //endregion
 
     //region MENTOR ENTITY

@@ -215,6 +215,11 @@ public enum Repository {
         ObservableList<GroupEntity> groupObservableList = addCollection(dbHelper.getGroupData());
         directionGroupData.put(direction, groupObservableList);
     }
+
+    public void removeGroup(GroupEntity group) {
+        dbHelper.deleteGroup(group);
+        directionGroupData.get(group.getDirection()).remove(group);
+    }
     //endregion
 
     //region MENTOR ENTITY
