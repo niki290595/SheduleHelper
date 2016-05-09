@@ -82,8 +82,8 @@ public class GroupsPanelViewController implements Initializable {
 
     public void delDirection(ActionEvent actionEvent) {
         DirectionEntity direction = directions.getSelectionModel().getSelectedItem();
-        directions.getSelectionModel().selectFirst();
         db.removeDirection(direction);
+        directions.getSelectionModel().selectFirst();
     }
 
     public void addGroup(ActionEvent actionEvent) throws IOException {
