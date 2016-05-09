@@ -58,6 +58,11 @@ public class DirectionEntity implements Comparable<DirectionEntity> {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public int compareTo(DirectionEntity o) {
         String s1 = this.getName();
         String s2 = o.getName();

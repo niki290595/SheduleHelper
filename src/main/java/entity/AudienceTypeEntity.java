@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "audiencetype", schema = "scheduledb")
-public class AudienceTypeEntity {
+public class AudienceTypeEntity implements Comparable<AudienceTypeEntity> {
     private Integer id;
     private String name;
 
@@ -56,5 +56,15 @@ public class AudienceTypeEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public int compareTo(AudienceTypeEntity o) {
+        return this.getName().compareTo(o.getName());
     }
 }

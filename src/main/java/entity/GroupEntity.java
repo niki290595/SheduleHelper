@@ -89,6 +89,11 @@ public class GroupEntity implements Comparable<GroupEntity>{
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public int compareTo(GroupEntity o) {
         String s1 = this.getName();
         String s2 = o.getName();

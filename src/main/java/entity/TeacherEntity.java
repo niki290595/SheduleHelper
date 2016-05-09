@@ -113,6 +113,11 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     }
 
     @Override
+    public String toString() {
+        return fio;
+    }
+
+    @Override
     public int compareTo(TeacherEntity o) {
         String s1 = this.shortName();
         String s2 = o.shortName();

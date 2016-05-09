@@ -59,6 +59,11 @@ public class DisciplineEntity implements Comparable<DisciplineEntity> {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public int compareTo(DisciplineEntity o) {
         String s1 = this.getName();
         String s2 = o.getName();
