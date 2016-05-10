@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "group", schema = "scheduledb")
+@Table(name = "group1", schema = "scheduledb")
 public class GroupEntity implements Comparable<GroupEntity>{
     private Integer id;
     private String name;

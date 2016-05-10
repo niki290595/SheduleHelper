@@ -41,7 +41,7 @@ public class MainPanelViewController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/main-panel.view.fxml"));
         stage = new Stage();
         stage.setTitle("Добро пожаловать " + user.getLogin());
-        stage.setScene(new Scene(root, 1024, 768));
+        stage.setScene(new Scene(root));
         MainPanelViewController.user = user;
         parentStage.hide();
         stage.show();

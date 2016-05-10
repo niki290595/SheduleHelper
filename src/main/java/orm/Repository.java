@@ -22,12 +22,14 @@ public enum Repository {
         dbHelper = DbHelper.INSTANCE;
     }
 
+    private ObservableList<AcademicPlanEntity> academicPlanData;
     private ObservableList<AudienceEntity> audienceData;
     private ObservableList<AudienceTypeEntity> audienceTypeData;
     private ObservableList<CategoryEntity> categoryData;
     private ObservableList<DirectionEntity> directionData;
     private ObservableMap<DirectionEntity, ObservableList<GroupEntity>> directionGroupData;
     private ObservableMap<DirectionEntity, ObservableList<DisciplineEntity>> directionDisciplineData;
+    private ObservableList<GroupEntity> groupData;
     private ObservableList<DisciplineEntity> disciplineData;
     private ObservableList<DisciplineEntity> noUseDisciplineData;
     private ObservableList<TeacherEntity> teacherData;
@@ -42,6 +44,50 @@ public enum Repository {
     }
 
     //region ACADEMIC PLAN ENTITY
+    public ObservableList<AcademicPlanEntity> getAcademicPlanData() {
+        return academicPlanData == null ? initAcademicPlanData() : academicPlanData;
+    }
+
+    private ObservableList<AcademicPlanEntity> initAcademicPlanData() {
+        academicPlanData = addCollection(dbHelper.getAcademicPlanData());
+        return academicPlanData;
+    }
+
+
+    public ObservableList<DisciplineEntity> getDisciplineData(DirectionEntity direction) {
+        if (direction == null) return null;
+
+        return directionDisciplineData == null ||
+                directionDisciplineData.get(direction) == null ?
+                initDisciplineData(direction) : directionDisciplineData.get(direction);
+    }
+
+    private ObservableList<DisciplineEntity> initDisciplineData(DirectionEntity direction) {
+        if (directionDisciplineData == null)
+            directionDisciplineData = FXCollections.observableHashMap();
+        ObservableList<DisciplineEntity> disciplines = FXCollections.observableArrayList();
+
+        for (AcademicPlanEntity academicPlanEntity : getAcademicPlanData()) {
+            if (academicPlanEntity.getDirection().equals(direction))
+                disciplines.add(academicPlanEntity.getDiscipline());
+        }
+        directionDisciplineData.put(direction, disciplines);
+        return disciplines;
+    }
+
+    public ObservableList<DisciplineEntity> getNoUseDisciplineData(DirectionEntity direction) {
+        if(noUseDisciplineData == null) {
+            noUseDisciplineData = FXCollections.observableArrayList();
+        }
+
+        this.noUseDisciplineData.clear();
+        this.noUseDisciplineData.addAll(getDisciplineData());
+        if(direction != null) {
+            this.noUseDisciplineData.removeAll(directionDisciplineData.get(direction));
+        }
+
+        return this.noUseDisciplineData;
+    }
     //endregion
 
     //region AUDIENCE ENTITY
@@ -205,16 +251,32 @@ public enum Repository {
     //endregion
 
     //region GROUP ENTITY
+    public ObservableList<GroupEntity> getGroupData() {
+        return groupData == null ? initGroupData() : groupData;
+    }
+
+    private ObservableList<GroupEntity> initGroupData() {
+        groupData = addCollection(dbHelper.getGroupData());
+        return groupData;
+    }
+
     public ObservableList<GroupEntity> getGroupData(DirectionEntity direction) {
-        if (directionGroupData.get(direction) == null) {
+        if (directionGroupData == null || directionGroupData.get(direction) == null) {
             initGroupData(direction);
         }
         return directionGroupData.get(direction);
     }
 
-    private void initGroupData(DirectionEntity direction) {
-        ObservableList<GroupEntity> groupObservableList = addCollection(dbHelper.getGroupData());
-        directionGroupData.put(direction, groupObservableList);
+    private ObservableList<GroupEntity> initGroupData(DirectionEntity direction) {
+        if (directionGroupData == null)
+            directionGroupData = FXCollections.observableHashMap();
+
+        ObservableList<GroupEntity> groups = FXCollections.observableArrayList();
+        for (GroupEntity group : getGroupData()) {
+            if (group.getDirection().equals(direction)) groups.add(group);
+        }
+        directionGroupData.put(direction, groups);
+        return groups;
     }
 
     public void addGroup(DirectionEntity direction, String name, int studentNumber) {

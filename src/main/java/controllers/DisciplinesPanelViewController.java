@@ -3,6 +3,8 @@ package controllers;
 import com.sun.jnlp.ApiDialog.DialogResult;
 import entity.DirectionEntity;
 import entity.DisciplineEntity;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,6 +56,14 @@ public class DisciplinesPanelViewController implements Initializable{
         noUseDisciplineList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             DisciplinesPanelViewController.lastSelectedDiscipline = newValue;
         });
+        directions.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DirectionEntity>() {
+            @Override
+            public void changed(ObservableValue<? extends DirectionEntity> observable, DirectionEntity oldValue, DirectionEntity newValue) {
+                useDisciplineList.setItems(db.getDisciplineData(newValue));
+                noUseDisciplineList.setItems(db.getNoUseDisciplineData(newValue));
+            }
+        });
+        directions.getSelectionModel().selectFirst();
     }
 
     public void addDirection(ActionEvent actionEvent) {
@@ -134,14 +144,16 @@ public class DisciplinesPanelViewController implements Initializable{
     public void addToUseList(ActionEvent actionEvent) {
         DirectionEntity selectedDirection = directions.getSelectionModel().getSelectedItem();
         DisciplineEntity selectedDiscipline = noUseDisciplineList.getSelectionModel().getSelectedItem();
+        if (selectedDirection == null || selectedDiscipline == null) return;
+
         db.addDisciplineToDirection(selectedDiscipline, selectedDirection);
-        //this.selectFirstItemInList(this.useDisciplineList);
     }
 
     public void removeFromUseList(ActionEvent actionEvent) {
         DirectionEntity selectedDirection = directions.getSelectionModel().getSelectedItem();
         DisciplineEntity selectedDiscipline = noUseDisciplineList.getSelectionModel().getSelectedItem();
+        if (selectedDirection == null || selectedDiscipline == null) return;
+
         db.removeDisciplineFromDirection(selectedDiscipline, selectedDirection);
-        //this.selectFirstItemInList(this.noUseDisciplineList);
     }
 }

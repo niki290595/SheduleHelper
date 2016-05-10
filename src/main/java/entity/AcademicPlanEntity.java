@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "academicplan", schema = "scheduledb")
-public class AcademicPlanEntity {
+public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     private Integer id;
     private DirectionEntity direction;
     private DisciplineEntity discipline;
@@ -110,5 +110,12 @@ public class AcademicPlanEntity {
         result = 31 * result + (practiсe != null ? practiсe.hashCode() : 0);
         result = 31 * result + (lab != null ? lab.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(AcademicPlanEntity o) {
+        return direction.equals(o.direction) ?
+                discipline.compareTo(o.discipline) :
+                direction.compareTo(o.direction);
     }
 }
