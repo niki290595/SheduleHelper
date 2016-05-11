@@ -46,6 +46,7 @@
                 prefWidth="150"/>
 
         <Button text="Выход"
+                cancelButton="true"
                 onAction="#exit"
                 prefWidth="150"/>
     </HBox>

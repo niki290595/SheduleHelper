@@ -112,6 +112,7 @@
                 <Button
                         text="Выход"
                         onAction="#exit"
+                        cancelButton="true"
                         prefWidth="140"
                         GridPane.columnIndex="3"
                         GridPane.rowIndex="1"/>

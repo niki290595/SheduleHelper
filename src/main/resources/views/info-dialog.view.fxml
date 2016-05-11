@@ -19,6 +19,7 @@
     <Label fx:id="msgLabel"
             wrapText="true"/>
     <Button text="OK"
+            defaultButton="true"
             prefWidth="140"
             onAction="#close"/>
 

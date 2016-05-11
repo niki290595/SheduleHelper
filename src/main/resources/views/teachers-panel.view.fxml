@@ -50,6 +50,7 @@
 
         <Button text="Выход"
                 onAction="#exit"
+                cancelButton="true"
                 prefWidth="150"/>
     </HBox>
 </VBox>

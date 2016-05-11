@@ -26,9 +26,11 @@
     <HBox>
         <Button text="Применить"
                 onAction="#apply"
+                defaultButton="true"
                 prefWidth="140"/>
         <Button text="Выход"
                 onAction="#cancel"
+                cancelButton="true"
                 prefWidth="140"/>
     </HBox>
 
