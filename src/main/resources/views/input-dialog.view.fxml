@@ -16,7 +16,7 @@
         prefWidth="240"
         prefHeight="160"
         spacing="10"
-        alignment="BOTTOM_CENTER">
+        alignment="CENTER">
 
     <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
 
