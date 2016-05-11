@@ -59,11 +59,15 @@ public class TimeTableEntity {
 
         TimeTableEntity that = (TimeTableEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (timeBegin != null ? !timeBegin.equals(that.timeBegin) : that.timeBegin != null) return false;
         if (timeEnd != null ? !timeEnd.equals(that.timeEnd) : that.timeEnd != null) return false;
 
         return true;
+        */
     }
 
     @Override

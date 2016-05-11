@@ -68,8 +68,11 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
 
         CategoryEntity that = (CategoryEntity) o;
 
+        return id.equals(that.id);
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         return description != null ? description.equals(that.description) : that.description == null;
+        */
     }
 
     @Override

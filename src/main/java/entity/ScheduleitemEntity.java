@@ -60,11 +60,15 @@ public class ScheduleItemEntity {
 
         ScheduleItemEntity that = (ScheduleItemEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (navigator != null ? !navigator.equals(that.navigator) : that.navigator != null) return false;
         if (group != null ? !group.equals(that.group) : that.group != null) return false;
 
         return true;
+        */
     }
 
     @Override

@@ -94,6 +94,9 @@ public class NavigatorEntity {
 
         NavigatorEntity that = (NavigatorEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (dayOfWeek != null ? !dayOfWeek.equals(that.dayOfWeek) : that.dayOfWeek != null) return false;
         if (time != null ? !time.equals(that.time) : that.time != null) return false;
@@ -102,6 +105,7 @@ public class NavigatorEntity {
         if (mentor != null ? !mentor.equals(that.mentor) : that.mentor != null) return false;
 
         return true;
+        */
     }
 
     @Override

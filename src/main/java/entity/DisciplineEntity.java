@@ -46,10 +46,14 @@ public class DisciplineEntity implements Comparable<DisciplineEntity> {
 
         DisciplineEntity that = (DisciplineEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
+        */
     }
 
     @Override

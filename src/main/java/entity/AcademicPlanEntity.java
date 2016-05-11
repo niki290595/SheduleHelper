@@ -91,6 +91,9 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
 
         AcademicPlanEntity that = (AcademicPlanEntity) o;
 
+        return id.equals(that.id);
+        /*
+
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (direction != null ? !direction.equals(that.direction) : that.direction != null) return false;
         if (discipline != null ? !discipline.equals(that.discipline) : that.discipline != null) return false;
@@ -99,6 +102,7 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
         if (lab != null ? !lab.equals(that.lab) : that.lab != null) return false;
 
         return true;
+        */
     }
 
     @Override

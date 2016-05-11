@@ -58,12 +58,16 @@ public class AudienceEntity implements Comparable<AudienceEntity> {
 
         AudienceEntity that = (AudienceEntity) o;
 
+        return id.equals(that.id);
+        /*
+
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (audienceType != null ? !audienceType.equals(that.audienceType) : that.audienceType != null)
             return false;
         if (capacity != null ? !capacity.equals(that.capacity) : that.capacity != null) return false;
 
         return true;
+        */
     }
 
     @Override

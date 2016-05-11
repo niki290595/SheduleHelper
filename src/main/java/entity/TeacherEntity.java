@@ -82,6 +82,9 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
 
         TeacherEntity that = (TeacherEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (fio != null ? !fio.equals(that.fio) : that.fio != null) return false;
         if (academicDegree != null ? !academicDegree.equals(that.academicDegree) : that.academicDegree != null)
@@ -90,6 +93,7 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
 
         return true;
+        */
     }
 
     @Override

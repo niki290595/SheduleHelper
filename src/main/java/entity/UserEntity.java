@@ -112,6 +112,9 @@ public class UserEntity implements Comparable<UserEntity> {
 
         UserEntity that = (UserEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (login != null ? !login.equals(that.login) : that.login != null) return false;
         if (pass != null ? !pass.equals(that.pass) : that.pass != null) return false;
@@ -119,6 +122,7 @@ public class UserEntity implements Comparable<UserEntity> {
         if (salt != null ? !salt.equals(that.salt) : that.salt != null) return false;
         if (dateCreation != null ? !dateCreation.equals(that.dateCreation) : that.dateCreation != null) return false;
         return dateModification != null ? dateModification.equals(that.dateModification) : that.dateModification == null;
+        */
     }
 
     @Override

@@ -46,10 +46,14 @@ public class DisciplineTypeEntity {
 
         DisciplineTypeEntity that = (DisciplineTypeEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
+        */
     }
 
     @Override

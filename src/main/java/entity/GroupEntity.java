@@ -70,6 +70,9 @@ public class GroupEntity implements Comparable<GroupEntity>{
 
         GroupEntity that = (GroupEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (direction != null ? !direction.equals(that.direction) : that.direction != null) return false;
@@ -77,6 +80,7 @@ public class GroupEntity implements Comparable<GroupEntity>{
             return false;
 
         return true;
+        */
     }
 
     @Override

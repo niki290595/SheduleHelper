@@ -70,6 +70,9 @@ public class MentorEntity {
 
         MentorEntity that = (MentorEntity) o;
 
+        return id.equals(that.id);
+
+        /*
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (discipline != null ? !discipline.equals(that.discipline) : that.discipline != null) return false;
         if (disciplineType != null ? !disciplineType.equals(that.disciplineType) : that.disciplineType != null)
@@ -77,6 +80,7 @@ public class MentorEntity {
         if (teacher != null ? !teacher.equals(that.teacher) : that.teacher != null) return false;
 
         return true;
+        */
     }
 
     @Override
