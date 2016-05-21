@@ -46,7 +46,7 @@ public class AudiencesPanelViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("num"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("audienceType"));
         capacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         audienceTable.setItems(db.getAudienceData());
@@ -65,9 +65,11 @@ public class AudiencesPanelViewController implements Initializable {
         } else {
             AudienceEntity audience = audienceTable.getSelectionModel().getSelectedItem();
             new AudienceEditorViewController(stage, audience);
+            audienceTable.setItems(db.getAudienceData());
+            /*
             new DialogController(stage, DialogController.Type.INFO)
                     .setTitle("Уведомление")
-                    .setMsg("Данные успешно изменены").show();
+                    .setMsg("Данные успешно изменены").show();*/
         }
     }
 

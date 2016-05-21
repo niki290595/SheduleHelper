@@ -100,15 +100,14 @@ public enum Repository {
         return audienceData;
     }
 
-    public void addAudience(String id, AudienceTypeEntity type, int capacity) {
-        AudienceEntity audience = dbHelper.insertAudience(id, type, capacity);
+    public void addAudience(String num, AudienceTypeEntity type, int capacity) {
+        AudienceEntity audience = dbHelper.insertAudience(num, type, capacity);
         audienceData.add(audience);
         Collections.sort(audienceData);
     }
 
-    public void editAudience(AudienceEntity audience, String id, AudienceTypeEntity type, int capacity) {
-        AudienceEntity newAudience = new AudienceEntity(id, type, capacity);
-        dbHelper.alterAudience(audience, newAudience);
+    public void editAudience(AudienceEntity audience, String num, AudienceTypeEntity type, int capacity) {
+        AudienceEntity newAudience = dbHelper.alterAudience(audience, num, type, capacity);
         audienceData.remove(audience);
         audienceData.add(newAudience);
         Collections.sort(audienceData);

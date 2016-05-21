@@ -8,27 +8,39 @@ import javax.persistence.*;
 @Entity
 @Table(name = "audience", schema = "scheduledb")
 public class AudienceEntity implements Comparable<AudienceEntity> {
-    private String id;
+    private Integer id;
+    private String num;
     private AudienceTypeEntity audienceType;
     private Integer capacity;
 
     public AudienceEntity() {
     }
 
-    public AudienceEntity(String id, AudienceTypeEntity audienceType, Integer capacity) {
-        this.id = id;
+    public AudienceEntity(String num, AudienceTypeEntity audienceType, Integer capacity) {
+        this.num = num;
         this.audienceType = audienceType;
         this.capacity = capacity;
     }
 
     @Id
-    @Column(name = "id")
-    public String getId() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "num")
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 
     @ManyToOne
@@ -80,13 +92,11 @@ public class AudienceEntity implements Comparable<AudienceEntity> {
 
     @Override
     public String toString() {
-        return id;
+        return num;
     }
 
     @Override
     public int compareTo(AudienceEntity o) {
-        String s1 = this.getId();
-        String s2 = o.getId();
-        return s1.compareTo(s2);
+        return num.compareTo(o.num);
     }
 }

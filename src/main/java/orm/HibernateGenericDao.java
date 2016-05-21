@@ -1,5 +1,6 @@
 package orm;
 
+import entity.AcademicPlanEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -7,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -65,4 +67,9 @@ public class HibernateGenericDao<T, PK extends Serializable> implements GenericD
     }
 
 
+    public static Collection getCollection(Class<AcademicPlanEntity> aClass) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(aClass).list();
+        }
+    }
 }

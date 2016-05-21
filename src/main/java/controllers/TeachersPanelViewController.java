@@ -48,7 +48,7 @@ public class TeachersPanelViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("num"));
         FIOColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
         academicDegreeColumn.setCellValueFactory(new PropertyValueFactory<>("academicDegree"));
         positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));

@@ -17,9 +17,12 @@ public enum DbHelper {
 
     //region !ACADEMIC PLAN ENTITY
     public Collection getAcademicPlanData() {
+        return HibernateGenericDao.getCollection(AcademicPlanEntity.class);
+        /*
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(AcademicPlanEntity.class).list();
         }
+        */
     }
 
     public AcademicPlanEntity addDiscipline(DisciplineEntity discipline, DirectionEntity direction) {
@@ -59,25 +62,27 @@ public enum DbHelper {
         }
     }
 
-    public AudienceEntity insertAudience(String id, AudienceTypeEntity type, int capacity) {
+    public AudienceEntity insertAudience(String num, AudienceTypeEntity type, int capacity) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
-            AudienceEntity audience = new AudienceEntity(id, type, capacity);
+            AudienceEntity audience = new AudienceEntity(num, type, capacity);
+            audience.setId((Integer) session.save(audience));
             session.save(audience);
             session.getTransaction().commit();
             return audience;
         }
     }
 
-    public void alterAudience(AudienceEntity audience, AudienceEntity newAudience) {
+    public AudienceEntity alterAudience(AudienceEntity audience, String num, AudienceTypeEntity type, int capacity) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             session.beginTransaction();
             audience = session.get(AudienceEntity.class, audience.getId());
-            audience.setId(newAudience.getId());
-            audience.setAudienceType(newAudience.getAudienceType());
-            audience.setCapacity(newAudience.getCapacity());
+            audience.setNum(num);
+            audience.setAudienceType(type);
+            audience.setCapacity(capacity);
             session.getTransaction().commit();
         }
+        return audience;
     }
 
     public void deleteAudience(AudienceEntity audience) {

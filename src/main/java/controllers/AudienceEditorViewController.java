@@ -26,7 +26,7 @@ public class AudienceEditorViewController implements Initializable {
     private static Repository db = Repository.INSTANCE;
     private static AudienceEntity audience;
 
-    @FXML TextField id;
+    @FXML TextField num;
     @FXML ComboBox<AudienceTypeEntity> audienceType;
     @FXML TextField capacity;
 
@@ -49,7 +49,7 @@ public class AudienceEditorViewController implements Initializable {
         stage.setScene(new Scene(root));
         stage.initOwner(parentStage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        stage.showAndWait();
     }
 
     @Override
@@ -58,22 +58,22 @@ public class AudienceEditorViewController implements Initializable {
 
         if (audience == null) return;
 
-        id.setText(audience.getId());
+        num.setText(audience.getNum());
         capacity.setText(Integer.toString(audience.getCapacity()));
         audienceType.getSelectionModel().select(db.getAudienceType(audience));
     }
 
     public void apply(ActionEvent actionEvent) throws IOException {
         AudienceTypeEntity type = audienceType.getSelectionModel().getSelectedItem();
-        String id = this.id.getText();
+        String num = this.num.getText();
         int capacity = Integer.parseInt(this.capacity.getText());
 
         if (audience == null) {
-            db.addAudience(id, type, capacity);
-            this.id.setText("");
+            db.addAudience(num, type, capacity);
+            this.num.setText("");
             this.capacity.setText("");
         } else {
-            db.editAudience(audience, id, type, capacity);
+            db.editAudience(audience, num, type, capacity);
             new DialogController(stage, DialogController.Type.INFO)
                     .setTitle("Уведомление")
                     .setMsg("Запись успешно изменена").show();
