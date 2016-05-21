@@ -24,7 +24,7 @@
 
     <padding><Insets top="10" bottom="10" left="10" right="10"/> </padding>
 
-    <TreeView/>
+    <TreeView fx:id="treeView"/>
 
     <VBox
             HBox.hgrow="ALWAYS"

@@ -1,5 +1,7 @@
 package controllers;
 
+import customgui.NewTreeItem;
+import customgui.NewTreeItemWithChildFactory;
 import customgui.ScheduleLabel;
 import entity.*;
 import javafx.event.ActionEvent;
@@ -17,6 +19,7 @@ import orm.Repository;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -29,6 +32,7 @@ public class MainPanelViewController implements Initializable {
 
     @FXML GridPane scheduleGridPane;
     @FXML ToggleButton switchEvenBtn;
+    @FXML TreeView<Object> treeView;
 
     Label[][] timeTable;
     ScheduleItemEntity[][] scheduleItems;
@@ -95,8 +99,80 @@ public class MainPanelViewController implements Initializable {
     }
 
     private void initTree() {
+        TreeItem<Object> rootItem = new TreeItem<>("Система");
+        rootItem.setExpanded(true);
+        rootItem.addEventHandler(TreeItem.<Object> branchExpandedEvent(), event -> {
+            TreeItem<Object> item = event.getTreeItem();
+            String value = item.getValue().toString();
 
+            if (value.equals("Учителя")) {
+                ((NewTreeItem<Object, TeacherEntity>) item).visibleChild();
+            } else if (value.equals("Аудитории")) {
+                ((NewTreeItem<Object, AudienceEntity>) item).visibleChild();
+            } else if (value.equals("Направления")) {
+                ((NewTreeItemWithChildFactory<Object, DirectionEntity>) item).visibleChild();
+            } else if (item.getValue() instanceof DirectionEntity) {
+                ((NewTreeItem<Object, DirectionEntity>) item).visibleChild();
+            }
+        });
+
+
+        TreeItem<Object> teacherItem = null;
+        TreeItem<Object> audienceItem = null;
+        TreeItem<Object> directionItem = null;
+        try {
+            teacherItem = new NewTreeItem<Object, TeacherEntity>("Учителя",
+                    db.getClass().getMethod("getTeacherData"));
+
+            audienceItem = new NewTreeItem<Object, AudienceEntity>("Аудитории",
+                    db.getClass().getMethod("getAudienceData"));
+
+            Class[] paramTypes = new Class[] {DirectionEntity.class};
+            directionItem = new NewTreeItemWithChildFactory<>("Направления",
+                    db.getClass().getMethod("getDirectionData"),
+                    db.getClass().getMethod("getGroupData", paramTypes));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+        rootItem.getChildren().add(teacherItem);
+        rootItem.getChildren().add(audienceItem);
+        rootItem.getChildren().add(directionItem);
+
+        treeView.setRoot(rootItem);
+        treeView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, item) -> changeSchedule(item));
     }
+
+    private void changeSchedule(TreeItem<Object> item) {
+        /*
+        Object obj = item.getValue();
+        if (obj instanceof String || obj instanceof DirectionEntity) {
+            scheduleGridPane.setVisible(false);
+            return;
+        }
+
+        scheduleGridPane.setVisible(true);
+        scheduleItems = db.getScheduleItemData(obj, getWeekOdd());
+        for (int i = 0; i < scheduleItems.length; i++) {
+            for (int j = 0; j < scheduleItems[0].length; j++) {
+                if (scheduleItems[i][j] != null) {
+                    String text = scheduleItems[i][j].toString(obj);
+                    schedule[i][j].setText(text);
+                    schedule[i][j].setTooltip(new Tooltip(text));
+                    if (ruleForINSERT) {
+                        schedule[i][j].setContextMenu(menu);
+                    }
+                } else {
+                    schedule[i][j].setText("-");
+                }
+            }
+        }
+
+        menu.getItems().get(2).setDisable(!(obj instanceof Group));
+        */
+    }
+
 /*
     private void initContextMenu() {
         MenuItem[] menuItems = new MenuItem[3];

@@ -114,7 +114,9 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     }
 
     public String shortName() {
-        String[] name = fio.get().split(" ");
+        String[] name = fio.get().replace("  ", " ").split(" ");
+        if (name.length < 3) return getFio();
+
         return name[0] + " " + name[1].substring(0,1) + ". " + name[2].substring(0,1) + ".";
     }
 

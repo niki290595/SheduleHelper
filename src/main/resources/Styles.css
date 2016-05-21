@@ -13,7 +13,8 @@
 	-fx-background-image: url("image/background.jpg");
 }
 
-.label {
+.label,
+.tree-item {
 	-fx-font-size: 11pt;
 	-fx-background-color: transparent;
 	-fx-text-fill: white;
@@ -76,7 +77,16 @@
 	-fx-opacity: 0.8;
 }
 
+
+.tree-view,
 .tree-cell,
-.tree-view {
-	-fx-opacity: 0.2;
+.tree-cell:expanded {
+	-fx-background-image: url("image/background.jpg");
+	-fx-font-size: 12pt;
+	-fx-text-fill: white ;
+	-fx-font-weight: bold;
+}
+
+.tree-cell:selected {
+	-fx-text-fill: green;
 }
