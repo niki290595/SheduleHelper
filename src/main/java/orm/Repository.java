@@ -324,7 +324,6 @@ public enum Repository {
     }
 
     public void editTeacher(TeacherEntity teacher, String fio, String academicDegree, String position, String phone) {
-
         TeacherEntity alterTeacher = dbHelper.alterTeacher(teacher, fio, academicDegree, position, phone);
         teacherData.remove(teacher);
         teacherData.add(alterTeacher);

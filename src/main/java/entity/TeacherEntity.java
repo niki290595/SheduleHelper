@@ -1,5 +1,8 @@
 package entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 
 /**
@@ -9,7 +12,7 @@ import javax.persistence.*;
 @Table(name = "teacher", schema = "scheduledb")
 public class TeacherEntity implements Comparable<TeacherEntity> {
     private Integer id;
-    private String fio;
+    private StringProperty fio;
     private String academicDegree;
     private String position;
     private String phone;
@@ -18,7 +21,7 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     }
 
     public TeacherEntity(String fio, String academicDegree, String position, String phone) {
-        this.fio = fio;
+        this.fio = new SimpleStringProperty(fio);
         this.academicDegree = academicDegree;
         this.position = position;
         this.phone = phone;
@@ -38,11 +41,15 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     @Basic
     @Column(name = "FIO")
     public String getFio() {
+        return fio.get();
+    }
+
+    public StringProperty fioProperty() {
         return fio;
     }
 
     public void setFio(String fio) {
-        this.fio = fio;
+        this.fio = new SimpleStringProperty(fio);
     }
 
     @Basic
@@ -107,18 +114,18 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     }
 
     public String shortName() {
-        String[] name = fio.split(" ");
+        String[] name = fio.get().split(" ");
         return name[0] + " " + name[1].substring(0,1) + ". " + name[2].substring(0,1) + ".";
     }
 
     public String firstName() {
-        String[] name = fio.split(" ");
+        String[] name = fio.get().split(" ");
         return name[0];
     }
 
     @Override
     public String toString() {
-        return fio;
+        return fio.get();
     }
 
     @Override

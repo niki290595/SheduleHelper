@@ -48,8 +48,13 @@ public class TeachersPanelViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("num"));
-        FIOColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));
+        initTable();
+    }
+
+    private void initTable() {
+        teachersTable.setItems(null);
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        FIOColumn.setCellValueFactory(cellData -> cellData.getValue().fioProperty());
         academicDegreeColumn.setCellValueFactory(new PropertyValueFactory<>("academicDegree"));
         positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
@@ -74,6 +79,7 @@ public class TeachersPanelViewController implements Initializable {
                 .setTitle("Уведомление")
                 .setMsg("Данные успешно изменены").show();
         }
+        initTable();
     }
 
     public void remove(ActionEvent actionEvent) throws IOException {
