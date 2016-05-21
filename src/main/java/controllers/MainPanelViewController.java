@@ -5,13 +5,18 @@ import customgui.NewTreeItemWithChildFactory;
 import customgui.ScheduleLabel;
 import entity.*;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import orm.Repository;
@@ -35,6 +40,7 @@ public class MainPanelViewController implements Initializable {
     @FXML TreeView<Object> treeView;
 
     Label[][] timeTable;
+    Label[][] schedule;
     ScheduleItemEntity[][] scheduleItems;
     ScheduleLabel contextMenuSrc;
 
@@ -94,8 +100,57 @@ public class MainPanelViewController implements Initializable {
         return label;
     }
 
-    private void initSchedule() {
+    private Label createLabel(String text, int dayOfWeek, int idTime) {
+        Label label = new ScheduleLabel(text, dayOfWeek, idTime);
+        label.setVisible(true);
+        label.setAlignment(Pos.CENTER);
+        label.setPrefHeight(16.0);
+        label.setPrefWidth(230);
+        //label.setContextMenu();
+        label.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ScheduleLabel src = (ScheduleLabel) event.getSource();
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    src = (ScheduleLabel) event.getSource();
+                    TreeItem<Object> item = treeView.getSelectionModel().getSelectedItem();
+                    if (item != null) {
+                        /*
+                        try {
+                            openScheduleEdit(src, item.getValue());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        */
+                    }
+                } else if (!src.getText().equals("-")) {
+                    contextMenuSrc = src;
+                    //menu.show(src, Side.BOTTOM, event.getSceneX() - src.getLayoutX(), event.getSceneY() - src.getLayoutY());
+                }
+            }
+        });
+        return label;
+    }
 
+    private void initSchedule() {
+        schedule = new Label[6][7];
+
+        for (int i = 0; i < schedule.length; i++) {
+            for (int j = 0; j < schedule[0].length; j++) {
+                schedule[i][j] = createLabel("lesson" + i + j, i + 1, j + 1);
+                scheduleGridPane.add(schedule[i][j],
+                        i + 1 + (i < 3 ? 0 : -3),
+                        j + 1 + (i < 3 ? 0 : 9));
+                scheduleGridPane.setHalignment(schedule[i][j], HPos.CENTER);
+            }
+        }
+
+        switchEvenBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                changeSchedule(treeView.getSelectionModel().getSelectedItem());
+            }
+        });
     }
 
     private void initTree() {
@@ -145,6 +200,7 @@ public class MainPanelViewController implements Initializable {
     }
 
     private void changeSchedule(TreeItem<Object> item) {
+        System.out.println("change scheduler");
         /*
         Object obj = item.getValue();
         if (obj instanceof String || obj instanceof DirectionEntity) {
