@@ -1,5 +1,7 @@
 package entity;
 
+import javafx.fxml.Initializable;
+
 import javax.persistence.*;
 
 /**
@@ -7,7 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "disciplinetype", schema = "scheduledb")
-public class DisciplineTypeEntity {
+public class DisciplineTypeEntity implements Comparable<DisciplineTypeEntity> {
     private Integer id;
     private String name;
 
@@ -66,5 +68,10 @@ public class DisciplineTypeEntity {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(DisciplineTypeEntity o) {
+        return name.compareTo(o.getName());
     }
 }

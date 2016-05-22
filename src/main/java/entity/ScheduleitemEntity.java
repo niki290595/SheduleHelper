@@ -1,8 +1,10 @@
 package entity;
 
+import orm.Repository;
+
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by User on 20.04.2016.
@@ -80,8 +82,44 @@ public class ScheduleItemEntity {
     }
 
     public List<GroupEntity> groupList() {
-        List<GroupEntity> groups = new ArrayList<>();
-        //todo getGroupEntity
+        List<GroupEntity> groups = Repository.INSTANCE.getScheduleItemData()
+                .stream().filter(item -> item.getNavigator().equals(getNavigator()))
+                .map(ScheduleItemEntity::getGroup).collect(Collectors.toList());
         return groups;
+    }
+
+    public String toString(Object obj) {
+        if (obj instanceof TeacherEntity) { return toStringForTeacher();
+        } else if (obj instanceof AudienceEntity) { return toStringForAudience();
+        } else if (obj instanceof GroupEntity) { return toStringForGroup(); }
+        return "--";
+    }
+
+    public String toStringForTeacher() {
+        List<GroupEntity> groupList = groupList();
+        return navigator.getMentor().getDiscipline() + " - " + groupsString();
+    }
+
+    public String toStringForAudience() {
+        return navigator.getMentor().getDiscipline() + " - " + navigator.getMentor().getTeacher().shortName();
+    }
+
+    public String groupsString() {
+        String res = "";
+        List<GroupEntity> groupList = groupList();
+        for (int i = 0; i < groupList.size(); i++) {
+            res += groupList.get(i).toString();
+            if (i < groupList.size() - 1) {
+                res += ", ";
+            }
+        }
+        return res;
+    }
+
+    public String toStringForGroup() {
+        return navigator.getMentor().getDiscipline() + "(" +
+                navigator.getMentor().getDisciplineType() + ")" + " - " +
+                navigator.getMentor().getTeacher().firstName() + " (" +
+                navigator.getAudience() + ")";
     }
 }

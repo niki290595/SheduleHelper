@@ -182,6 +182,22 @@ public enum DbHelper {
     //endregion
 
     //region DISCIPLINE TYPE ENTITY
+
+    public Collection getDisciplineTypeData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(DisciplineTypeEntity.class).list();
+        }
+    }
+
+    public DisciplineTypeEntity insertDisciplineType(String name) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            DisciplineTypeEntity disciplineType = new DisciplineTypeEntity(name);
+            disciplineType.setId((Integer) session.save(disciplineType));
+            session.getTransaction().commit();
+            return disciplineType;
+        }
+    }
     //endregion
 
     //region !GROUP ENTITY
@@ -229,6 +245,12 @@ public enum DbHelper {
     //endregion
 
     //region SCHEDULE ITEM ENTITY
+
+    public Collection getScheduleItemData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(ScheduleItemEntity.class).list();
+        }
+    }
     //endregion
 
     //region !TEACHER ENTITY

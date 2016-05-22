@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.jnlp.ApiDialog;
 import customgui.NewTreeItem;
 import customgui.NewTreeItemWithChildFactory;
 import customgui.ScheduleLabel;
@@ -66,7 +67,7 @@ public class MainPanelViewController implements Initializable {
         initSchedule();
         initTree();
         //initContextMenu();
-        scheduleGridPane.setVisible(true);
+        scheduleGridPane.setVisible(false);
     }
 
     private void initTimeTable() {
@@ -115,13 +116,11 @@ public class MainPanelViewController implements Initializable {
                     src = (ScheduleLabel) event.getSource();
                     TreeItem<Object> item = treeView.getSelectionModel().getSelectedItem();
                     if (item != null) {
-                        /*
                         try {
                             openScheduleEdit(src, item.getValue());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        */
                     }
                 } else if (!src.getText().equals("-")) {
                     contextMenuSrc = src;
@@ -130,6 +129,42 @@ public class MainPanelViewController implements Initializable {
             }
         });
         return label;
+    }
+
+    private void openScheduleEdit(ScheduleLabel label, Object obj) throws IOException {
+        TimeTableEntity time = db.getTimeTable(label.getIdTime());
+        //edit
+        if (scheduleItems[label.getDayOfWeek()-1][label.getIdTime() - 1] != null) {
+            if (obj instanceof GroupEntity) {
+                new ScheduleEditorViewController(stage, scheduleItems[label.getDayOfWeek() - 1][label.getIdTime()-1], (GroupEntity) obj);
+            } else {
+                new ScheduleEditorViewController(stage, scheduleItems[label.getDayOfWeek() - 1][label.getIdTime()-1]);
+            }
+        } else
+            //add
+            if (obj instanceof TeacherEntity) {
+                new ScheduleEditorViewController(stage, (TeacherEntity) obj, label.getDayOfWeek(), time, getWeekOdd());
+            } else if (obj instanceof AudienceEntity) {
+                new ScheduleEditorViewController(stage, (AudienceEntity) obj, label.getDayOfWeek(), time, getWeekOdd());
+            } else if (obj instanceof GroupEntity) {
+                new ScheduleEditorViewController(stage, (GroupEntity) obj, label.getDayOfWeek(), time, getWeekOdd());
+            }
+
+        /*
+        if (ScheduleEditorViewController.getDialogResult() == ApiDialog.DialogResult.OK) {
+            String text = ScheduleEditorViewController.getScheduleItem().toString(obj);
+            scheduleItems[label.getDayOfWeek()-1][label.getIdTime() - 1] = ScheduleEditorViewController.getScheduleItem();
+            label.setText(text);
+            label.setTooltip(new Tooltip(text));
+            //if (ruleForINSERT) {
+                //label.setContextMenu(menu);
+            //}
+        }
+        */
+    }
+
+    private int getWeekOdd() {
+        return 0;
     }
 
     private void initSchedule() {
@@ -201,7 +236,6 @@ public class MainPanelViewController implements Initializable {
 
     private void changeSchedule(TreeItem<Object> item) {
         System.out.println("change scheduler");
-        /*
         Object obj = item.getValue();
         if (obj instanceof String || obj instanceof DirectionEntity) {
             scheduleGridPane.setVisible(false);
@@ -216,17 +250,18 @@ public class MainPanelViewController implements Initializable {
                     String text = scheduleItems[i][j].toString(obj);
                     schedule[i][j].setText(text);
                     schedule[i][j].setTooltip(new Tooltip(text));
+                    /*
                     if (ruleForINSERT) {
                         schedule[i][j].setContextMenu(menu);
-                    }
+                    }*/
                 } else {
                     schedule[i][j].setText("-");
                 }
             }
         }
 
-        menu.getItems().get(2).setDisable(!(obj instanceof Group));
-        */
+        //menu.getItems().get(2).setDisable(!(obj instanceof Group));
+
     }
 
 /*

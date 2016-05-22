@@ -6,7 +6,6 @@ import entity.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.scene.Group;
 
 import java.util.*;
 
@@ -31,6 +30,8 @@ public enum Repository {
     private ObservableMap<DirectionEntity, ObservableList<DisciplineEntity>> directionDisciplineData;
     private ObservableList<GroupEntity> groupData;
     private ObservableList<DisciplineEntity> disciplineData;
+    private ObservableList<DisciplineTypeEntity> disciplineTypeData;
+    private ObservableList<ScheduleItemEntity> scheduleItemData;
     private ObservableList<DisciplineEntity> noUseDisciplineData;
     private ObservableList<TeacherEntity> teacherData;
     private ObservableMap<Integer, TimeTableEntity> timeTableData;
@@ -247,6 +248,21 @@ public enum Repository {
     //endregion
 
     //region DISCIPLINE TYPE ENTITY
+    public ObservableList<DisciplineTypeEntity> getDisciplineTypeData() {
+        return disciplineTypeData == null ? initDisciplineTypeData() : disciplineTypeData;
+    }
+
+    private ObservableList<DisciplineTypeEntity> initDisciplineTypeData() {
+        disciplineTypeData = addCollection(dbHelper.getDisciplineTypeData());
+        return disciplineTypeData;
+    }
+
+    public DisciplineTypeEntity addDisciplineType(String name) {
+        DisciplineTypeEntity newDisciplineType = dbHelper.insertDisciplineType(name);
+        disciplineTypeData.add(newDisciplineType);
+        Collections.sort(disciplineTypeData);
+        return newDisciplineType;
+    }
     //endregion
 
     //region GROUP ENTITY
@@ -305,6 +321,60 @@ public enum Repository {
     //endregion
 
     //region SCHEDULE ITEM ENTITY
+    public ObservableList<ScheduleItemEntity> getScheduleItemData() {
+        if (scheduleItemData == null) {
+            initScheduleItemData();
+        }
+        return scheduleItemData;
+    }
+
+    private ObservableList<ScheduleItemEntity> initScheduleItemData() {
+        scheduleItemData = addCollection(dbHelper.getScheduleItemData());
+        return scheduleItemData;
+    }
+
+    public ScheduleItemEntity[][] getScheduleItemData(Object obj, int weekOdd) {
+        if (obj instanceof TeacherEntity)
+            return getScheduleItemData((TeacherEntity) obj, weekOdd);
+        else if (obj instanceof AudienceEntity)
+            return getScheduleItemData((AudienceEntity) obj, weekOdd);
+        else if (obj instanceof GroupEntity)
+            return getScheduleItemData((GroupEntity) obj, weekOdd);
+        return null;
+    }
+
+    public ScheduleItemEntity[][] getScheduleItemData(AudienceEntity audience, int weekOdd) {
+        ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
+        for (ScheduleItemEntity item : getScheduleItemData()) {
+            if (item.getNavigator().getAudience() == audience &&
+                        item.getNavigator().getWeekOdd() == weekOdd) {
+                res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
+            }
+        }
+        return res;
+    }
+
+    public ScheduleItemEntity[][] getScheduleItemData(TeacherEntity teacher, int weekOdd) {
+        ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
+        for (ScheduleItemEntity item : getScheduleItemData()) {
+            if (item.getNavigator().getMentor().getTeacher() == teacher &&
+                    item.getNavigator().getWeekOdd() == weekOdd) {
+                res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
+            }
+        }
+        return res;
+    }
+
+    public ScheduleItemEntity[][] getScheduleItemData(GroupEntity group, int weekOdd) {
+        ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
+        for (ScheduleItemEntity item : getScheduleItemData()) {
+            if (item.getGroup() == group &&
+                    item.getNavigator().getWeekOdd() == weekOdd) {
+                res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
+            }
+        }
+        return res;
+    }
     //endregion
 
     //region TEACHER ENTITY
@@ -348,6 +418,10 @@ public enum Repository {
             this.timeTableData.put(item.getId(), item);
         }
         return this.timeTableData;
+    }
+
+    public TimeTableEntity getTimeTable(int idTime) {
+        return getTimeTableData().get(idTime);
     }
 
     public void editTimeTable(Integer id, String beginTime, String endTime) {

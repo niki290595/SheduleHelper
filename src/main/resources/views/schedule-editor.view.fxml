@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<GridPane
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/8"
+        fx:controller="controllers.ScheduleEditorViewController"
+        stylesheets="@../Styles.css"
+        hgap="10"
+        vgap="5">
+
+    <columnConstraints>
+        <ColumnConstraints/>
+        <ColumnConstraints/>
+    </columnConstraints>
+
+    <padding><Insets top="10" left="10" right="10" bottom="10"/> </padding>
+
+    <children>
+
+        <Label text="Направления"
+                GridPane.rowIndex="0"/>
+        <ComboBox fx:id="directions"
+                GridPane.rowIndex="1"
+                prefWidth="140"/>
+        <Button onAction="#addDirection"
+                text="+"
+                GridPane.rowIndex="1"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"/>
+
+        <Label text="Группа"
+                GridPane.rowIndex="2"/>
+        <ComboBox fx:id="groups"
+                GridPane.rowIndex="3"
+                prefWidth="140"/>
+        <Button onAction="#addGroup"
+                text="+"
+                GridPane.rowIndex="3"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"/>
+
+        <Label text="Дисциплина"
+                GridPane.rowIndex="4"/>
+        <ComboBox fx:id="disciplines"
+                GridPane.rowIndex="5"
+                prefWidth="140"/>
+        <Button onAction="#addDiscipline"
+                text="+"
+                GridPane.rowIndex="5"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"/>
+
+        <Label text="Тип дисциплины"
+                GridPane.rowIndex="6"/>
+        <ComboBox fx:id="disciplineTypes"
+                GridPane.rowIndex="7"
+                prefWidth="140"/>
+        <Button onAction="#addDisciplineType"
+                text="+"
+                GridPane.rowIndex="7"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"/>
+
+        <Label text="Учитель"
+                GridPane.rowIndex="8"/>
+        <ComboBox fx:id="teachers"
+                GridPane.rowIndex="9"
+                prefWidth="140"/>
+        <Button onAction="#addTeacher"
+                text="+"
+                GridPane.rowIndex="9"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"/>
+
+        <Label text="Аудитория"
+                GridPane.rowIndex="10"/>
+        <ComboBox fx:id="audiences"
+                GridPane.rowIndex="11"
+                prefWidth="140"/>
+        <Button onAction="#addAudience"
+                text="+"
+                GridPane.rowIndex="11"
+                GridPane.columnIndex="1"
+                GridPane.halignment="CENTER"/>
+
+        <Button onAction="#apply"
+                text="Сохранить"
+                GridPane.rowIndex="15"
+                prefWidth="100"/>
+        <Button onAction="#cancel"
+                text="Отмена"
+                GridPane.rowIndex="15"
+                GridPane.columnIndex="1"
+                prefWidth="100"/>
+
+    </children>
+
+
+</GridPane>
