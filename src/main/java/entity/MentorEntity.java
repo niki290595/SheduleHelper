@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "mentor", schema = "scheduledb")
-public class MentorEntity {
+public class MentorEntity implements Comparable<MentorEntity> {
     private Integer id;
     private DisciplineEntity discipline;
     private DisciplineTypeEntity disciplineType;
@@ -90,5 +90,10 @@ public class MentorEntity {
         result = 31 * result + (disciplineType != null ? disciplineType.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(MentorEntity o) {
+        return id.compareTo(o.getId());
     }
 }

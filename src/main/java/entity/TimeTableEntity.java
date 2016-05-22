@@ -8,7 +8,7 @@ import java.sql.Time;
  */
 @Entity
 @Table(name = "timetable", schema = "scheduledb")
-public class TimeTableEntity {
+public class TimeTableEntity implements Comparable<TimeTableEntity> {
     private Integer id;
     private Time timeBegin;
     private Time timeEnd;
@@ -103,5 +103,10 @@ public class TimeTableEntity {
     @Override
     public String toString() {
         return shortFormat(timeBegin.toString()) + " - " + shortFormat(timeEnd.toString());
+    }
+
+    @Override
+    public int compareTo(TimeTableEntity o) {
+        return id.compareTo(o.id);
     }
 }

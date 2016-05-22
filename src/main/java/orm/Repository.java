@@ -28,6 +28,8 @@ public enum Repository {
     private ObservableList<DirectionEntity> directionData;
     private ObservableMap<DirectionEntity, ObservableList<GroupEntity>> directionGroupData;
     private ObservableMap<DirectionEntity, ObservableList<DisciplineEntity>> directionDisciplineData;
+    private ObservableList<MentorEntity> mentorData;
+    private ObservableList<NavigatorEntity> navigatorData;
     private ObservableList<GroupEntity> groupData;
     private ObservableList<DisciplineEntity> disciplineData;
     private ObservableList<DisciplineTypeEntity> disciplineTypeData;
@@ -103,7 +105,7 @@ public enum Repository {
 
     public void addAudience(String num, AudienceTypeEntity type, int capacity) {
         AudienceEntity audience = dbHelper.insertAudience(num, type, capacity);
-        audienceData.add(audience);
+        getAudienceData().add(audience);
         Collections.sort(audienceData);
     }
 
@@ -259,7 +261,7 @@ public enum Repository {
 
     public DisciplineTypeEntity addDisciplineType(String name) {
         DisciplineTypeEntity newDisciplineType = dbHelper.insertDisciplineType(name);
-        disciplineTypeData.add(newDisciplineType);
+        getDisciplineTypeData().add(newDisciplineType);
         Collections.sort(disciplineTypeData);
         return newDisciplineType;
     }
@@ -315,9 +317,56 @@ public enum Repository {
     //endregion
 
     //region MENTOR ENTITY
+    private ObservableList<MentorEntity> getMentorData() {
+        return mentorData == null ? initMentorData() : mentorData;
+    }
+
+    private ObservableList<MentorEntity> initMentorData() {
+        return addCollection(dbHelper.getMentorData());
+    }
+
+    private MentorEntity getMentor(DisciplineEntity discipline, DisciplineTypeEntity type, TeacherEntity teacher) {
+        for (MentorEntity mentor : getMentorData()) {
+            if (mentor.getTeacher().equals(teacher) &&
+                    mentor.getDiscipline().equals(discipline) &&
+                    mentor.getDisciplineType().equals(type))
+                return mentor;
+        }
+        return null;
+    }
+
+    private MentorEntity addMentor(DisciplineEntity discipline, DisciplineTypeEntity type, TeacherEntity teacher) {
+        MentorEntity mentor = dbHelper.insertMentor(discipline, type, teacher);
+        getMentorData().add(mentor);
+        return mentor;
+    }
     //endregion
 
     //region NAVIGATOR ENTITY
+    private ObservableList<NavigatorEntity> getNavigatorData() {
+        return navigatorData == null ? initNavigatorData() : navigatorData;
+    }
+
+    private ObservableList<NavigatorEntity> initNavigatorData() {
+        return addCollection(dbHelper.getNavigatorData());
+    }
+
+    private NavigatorEntity getNavigator(int dayOfWeek, TimeTableEntity time, int weekOdd, AudienceEntity audience) {
+        for (NavigatorEntity navigator : getNavigatorData()) {
+            if (navigator.getDayOfWeek().equals(dayOfWeek) &&
+                    navigator.getTime().equals(time) &&
+                    navigator.getWeekOdd().equals(weekOdd) &&
+                    navigator.getAudience().equals(audience))
+                return navigator;
+        }
+        return null;
+    }
+
+    private NavigatorEntity addNavigator(int dayOfWeek, TimeTableEntity time, int weekOdd, AudienceEntity audience, MentorEntity mentor) {
+        NavigatorEntity navigator = dbHelper.insertNavigator(dayOfWeek, time, weekOdd, audience, mentor);
+        getNavigatorData().add(navigator);
+        return navigator;
+    }
     //endregion
 
     //region SCHEDULE ITEM ENTITY
@@ -346,8 +395,8 @@ public enum Repository {
     public ScheduleItemEntity[][] getScheduleItemData(AudienceEntity audience, int weekOdd) {
         ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
         for (ScheduleItemEntity item : getScheduleItemData()) {
-            if (item.getNavigator().getAudience() == audience &&
-                        item.getNavigator().getWeekOdd() == weekOdd) {
+            if (item.getNavigator().getAudience().equals(audience) &&
+                        item.getNavigator().getWeekOdd().equals(weekOdd)) {
                 res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
             }
         }
@@ -357,8 +406,8 @@ public enum Repository {
     public ScheduleItemEntity[][] getScheduleItemData(TeacherEntity teacher, int weekOdd) {
         ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
         for (ScheduleItemEntity item : getScheduleItemData()) {
-            if (item.getNavigator().getMentor().getTeacher() == teacher &&
-                    item.getNavigator().getWeekOdd() == weekOdd) {
+            if (item.getNavigator().getMentor().getTeacher().equals(teacher) &&
+                    item.getNavigator().getWeekOdd().equals(weekOdd)) {
                 res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
             }
         }
@@ -368,12 +417,31 @@ public enum Repository {
     public ScheduleItemEntity[][] getScheduleItemData(GroupEntity group, int weekOdd) {
         ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
         for (ScheduleItemEntity item : getScheduleItemData()) {
-            if (item.getGroup() == group &&
-                    item.getNavigator().getWeekOdd() == weekOdd) {
+            if (item.getGroup().equals(group) &&
+                    item.getNavigator().getWeekOdd().equals(weekOdd)) {
                 res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
             }
         }
         return res;
+    }
+
+    public ScheduleItemEntity addScheduleItem(int dayOfWeek, TimeTableEntity time, int weekOdd, AudienceEntity audience, DisciplineEntity discipline, DisciplineTypeEntity type, GroupEntity group, TeacherEntity teacher) {
+        NavigatorEntity navigator = getNavigator(dayOfWeek, time, weekOdd, audience);
+        MentorEntity mentor = getMentor(discipline, type, teacher);
+
+        if (mentor == null)
+            mentor = addMentor(discipline, type, teacher);
+
+        if (navigator == null)
+            navigator = addNavigator(dayOfWeek, time, weekOdd, audience, mentor);
+
+        return addScheduleItem(navigator, group);
+    }
+
+    private ScheduleItemEntity addScheduleItem(NavigatorEntity navigator, GroupEntity group) {
+        ScheduleItemEntity item = dbHelper.insertScheduleItem(navigator, group);
+        getScheduleItemData().add(item);
+        return item;
     }
     //endregion
 
@@ -389,7 +457,7 @@ public enum Repository {
 
     public void addTeacher(String fio, String academicDegree, String position, String phone) {
         TeacherEntity teacher = dbHelper.addTeacher(fio, academicDegree, position, phone);
-        teacherData.add(teacher);
+        getTeacherData().add(teacher);
         Collections.sort(teacherData);
     }
 
@@ -453,21 +521,21 @@ public enum Repository {
 
     public UserEntity addUser(String login, String hash, CategoryEntity category, String salt) {
         UserEntity newUser = dbHelper.insertUser(login, hash, category, salt);
-        userData.add(newUser);
+        getUserData().add(newUser);
         Collections.sort(userData);
         return newUser;
     }
 
     public UserEntity addUser(String login, CategoryEntity category) {
         UserEntity newUser = dbHelper.insertUser(login, category);
-        userData.add(newUser);
+        getUserData().add(newUser);
         Collections.sort(userData);
         return newUser;
     }
 
     public void editUser(UserEntity user, String newLogin, CategoryEntity newCategory) {
         UserEntity alterUser = dbHelper.alterUser(user, newLogin, newCategory);
-        userData.remove(user);
+        getUserData().remove(user);
         userData.add(alterUser);
         Collections.sort(userData);
     }
@@ -475,14 +543,14 @@ public enum Repository {
     public void editUser(UserEntity user, String pass) {
         String salt = SaltGenerator.generate();
         UserEntity alterUser = dbHelper.alterUser(user, HashText.getHash(pass, salt), salt);
-        userData.remove(user);
+        getUserData().remove(user);
         userData.add(alterUser);
         Collections.sort(userData);
     }
 
     public void removeUser(UserEntity user) {
         dbHelper.deleteUser(user);
-        userData.remove(user);
+        getUserData().remove(user);
     }
     //endregion
 }

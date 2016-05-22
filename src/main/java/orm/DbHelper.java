@@ -182,7 +182,6 @@ public enum DbHelper {
     //endregion
 
     //region DISCIPLINE TYPE ENTITY
-
     public Collection getDisciplineTypeData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(DisciplineTypeEntity.class).list();
@@ -239,16 +238,55 @@ public enum DbHelper {
     //endregion
 
     //region MENTOR ENTITY
+    public Collection getMentorData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(MentorEntity.class).list();
+        }
+    }
+
+    public MentorEntity insertMentor(DisciplineEntity discipline, DisciplineTypeEntity type, TeacherEntity teacher) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            MentorEntity mentor = new MentorEntity(discipline, type, teacher);
+            mentor.setId((Integer) session.save(mentor));
+            session.getTransaction().commit();
+            return mentor;
+        }
+    }
     //endregion
 
     //region NAVIGATOR ENTITY
+    public Collection getNavigatorData() {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            return session.createCriteria(NavigatorEntity.class).list();
+        }
+    }
+
+    public NavigatorEntity insertNavigator(int dayOfWeek, TimeTableEntity time, int weekOdd, AudienceEntity audience, MentorEntity mentor) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            NavigatorEntity navigator = new NavigatorEntity(dayOfWeek, time, weekOdd, audience, mentor);
+            navigator.setId((Integer) session.save(navigator));
+            session.getTransaction().commit();
+            return navigator;
+        }
+    }
     //endregion
 
     //region SCHEDULE ITEM ENTITY
-
     public Collection getScheduleItemData() {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(ScheduleItemEntity.class).list();
+        }
+    }
+
+    public ScheduleItemEntity insertScheduleItem(NavigatorEntity navigator, GroupEntity group) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            ScheduleItemEntity item = new ScheduleItemEntity(navigator, group);
+            item.setId((Integer) session.save(item));
+            session.getTransaction().commit();
+            return item;
         }
     }
     //endregion

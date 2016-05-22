@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,7 +24,6 @@ import orm.Repository;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -150,7 +148,7 @@ public class MainPanelViewController implements Initializable {
                 new ScheduleEditorViewController(stage, (GroupEntity) obj, label.getDayOfWeek(), time, getWeekOdd());
             }
 
-        /*
+
         if (ScheduleEditorViewController.getDialogResult() == ApiDialog.DialogResult.OK) {
             String text = ScheduleEditorViewController.getScheduleItem().toString(obj);
             scheduleItems[label.getDayOfWeek()-1][label.getIdTime() - 1] = ScheduleEditorViewController.getScheduleItem();
@@ -160,7 +158,6 @@ public class MainPanelViewController implements Initializable {
                 //label.setContextMenu(menu);
             //}
         }
-        */
     }
 
     private int getWeekOdd() {

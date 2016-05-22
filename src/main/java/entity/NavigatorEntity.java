@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "navigator", schema = "scheduledb")
-public class NavigatorEntity {
+public class NavigatorEntity implements Comparable<NavigatorEntity> {
     private Integer id;
     private Integer dayOfWeek;
     private TimeTableEntity time;
@@ -117,5 +117,10 @@ public class NavigatorEntity {
         result = 31 * result + (audience != null ? audience.hashCode() : 0);
         result = 31 * result + (mentor != null ? mentor.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int compareTo(NavigatorEntity o) {
+        return id.compareTo(o.getId());
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "scheduleitem", schema = "scheduledb")
-public class ScheduleItemEntity {
+public class ScheduleItemEntity implements Comparable<ScheduleItemEntity> {
     private Integer id;
     private NavigatorEntity navigator;
     private GroupEntity group;
@@ -121,5 +121,10 @@ public class ScheduleItemEntity {
                 navigator.getMentor().getDisciplineType() + ")" + " - " +
                 navigator.getMentor().getTeacher().firstName() + " (" +
                 navigator.getAudience() + ")";
+    }
+
+    @Override
+    public int compareTo(ScheduleItemEntity o) {
+        return id.compareTo(o.id);
     }
 }

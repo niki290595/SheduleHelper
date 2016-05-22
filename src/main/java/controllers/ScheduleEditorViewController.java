@@ -247,8 +247,24 @@ public class ScheduleEditorViewController implements Initializable {
     }
 
     public void apply(ActionEvent actionEvent) {
+        AudienceEntity audience = audiences.getSelectionModel().getSelectedItem();
+        DisciplineEntity discipline = disciplines.getSelectionModel().getSelectedItem();
+        DisciplineTypeEntity type = disciplineTypes.getSelectionModel().getSelectedItem();
+        GroupEntity group = groups.getSelectionModel().getSelectedItem();
+        TeacherEntity teacher = teachers.getSelectionModel().getSelectedItem();
+        item = db.addScheduleItem(dayOfWeek, time, weekOdd, audience, discipline, type, group, teacher);
+        result = DialogResult.OK;
+        stage.close();
     }
 
     public void cancel(ActionEvent actionEvent) {
+    }
+
+    public static DialogResult getDialogResult() {
+        return result;
+    }
+
+    public static ScheduleItemEntity getScheduleItem() {
+        return item;
     }
 }
