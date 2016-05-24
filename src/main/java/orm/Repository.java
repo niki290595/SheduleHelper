@@ -443,6 +443,11 @@ public enum Repository {
         getScheduleItemData().add(item);
         return item;
     }
+
+    public void removeScheduleItem(ScheduleItemEntity item) { //, GroupEntity obj) {
+        dbHelper.deleteScheduleItem(item);
+        scheduleItemData.remove(item);
+    }
     //endregion
 
     //region TEACHER ENTITY

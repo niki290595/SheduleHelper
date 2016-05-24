@@ -80,7 +80,9 @@
 
 .tree-view,
 .tree-cell,
-.tree-cell:expanded {
+.tree-cell:expanded,
+.menu,
+.menu-item {
 	-fx-background-image: url("image/background.jpg");
 	-fx-font-size: 12pt;
 	-fx-text-fill: white ;

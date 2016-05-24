@@ -1,6 +1,7 @@
 package controllers;
 
 import com.sun.jnlp.ApiDialog;
+import customgui.MenuItemGroup;
 import customgui.NewTreeItem;
 import customgui.NewTreeItemWithChildFactory;
 import customgui.ScheduleLabel;
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,6 +25,7 @@ import orm.Repository;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -42,6 +45,7 @@ public class MainPanelViewController implements Initializable {
     Label[][] schedule;
     ScheduleItemEntity[][] scheduleItems;
     ScheduleLabel contextMenuSrc;
+    ContextMenu menu;
 
     public MainPanelViewController() {
     }
@@ -64,7 +68,7 @@ public class MainPanelViewController implements Initializable {
         initTimeTable();
         initSchedule();
         initTree();
-        //initContextMenu();
+        initContextMenu();
         scheduleGridPane.setVisible(false);
     }
 
@@ -122,7 +126,7 @@ public class MainPanelViewController implements Initializable {
                     }
                 } else if (!src.getText().equals("-")) {
                     contextMenuSrc = src;
-                    //menu.show(src, Side.BOTTOM, event.getSceneX() - src.getLayoutX(), event.getSceneY() - src.getLayoutY());
+                    menu.show(src, Side.BOTTOM, event.getSceneX() - src.getLayoutX(), event.getSceneY() - src.getLayoutY());
                 }
             }
         });
@@ -155,13 +159,13 @@ public class MainPanelViewController implements Initializable {
             label.setText(text);
             label.setTooltip(new Tooltip(text));
             //if (ruleForINSERT) {
-                //label.setContextMenu(menu);
+                label.setContextMenu(menu);
             //}
         }
     }
 
     private int getWeekOdd() {
-        return 0;
+        return switchEvenBtn.isSelected() ? 2 : 1;
     }
 
     private void initSchedule() {
@@ -247,21 +251,20 @@ public class MainPanelViewController implements Initializable {
                     String text = scheduleItems[i][j].toString(obj);
                     schedule[i][j].setText(text);
                     schedule[i][j].setTooltip(new Tooltip(text));
-                    /*
-                    if (ruleForINSERT) {
+                    //if (ruleForINSERT) {
                         schedule[i][j].setContextMenu(menu);
-                    }*/
+                    //}
                 } else {
                     schedule[i][j].setText("-");
                 }
             }
         }
 
-        //menu.getItems().get(2).setDisable(!(obj instanceof Group));
+        menu.getItems().get(2).setDisable(!(obj instanceof GroupEntity));
 
     }
 
-/*
+
     private void initContextMenu() {
         MenuItem[] menuItems = new MenuItem[3];
         List<DirectionEntity> directionList = db.getDirectionData();
@@ -280,7 +283,7 @@ public class MainPanelViewController implements Initializable {
                         ScheduleItemEntity item = scheduleItems[contextMenuSrc.getDayOfWeek() - 1][contextMenuSrc.getIdTime()-1];
                         if (!item.groupList().contains(((MenuItemGroup) event.getSource()).getGroup())) {
                             //проверить расписание второй группы надо
-                            db.addScheduleItem2(item.getNavigator().getDayOfWeek(),
+                            db.addScheduleItem(item.getNavigator().getDayOfWeek(),
                                     item.getNavigator().getTime(),
                                     item.getNavigator().getWeekOdd(),
                                     item.getNavigator().getAudience(),
@@ -288,14 +291,9 @@ public class MainPanelViewController implements Initializable {
                                     item.getNavigator().getMentor().getDisciplineType(),
                                     ((MenuItemGroup) event.getSource()).getGroup(),
                                     item.getNavigator().getMentor().getTeacher());
-
-                            try {
-                                new DialogController(stage, DialogController.Type.INFO)
-                                        .setTitle("Уведомление")
-                                        .setMsg("Запись успешно добавлена").show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            new DialogController(stage, DialogController.Type.INFO)
+                                    .setTitle("Уведомление")
+                                    .setMsg("Запись успешно добавлена").show();
                         }
                     }
                 });
@@ -322,23 +320,19 @@ public class MainPanelViewController implements Initializable {
             public void handle(ActionEvent event) {
                 Object obj = treeView.getSelectionModel().getSelectedItem().getValue();
                 if (obj instanceof GroupEntity) {
-                    Main.getInstance().delSchedule(scheduleItems[contextMenuSrc.getDayOfWeek() - 1][contextMenuSrc.getIdTime() - 1], (Group) obj);
+                    db.removeScheduleItem(scheduleItems[contextMenuSrc.getDayOfWeek() - 1][contextMenuSrc.getIdTime() - 1]);
                     scheduleItems[contextMenuSrc.getDayOfWeek() - 1][contextMenuSrc.getIdTime() - 1] = null;
                     contextMenuSrc.setText("-");
-                    try {
-                        new DialogController(stage, DialogController.Type.INFO)
-                                .setTitle("Уведомление")
-                                .setMsg("Запись успешно удалена");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    new DialogController(stage, DialogController.Type.INFO)
+                            .setTitle("Уведомление")
+                            .setMsg("Запись успешно удалена");
                 }
             }
         });
 
         menu = new ContextMenu(menuItems);
     }
-*/
+
 
     public void openTeachersPanel(ActionEvent actionEvent) throws IOException {
         new TeachersPanelViewController(stage);

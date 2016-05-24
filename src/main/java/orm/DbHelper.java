@@ -289,6 +289,14 @@ public enum DbHelper {
             return item;
         }
     }
+
+    public void deleteScheduleItem(ScheduleItemEntity item) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(item);
+            session.getTransaction().commit();
+        }
+    }
     //endregion
 
     //region !TEACHER ENTITY
