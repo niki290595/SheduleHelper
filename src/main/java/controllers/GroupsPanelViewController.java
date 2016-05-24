@@ -102,6 +102,6 @@ public class GroupsPanelViewController implements Initializable {
         db.removeGroup(group);
         new DialogController(stage, DialogController.Type.INFO)
                 .setTitle("Уведомление")
-                .setInput("Данные успешно удалены").show();
+                .setMsg("Данные успешно удалены").show();
     }
 }

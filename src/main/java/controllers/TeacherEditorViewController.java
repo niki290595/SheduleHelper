@@ -71,6 +71,13 @@ public class TeacherEditorViewController implements Initializable {
         String position = this.position.getText();
         String phone = this.phone.getText();
 
+        if (FIO.length() == 0) {
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Ошибка")
+                    .setMsg("ФИО не введено").show();
+            return;
+        }
+
         if (teacher == null) { //add
             db.addTeacher(FIO, academicDegree, position, phone);
             Stage stage = (Stage)((Node)(actionEvent.getSource())).getScene().getWindow();
@@ -84,6 +91,9 @@ public class TeacherEditorViewController implements Initializable {
             this.phone.setText("");
         } else { //change
             db.editTeacher(teacher, FIO, academicDegree, position, phone);
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Уведомление")
+                    .setMsg("Данные успешно изменены").show();
             stage.close();
         }
     }

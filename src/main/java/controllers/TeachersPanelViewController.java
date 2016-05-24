@@ -75,9 +75,6 @@ public class TeachersPanelViewController implements Initializable {
         } else {
             TeacherEntity teacher = teachersTable.getItems().get(row);
             new TeacherEditorViewController(stage, teacher);
-            new DialogController(stage, DialogController.Type.INFO)
-                .setTitle("Уведомление")
-                .setMsg("Данные успешно изменены").show();
         }
         initTable();
     }

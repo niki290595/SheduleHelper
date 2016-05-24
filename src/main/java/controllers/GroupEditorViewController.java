@@ -82,6 +82,10 @@ public class GroupEditorViewController implements Initializable {
             stage.close();
         } else {
             db.addGroup(direction, name, studentNumber);
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Уведомление")
+                    .setMsg("Запись успешно добавлена").show();
+            stage.close();
         }
     }
 
