@@ -1,5 +1,6 @@
 package controllers;
 
+import entity.CategoryEntity;
 import entity.TeacherEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,12 +8,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +34,9 @@ public class TeachersPanelViewController implements Initializable {
     @FXML TableColumn<TeacherEntity, String> academicDegreeColumn;
     @FXML TableColumn<TeacherEntity, String> positionColumn;
     @FXML TableColumn<TeacherEntity, String> phoneColumn;
+    @FXML Button addBtn;
+    @FXML Button editBtn;
+    @FXML Button delBtn;
 
 
     public TeachersPanelViewController() {
@@ -49,6 +55,10 @@ public class TeachersPanelViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
+
+        addBtn.setDisable(!Session.haveRule());
+        editBtn.setDisable(!Session.haveRule());
+        delBtn.setDisable(!Session.haveRule());
     }
 
     private void initTable() {

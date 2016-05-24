@@ -12,10 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +32,12 @@ public class GroupsPanelViewController implements Initializable {
 
     @FXML ListView<DirectionEntity> directions;
     @FXML ListView<GroupEntity> groups;
+    @FXML Button addDr;
+    @FXML Button editDr;
+    @FXML Button delDr;
+    @FXML Button addGr;
+    @FXML Button editGr;
+    @FXML Button delGr;
 
     public GroupsPanelViewController() {
     }
@@ -54,6 +62,12 @@ public class GroupsPanelViewController implements Initializable {
                     groups.setItems(db.getGroupData(newValue));
             }
         });
+        addDr.setDisable(!Session.haveRule());
+        editDr.setDisable(!Session.haveRule());
+        delDr.setDisable(!Session.haveRule());
+        addGr.setDisable(!Session.haveRule());
+        editGr.setDisable(!Session.haveRule());
+        delGr.setDisable(!Session.haveRule());
     }
 
     public void addDirection(ActionEvent actionEvent) {

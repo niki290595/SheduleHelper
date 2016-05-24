@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,10 +37,10 @@ public class AdminViewController implements Initializable {
 
     public AdminViewController() {}
 
-    public AdminViewController(Stage stage, String login) throws IOException {
+    public AdminViewController(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/admin.view.fxml"));
         stage = new Stage();
-        stage.setTitle("Добро пожаловать " + login);
+        stage.setTitle("Добро пожаловать " + Session.user.getLogin());
         stage.setScene(new Scene(root, 400, 200));
         AdminViewController.stage = stage;
         stage.show();
@@ -71,6 +72,10 @@ public class AdminViewController implements Initializable {
         if (user != null) {
             db.removeUser(user);
         }
+    }
+
+    public void openMainPanel(ActionEvent actionEvent) throws IOException {
+        new MainPanelViewController(stage);
     }
 
     public void exit(ActionEvent actionEvent) {

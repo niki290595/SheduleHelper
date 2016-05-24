@@ -7,12 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +31,9 @@ public class AudiencesPanelViewController implements Initializable {
     @FXML TableColumn<AudienceEntity, String> idColumn;
     @FXML TableColumn<AudienceEntity, String> typeColumn;
     @FXML TableColumn<AudienceEntity, Number> capacity;
+    @FXML Button addBtn;
+    @FXML Button editBtn;
+    @FXML Button delBtn;
 
     public AudiencesPanelViewController() {
     }
@@ -50,6 +55,10 @@ public class AudiencesPanelViewController implements Initializable {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("audienceType"));
         capacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         audienceTable.setItems(db.getAudienceData());
+
+        addBtn.setDisable(!Session.haveRule());
+        editBtn.setDisable(!Session.haveRule());
+        delBtn.setDisable(!Session.haveRule());
     }
 
     public void add(ActionEvent actionEvent) throws IOException {

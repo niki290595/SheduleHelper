@@ -36,15 +36,18 @@
         spacing="10"
         alignment="CENTER">
         <Button text="Добавить"
+                fx:id="addBtn"
                 defaultButton="true"
                 onAction="#add"
                 prefWidth="150"/>
 
         <Button text="Изменить"
+                fx:id="editBtn"
                 onAction="#modify"
                 prefWidth="150"/>
 
         <Button text="Удалить"
+                fx:id="delBtn"
                 onAction="#remove"
                 prefWidth="150"/>
 

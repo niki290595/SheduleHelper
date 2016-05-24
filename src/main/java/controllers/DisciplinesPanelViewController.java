@@ -12,11 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +35,14 @@ public class DisciplinesPanelViewController implements Initializable{
     @FXML ComboBox<DirectionEntity> directions;
     @FXML ListView<DisciplineEntity> noUseDisciplineList;
     @FXML ListView<DisciplineEntity> useDisciplineList;
+    @FXML Button addDr;
+    @FXML Button editDr;
+    @FXML Button delDr;
+    @FXML Button addDs;
+    @FXML Button editDs;
+    @FXML Button delDs;
+    @FXML Button addToUseListBtn;
+    @FXML Button removeFromUseList;
 
     public DisciplinesPanelViewController() {
     }
@@ -64,6 +74,15 @@ public class DisciplinesPanelViewController implements Initializable{
             }
         });
         directions.getSelectionModel().selectFirst();
+
+        addDr.setDisable(!Session.haveRule());
+        editDr.setDisable(!Session.haveRule());
+        delDr.setDisable(!Session.haveRule());
+        addDs.setDisable(!Session.haveRule());
+        editDs.setDisable(!Session.haveRule());
+        delDs.setDisable(!Session.haveRule());
+        addToUseListBtn.setDisable(!Session.haveRule());
+        removeFromUseList.setDisable(!Session.haveRule());
     }
 
     public void addDirection(ActionEvent actionEvent) {

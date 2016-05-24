@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import orm.HibernateGenericDao;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -100,15 +101,15 @@ public class LoginViewController implements Initializable {
         }
 
         if (user.getPass().equals(HashText.getHash(pass, user.getSalt()))) {
-
+            Session.user = user;
             switch (user.getCategory().categoryType()) {
                 case ADMIN:
                     stage.hide();
-                    new AdminViewController(stage, user.getLogin());
+                    new AdminViewController(stage);
                     break;
                 case OWNER:
                 case STAFF:
-                    new MainPanelViewController(stage, user);
+                    new MainPanelViewController(stage);
             }
         } else {
             new Alert(Alert.AlertType.ERROR, "Авторизация не пройдена, пароль введен неверно", ButtonType.OK).showAndWait();

@@ -23,10 +23,13 @@
 
         <HBox>
             <Button text="Добавить"
+                    fx:id="addDr"
                     onAction="#addDirection"/>
             <Button text="Изменить"
+                    fx:id="editDr"
                     onAction="#editDirection"/>
             <Button text="Удалить"
+                    fx:id="delDr"
                     onAction="#delDirection"/>
         </HBox>
 
@@ -38,10 +41,13 @@
 
         <HBox>
             <Button text="Добавить"
+                    fx:id="addGr"
                     onAction="#addGroup"/>
             <Button text="Изменить"
+                    fx:id="editGr"
                     onAction="#editGroup"/>
             <Button text="Удалить"
+                    fx:id="delGr"
                     onAction="#delGroup"/>
         </HBox>
 

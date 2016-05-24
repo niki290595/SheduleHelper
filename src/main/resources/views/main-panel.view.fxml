@@ -88,7 +88,7 @@
                         onAction="#openAudiencesPanel"
                         prefWidth="140"
                         GridPane.columnIndex="1"/>
-                <Button
+                <Button fx:id="timeBtn"
                         text="Время"
                         onAction="#openTimePanel"
                         prefWidth="140"
@@ -96,6 +96,7 @@
                 <Button
                         text="Запрос"
                         prefWidth="140"
+                        visible="false"
                         GridPane.rowIndex="1"/>
                 <Button
                         text="Дисциплины"

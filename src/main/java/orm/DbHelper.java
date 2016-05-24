@@ -18,11 +18,6 @@ public enum DbHelper {
     //region !ACADEMIC PLAN ENTITY
     public Collection getAcademicPlanData() {
         return HibernateGenericDao.getCollection(AcademicPlanEntity.class);
-        /*
-        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
-            return session.createCriteria(AcademicPlanEntity.class).list();
-        }
-        */
     }
 
     public AcademicPlanEntity addDiscipline(DisciplineEntity discipline, DirectionEntity direction) {

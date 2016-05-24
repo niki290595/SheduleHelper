@@ -258,6 +258,8 @@ public class ScheduleEditorViewController implements Initializable {
     }
 
     public void cancel(ActionEvent actionEvent) {
+        result = DialogResult.CANCEL;
+        stage.close();
     }
 
     public static DialogResult getDialogResult() {

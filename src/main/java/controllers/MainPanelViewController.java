@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import orm.Repository;
+import other.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +41,7 @@ public class MainPanelViewController implements Initializable {
     @FXML GridPane scheduleGridPane;
     @FXML ToggleButton switchEvenBtn;
     @FXML TreeView<Object> treeView;
+    @FXML Button timeBtn;
 
     Label[][] timeTable;
     Label[][] schedule;
@@ -50,12 +52,12 @@ public class MainPanelViewController implements Initializable {
     public MainPanelViewController() {
     }
 
-    public MainPanelViewController(Stage parentStage, UserEntity user) throws IOException {
+    public MainPanelViewController(Stage parentStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/main-panel.view.fxml"));
         stage = new Stage();
-        stage.setTitle("Добро пожаловать " + user.getLogin());
+        stage.setTitle("Добро пожаловать " + Session.user.getLogin());
         stage.setScene(new Scene(root));
-        MainPanelViewController.user = user;
+        MainPanelViewController.user = Session.user;
         parentStage.hide();
         stage.show();
         (new DialogController(stage, DialogController.Type.INFO))
@@ -70,6 +72,7 @@ public class MainPanelViewController implements Initializable {
         initTree();
         initContextMenu();
         scheduleGridPane.setVisible(false);
+        timeBtn.setDisable(!Session.haveRule());
     }
 
     private void initTimeTable() {
@@ -110,6 +113,8 @@ public class MainPanelViewController implements Initializable {
         label.setPrefHeight(16.0);
         label.setPrefWidth(230);
         //label.setContextMenu();
+        if (!Session.haveRule()) return label;
+
         label.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -251,9 +256,9 @@ public class MainPanelViewController implements Initializable {
                     String text = scheduleItems[i][j].toString(obj);
                     schedule[i][j].setText(text);
                     schedule[i][j].setTooltip(new Tooltip(text));
-                    //if (ruleForINSERT) {
+                    if (Session.haveRule()) {
                         schedule[i][j].setContextMenu(menu);
-                    //}
+                    }
                 } else {
                     schedule[i][j].setText("-");
                 }
