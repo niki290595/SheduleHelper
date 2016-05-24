@@ -44,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `ScheduleDB`.`Group` (
   `studentsNumber` INT NULL,
   UNIQUE INDEX `idgroup_UNIQUE` (`id` ASC),
   PRIMARY KEY (`id`),
-  INDEX `fk_group_ditection_idx` (`idDirection` ASC),
-  CONSTRAINT `fk_group_ditection`
+  INDEX `fk_group_direction_idx` (`idDirection` ASC),
+  CONSTRAINT `fk_group_direction`
     FOREIGN KEY (`idDirection`)
     REFERENCES `ScheduleDB`.`Direction` (`id`)
     ON DELETE CASCADE
