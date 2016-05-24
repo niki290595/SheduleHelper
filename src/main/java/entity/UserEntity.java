@@ -7,7 +7,7 @@ import java.sql.Date;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "user", schema = "scheduledb", catalog = "")
+@Table(name = "user", schema = "dbo", catalog = "scheduledb")
 public class UserEntity implements Comparable<UserEntity> {
     private Integer id;
     private String login;

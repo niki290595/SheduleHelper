@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:jtds:sqlserver://localhost:1434;databaseName=scheduledb;instanceName=SQLEXPRESS</property>
+        <property name="connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password">1111</property>
+        <property name="dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
+
+        <mapping class="entity.AcademicPlanEntity"/>
+        <mapping class="entity.AudienceEntity"/>
+        <mapping class="entity.AudienceTypeEntity"/>
+        <mapping class="entity.CategoryEntity"/>
+        <mapping class="entity.DirectionEntity"/>
+        <mapping class="entity.DisciplineEntity"/>
+        <mapping class="entity.DisciplineTypeEntity"/>
+        <mapping class="entity.GroupEntity"/>
+        <mapping class="entity.MentorEntity"/>
+        <mapping class="entity.NavigatorEntity"/>
+        <mapping class="entity.ScheduleItemEntity"/>
+        <mapping class="entity.TeacherEntity"/>
+        <mapping class="entity.TimeTableEntity"/>
+        <mapping class="entity.UserEntity"/>
+        <mapping class="entity.MainViewEntity"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

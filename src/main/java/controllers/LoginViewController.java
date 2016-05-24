@@ -21,6 +21,8 @@ import java.util.ResourceBundle;
  */
 public class LoginViewController implements Initializable {
     private static Stage stage;
+
+    @FXML ComboBox schemeCBox;
     @FXML ComboBox<UserEntity> loginCBox;
     @FXML PasswordField passTextField;
 
