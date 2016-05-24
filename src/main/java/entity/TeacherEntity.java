@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "teacher", schema = "scheduledb")
+@Table(name = "teacher", schema = "dbo", catalog = "scheduledb")
 public class TeacherEntity implements Comparable<TeacherEntity> {
     private Integer id;
     private StringProperty fio;

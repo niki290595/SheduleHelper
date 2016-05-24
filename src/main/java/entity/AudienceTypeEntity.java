@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "audiencetype", schema = "scheduledb")
+@Table(name = "audiencetype", schema = "dbo", catalog = "scheduledb")
 public class AudienceTypeEntity implements Comparable<AudienceTypeEntity> {
     private Integer id;
     private String name;

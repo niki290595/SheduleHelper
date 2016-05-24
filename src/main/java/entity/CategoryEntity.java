@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "category", schema = "scheduledb")
+@Table(name = "category", schema = "dbo", catalog = "scheduledb")
 public class CategoryEntity implements Comparable<CategoryEntity> {
 
     public static enum CategoryType {

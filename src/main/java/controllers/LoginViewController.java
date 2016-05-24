@@ -2,6 +2,10 @@ package controllers;
 
 import crypt.HashText;
 import entity.UserEntity;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +14,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import orm.HibernateGenericDao;
 import orm.Repository;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -22,7 +29,7 @@ import java.util.ResourceBundle;
 public class LoginViewController implements Initializable {
     private static Stage stage;
 
-    @FXML ComboBox schemeCBox;
+    @FXML ComboBox<HibernateGenericDao.DBMS> schemeCBox;
     @FXML ComboBox<UserEntity> loginCBox;
     @FXML PasswordField passTextField;
 
@@ -46,11 +53,31 @@ public class LoginViewController implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources) {
+        initSchemeCBox();
         loginCBox.setItems(db.getUserData());
+    }
+
+    private void initSchemeCBox() {
+        List<HibernateGenericDao.DBMS> list = new ArrayList<>();
+        for (HibernateGenericDao.DBMS dbms : HibernateGenericDao.DBMS.values()) {
+            list.add(dbms);
+        }
+        schemeCBox.setItems(FXCollections.observableArrayList(list));
+        schemeCBox.getSelectionModel().select(HibernateGenericDao.DBMS.MYSQL);
+        HibernateGenericDao.buildSessionFactory(HibernateGenericDao.DBMS.MYSQL);
+
+        schemeCBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<HibernateGenericDao.DBMS>() {
+            @Override
+            public void changed(ObservableValue<? extends HibernateGenericDao.DBMS> observable, HibernateGenericDao.DBMS oldValue, HibernateGenericDao.DBMS newValue) {
+                HibernateGenericDao.buildSessionFactory(newValue);
+                loginCBox.setItems(db.getUserData());
+            }
+        });
     }
 
     public void registration(ActionEvent actionEvent) throws IOException {
         new RegistrationViewController(stage);
+        loginCBox.setItems(db.getUserData());
     }
 
     public void enter(ActionEvent actionEvent) throws IOException {

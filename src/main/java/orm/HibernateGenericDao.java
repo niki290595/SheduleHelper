@@ -3,8 +3,6 @@ package orm;
 import entity.AcademicPlanEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import java.io.Serializable;
@@ -16,29 +14,35 @@ import java.util.List;
  */
 public class HibernateGenericDao<T, PK extends Serializable> implements GenericDao<T, PK> {
 
-    private Class<T> type;
-    private static final SessionFactory sessionFactory;
+    public static enum DBMS {
+        MYSQL,
+        MSSQL,
+        MARIADB;
 
-    static {
-        /*
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        try {
-            sessionFactory = new Configuration().configure("hibernate.mssql.cfg.xml").buildSessionFactory(registry);
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-        */
-        try {
-            sessionFactory = new Configuration().configure("hibernate.mysql.cfg.xml").buildSessionFactory();
-        } catch (Throwable ex) {
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+        public String getConnectionString() {
+            switch (this) {
+                case MYSQL: return "hibernate/hibernate.mysql.cfg.xml";
+                case MSSQL: return "hibernate/hibernate.mssql.cfg.xml";
+                case MARIADB: return "hibernate/hibernate.maria.cfg.xml";
+            }
+            return null;
         }
     }
 
+    private Class<T> type;
+    private static SessionFactory sessionFactory;
+
     public HibernateGenericDao(Class<T> type) {
         this.type = type;
+    }
+
+    public static void buildSessionFactory(DBMS dbms) {
+        try {
+            sessionFactory = new Configuration().configure(dbms.getConnectionString()).buildSessionFactory();
+        } catch (Throwable ex) {
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
     }
 
     public static SessionFactory getSessionFactory() {

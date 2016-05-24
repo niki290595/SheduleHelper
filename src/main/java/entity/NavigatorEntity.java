@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "navigator", schema = "scheduledb")
+@Table(name = "navigator", schema = "dbo", catalog = "scheduledb")
 public class NavigatorEntity implements Comparable<NavigatorEntity> {
     private Integer id;
     private Integer dayOfWeek;

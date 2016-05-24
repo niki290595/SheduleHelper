@@ -7,7 +7,7 @@ import java.sql.Time;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "timetable", schema = "scheduledb")
+@Table(name = "timetable", schema = "dbo", catalog = "scheduledb")
 public class TimeTableEntity implements Comparable<TimeTableEntity> {
     private Integer id;
     private Time timeBegin;
@@ -60,14 +60,6 @@ public class TimeTableEntity implements Comparable<TimeTableEntity> {
         TimeTableEntity that = (TimeTableEntity) o;
 
         return id.equals(that.id);
-
-        /*
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (timeBegin != null ? !timeBegin.equals(that.timeBegin) : that.timeBegin != null) return false;
-        if (timeEnd != null ? !timeEnd.equals(that.timeEnd) : that.timeEnd != null) return false;
-
-        return true;
-        */
     }
 
     @Override

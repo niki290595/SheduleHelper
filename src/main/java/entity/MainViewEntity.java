@@ -7,7 +7,7 @@ import java.sql.Time;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "mainview", schema = "scheduledb")
+@Table(name = "mainview", schema = "dbo", catalog = "scheduledb")
 public class MainViewEntity {
     private String id;
     private Integer dayOfWeek;

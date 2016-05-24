@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "scheduleitem", schema = "scheduledb")
+@Table(name = "scheduleitem", schema = "dbo", catalog = "scheduledb")
 public class ScheduleItemEntity implements Comparable<ScheduleItemEntity> {
     private Integer id;
     private NavigatorEntity navigator;

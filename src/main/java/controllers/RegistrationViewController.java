@@ -80,8 +80,14 @@ public class RegistrationViewController implements Initializable {
         String pass = passTEdit.getText();
         CategoryEntity category = null;
         for (CategoryEntity categoryEntity : db.getCategoryData()) {
-            if (categoryEntity.categoryType().equals(CategoryEntity.CategoryType.STAFF)) {
+            if (db.getUserData().size() == 0) {
+                if (categoryEntity.categoryType().equals(CategoryEntity.CategoryType.ADMIN)) {
+                    category = categoryEntity;
+                    break;
+                }
+            } else if (categoryEntity.categoryType().equals(CategoryEntity.CategoryType.STAFF)) {
                 category = categoryEntity;
+                break;
             }
         }
         String salt = SaltGenerator.generate();

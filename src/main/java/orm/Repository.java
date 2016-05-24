@@ -502,7 +502,8 @@ public enum Repository {
 
     //region USER ENTITY
     public ObservableList<UserEntity> getUserData() {
-        return userData == null ? initUserData() : userData;
+        return initUserData();
+        //return userData == null ? initUserData() : userData;
     }
 
     private ObservableList<UserEntity> initUserData() {

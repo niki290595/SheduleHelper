@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Created by User on 20.04.2016.
  */
 @Entity
-@Table(name = "disciplinetype", schema = "scheduledb")
+@Table(name = "disciplinetype", schema = "dbo", catalog = "scheduledb")
 public class DisciplineTypeEntity implements Comparable<DisciplineTypeEntity> {
     private Integer id;
     private String name;
