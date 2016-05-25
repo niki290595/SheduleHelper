@@ -7,6 +7,9 @@
           <unit-entry name="hibernate.cfg.xml" value="d9d576e3-d29a-4a76-af9e-a6a756b2e953" />
           <unit-entry name="hibernate.mariadb.cfg.xml" />
           <unit-entry name="hibernate.mssql.cfg.xml" />
+          <unit-entry name="hibernate:hibernate.maria.cfg.xml" />
+          <unit-entry name="hibernate:hibernate.mssql.cfg.xml" />
+          <unit-entry name="hibernate:hibernate.mysql.cfg.xml" />
         </datasource-map>
         <naming-strategy-map />
         <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/main/resources/hibernate/hibernate.maria.cfg.xml" />

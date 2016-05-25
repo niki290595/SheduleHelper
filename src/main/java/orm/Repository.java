@@ -103,10 +103,11 @@ public enum Repository {
         return audienceData;
     }
 
-    public void addAudience(String num, AudienceTypeEntity type, int capacity) {
+    public AudienceEntity addAudience(String num, AudienceTypeEntity type, int capacity) {
         AudienceEntity audience = dbHelper.insertAudience(num, type, capacity);
         getAudienceData().add(audience);
         Collections.sort(audienceData);
+        return audience;
     }
 
     public void editAudience(AudienceEntity audience, String num, AudienceTypeEntity type, int capacity) {
@@ -140,6 +141,13 @@ public enum Repository {
             }
         }
         return null;
+    }
+
+    public AudienceTypeEntity addAudienceType(String name) {
+        AudienceTypeEntity audienceType = dbHelper.insertAudienceType(name);
+        getAudienceTypeData().add(audienceType);
+        Collections.sort(audienceTypeData);
+        return audienceType;
     }
     //endregion
 
@@ -198,16 +206,20 @@ public enum Repository {
     public DisciplineEntity addDiscipline(String name) {
         DisciplineEntity discipline = dbHelper.insertDiscipline(name);
         getDisciplineData().add(discipline);
-        noUseDisciplineData.add(discipline);
         Collections.sort(disciplineData);
-        Collections.sort(noUseDisciplineData);
+        if (noUseDisciplineData != null) {
+            noUseDisciplineData.add(discipline);
+            Collections.sort(noUseDisciplineData);
+        }
         return discipline;
     }
 
     public void addDisciplineToDirection(DisciplineEntity discipline, DirectionEntity direction) {
         dbHelper.addDiscipline(discipline, direction);
+        if (directionDisciplineData.get(direction) == null)
+            directionDisciplineData.put(direction, getDisciplineData(direction));
         directionDisciplineData.get(direction).add(discipline);
-        this.noUseDisciplineData.remove(discipline);
+        if (noUseDisciplineData != null) noUseDisciplineData.remove(discipline);
         Collections.sort(directionDisciplineData.get(direction));
     }
 
@@ -284,6 +296,24 @@ public enum Repository {
         return directionGroupData.get(direction);
     }
 
+    public String getGroupData(NavigatorEntity navigator) {
+        List<GroupEntity> list = new ArrayList<>();
+        for (ScheduleItemEntity item : getScheduleItemData()) {
+            if (item.getNavigator().equals(navigator)) {
+                list.add(item.getGroup());
+            }
+        }
+
+        String res = "";
+        for (int i = 0; i < list.size(); i++) {
+            res += list.get(i);
+            if (i < list.size() - 1) {
+                res += ", ";
+            }
+        }
+        return res;
+    }
+
     private ObservableList<GroupEntity> initGroupData(DirectionEntity direction) {
         if (directionGroupData == null)
             directionGroupData = FXCollections.observableHashMap();
@@ -296,10 +326,11 @@ public enum Repository {
         return groups;
     }
 
-    public void addGroup(DirectionEntity direction, String name, int studentNumber) {
+    public GroupEntity addGroup(DirectionEntity direction, String name, int studentNumber) {
         GroupEntity group = dbHelper.insertGroup(direction, name, studentNumber);
         directionGroupData.get(group.getDirection()).add(group);
         Collections.sort(directionGroupData.get(group.getDirection()));
+        return group;
     }
 
     public void editGroup(GroupEntity group, DirectionEntity direction, String name, int studentNumber) {
@@ -351,8 +382,8 @@ public enum Repository {
         return addCollection(dbHelper.getNavigatorData());
     }
 
-    private NavigatorEntity getNavigator(int dayOfWeek, TimeTableEntity time, int weekOdd, AudienceEntity audience) {
-        for (NavigatorEntity navigator : getNavigatorData()) {
+    public NavigatorEntity getNavigator(int dayOfWeek, TimeTableEntity time, int weekOdd, AudienceEntity audience) {
+        for (NavigatorEntity navigator : initNavigatorData()) {
             if (navigator.getDayOfWeek().equals(dayOfWeek) &&
                     navigator.getTime().equals(time) &&
                     navigator.getWeekOdd().equals(weekOdd) &&
@@ -366,6 +397,11 @@ public enum Repository {
         NavigatorEntity navigator = dbHelper.insertNavigator(dayOfWeek, time, weekOdd, audience, mentor);
         getNavigatorData().add(navigator);
         return navigator;
+    }
+
+    private void removeNavigator(NavigatorEntity navigator) {
+        dbHelper.deleteNavigator(navigator);
+        getNavigatorData().remove(navigator);
     }
     //endregion
 
@@ -394,7 +430,7 @@ public enum Repository {
 
     public ScheduleItemEntity[][] getScheduleItemData(AudienceEntity audience, int weekOdd) {
         ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
-        for (ScheduleItemEntity item : getScheduleItemData()) {
+        for (ScheduleItemEntity item : initScheduleItemData()) {
             if (item.getNavigator().getAudience().equals(audience) &&
                         item.getNavigator().getWeekOdd().equals(weekOdd)) {
                 res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
@@ -405,7 +441,7 @@ public enum Repository {
 
     public ScheduleItemEntity[][] getScheduleItemData(TeacherEntity teacher, int weekOdd) {
         ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
-        for (ScheduleItemEntity item : getScheduleItemData()) {
+        for (ScheduleItemEntity item : initScheduleItemData()) {
             if (item.getNavigator().getMentor().getTeacher().equals(teacher) &&
                     item.getNavigator().getWeekOdd().equals(weekOdd)) {
                 res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
@@ -416,7 +452,7 @@ public enum Repository {
 
     public ScheduleItemEntity[][] getScheduleItemData(GroupEntity group, int weekOdd) {
         ScheduleItemEntity[][] res = new ScheduleItemEntity[6][7];
-        for (ScheduleItemEntity item : getScheduleItemData()) {
+        for (ScheduleItemEntity item : initScheduleItemData()) {
             if (item.getGroup().equals(group) &&
                     item.getNavigator().getWeekOdd().equals(weekOdd)) {
                 res[item.getNavigator().getDayOfWeek() - 1][item.getNavigator().getTime().getId() - 1] = item;
@@ -432,10 +468,24 @@ public enum Repository {
         if (mentor == null)
             mentor = addMentor(discipline, type, teacher);
 
-        if (navigator == null)
+        if (navigator != null && !navigator.getMentor().equals(mentor)) {
+            removeNavigator(navigator);
+            navigator = null;
+        }
+
+        if (navigator == null) {
             navigator = addNavigator(dayOfWeek, time, weekOdd, audience, mentor);
+            navigator = getNavigator(dayOfWeek, time, weekOdd, audience);
+        }
 
         return addScheduleItem(navigator, group);
+    }
+
+    private ScheduleItemEntity getScheduleItem(NavigatorEntity navigator) {
+        for (ScheduleItemEntity item : getScheduleItemData()) {
+            if (item.getNavigator().equals(navigator)) return item;
+        }
+        return null;
     }
 
     private ScheduleItemEntity addScheduleItem(NavigatorEntity navigator, GroupEntity group) {
@@ -460,10 +510,11 @@ public enum Repository {
         return teacherData;
     }
 
-    public void addTeacher(String fio, String academicDegree, String position, String phone) {
+    public TeacherEntity addTeacher(String fio, String academicDegree, String position, String phone) {
         TeacherEntity teacher = dbHelper.addTeacher(fio, academicDegree, position, phone);
         getTeacherData().add(teacher);
         Collections.sort(teacherData);
+        return teacher;
     }
 
     public void editTeacher(TeacherEntity teacher, String fio, String academicDegree, String position, String phone) {

@@ -88,6 +88,11 @@ public class UserEditorViewController implements Initializable {
     }
 
     private String addUser() {
+        if (loginTEdit.getText().length() == 0 || categoryCBox.getSelectionModel().getSelectedItem() == null) {
+            new Alert(Alert.AlertType.ERROR, "Проверьте введенные данные", ButtonType.OK).showAndWait();
+            return null;
+        }
+
         db.addUser(loginTEdit.getText(), categoryCBox.getSelectionModel().getSelectedItem());
         return "Пользователь добавлен";
     }

@@ -86,6 +86,14 @@ public class TimePanelViewController implements Initializable {
         for (Integer id = 1; id <= 7; id++) {
             String beginTime = getBeginTextField(id).getText();
             String endTime = getEndTextField(id).getText();
+
+            if (beginTime.length() == 0 || endTime.length() == 0) {
+                new DialogController(stage, DialogController.Type.INFO)
+                        .setTitle("Ошибка")
+                        .setMsg("Данные не ведены").show();
+                return;
+            }
+
             db.editTimeTable(id, beginTime, endTime);
         }
         stage.close();

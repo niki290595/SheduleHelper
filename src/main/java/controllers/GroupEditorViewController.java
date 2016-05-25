@@ -43,7 +43,7 @@ public class GroupEditorViewController implements Initializable {
         stage.setScene(new Scene(root));
         stage.initOwner(parentStage);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        stage.showAndWait();
     }
 
     public GroupEditorViewController(Stage parentStage) throws IOException {
@@ -74,6 +74,13 @@ public class GroupEditorViewController implements Initializable {
         String name = this.name.getText();
         int studentNumber = Integer.parseInt(count.getText());
 
+        if (direction == null || name.length() == 0 || count.getText().length() == 0) {
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Ошибка")
+                    .setMsg("Данные не ведены").show();
+            return;
+        }
+
         if (group != null) {
             db.editGroup(group, direction, name, studentNumber);
             new DialogController(stage, DialogController.Type.INFO)
@@ -81,12 +88,16 @@ public class GroupEditorViewController implements Initializable {
                     .setMsg("Запись успешно изменена").show();
             stage.close();
         } else {
-            db.addGroup(direction, name, studentNumber);
+            group = db.addGroup(direction, name, studentNumber);
             new DialogController(stage, DialogController.Type.INFO)
                     .setTitle("Уведомление")
                     .setMsg("Запись успешно добавлена").show();
             stage.close();
         }
+    }
+
+    public static GroupEntity getGroup() {
+        return group;
     }
 
     public void cancel(ActionEvent actionEvent) {

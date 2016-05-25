@@ -95,6 +95,17 @@ public enum DbHelper {
             return session.createCriteria(AudienceTypeEntity.class).list();
         }
     }
+
+    public AudienceTypeEntity insertAudienceType(String name) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            AudienceTypeEntity audienceType = new AudienceTypeEntity(name);
+            audienceType.setId((Integer) session.save(audienceType));
+            session.save(audienceType);
+            session.getTransaction().commit();
+            return audienceType;
+        }
+    }
     //endregion
 
     //region !CATEGORY ENTITY
@@ -264,6 +275,14 @@ public enum DbHelper {
             navigator.setId((Integer) session.save(navigator));
             session.getTransaction().commit();
             return navigator;
+        }
+    }
+
+    public void deleteNavigator(NavigatorEntity navigator) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(navigator);
+            session.getTransaction().commit();
         }
     }
     //endregion

@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 public class TeacherEditorViewController implements Initializable {
     private static Stage stage;
     private static TeacherEntity teacher;
+    private static TeacherEntity teacherOff;
     private static Repository db = Repository.INSTANCE;
 
     @FXML TextField fio;
@@ -65,7 +66,6 @@ public class TeacherEditorViewController implements Initializable {
     }
 
     public void apply(ActionEvent actionEvent) {
-        //todo запретить вставку пустых полей, exception
         String FIO = fio.getText();
         String academicDegree = this.academicDegree.getText();
         String position = this.position.getText();
@@ -79,7 +79,7 @@ public class TeacherEditorViewController implements Initializable {
         }
 
         if (teacher == null) { //add
-            db.addTeacher(FIO, academicDegree, position, phone);
+            teacherOff = db.addTeacher(FIO, academicDegree, position, phone);
             Stage stage = (Stage)((Node)(actionEvent.getSource())).getScene().getWindow();
             new DialogController(stage, DialogController.Type.INFO)
                     .setTitle("Уведомление")
@@ -89,6 +89,7 @@ public class TeacherEditorViewController implements Initializable {
             this.academicDegree.setText("");
             this.position.setText("");
             this.phone.setText("");
+            stage.close();
         } else { //change
             db.editTeacher(teacher, FIO, academicDegree, position, phone);
             new DialogController(stage, DialogController.Type.INFO)
@@ -96,6 +97,10 @@ public class TeacherEditorViewController implements Initializable {
                     .setMsg("Данные успешно изменены").show();
             stage.close();
         }
+    }
+
+    public static TeacherEntity getTeacher() {
+        return teacherOff;
     }
 
     public void cancel(ActionEvent actionEvent) {

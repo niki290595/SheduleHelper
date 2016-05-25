@@ -11,10 +11,11 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     private Integer id;
     private DirectionEntity direction;
     private DisciplineEntity discipline;
+    /*
     private Integer lection;
     private Integer practiсe;
     private Integer lab;
-
+*/
     public AcademicPlanEntity() {
     }
 
@@ -53,7 +54,7 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     public void setDiscipline(DisciplineEntity discipline) {
         this.discipline = discipline;
     }
-
+/*
     @Basic
     @Column(name = "lection")
     public Integer getLection() {
@@ -83,7 +84,7 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     public void setLab(Integer lab) {
         this.lab = lab;
     }
-
+*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,10 +110,10 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (direction != null ? direction.hashCode() : 0);
-        result = 31 * result + (discipline != null ? discipline.hashCode() : 0);
+        result = 31 * result + (discipline != null ? discipline.hashCode() : 0);/*
         result = 31 * result + (lection != null ? lection.hashCode() : 0);
         result = 31 * result + (practiсe != null ? practiсe.hashCode() : 0);
-        result = 31 * result + (lab != null ? lab.hashCode() : 0);
+        result = 31 * result + (lab != null ? lab.hashCode() : 0);*/
         return result;
     }
 

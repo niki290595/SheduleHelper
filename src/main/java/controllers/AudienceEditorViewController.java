@@ -1,5 +1,6 @@
 package controllers;
 
+import com.sun.jnlp.ApiDialog;
 import entity.AudienceEntity;
 import entity.AudienceTypeEntity;
 import javafx.event.ActionEvent;
@@ -66,12 +67,29 @@ public class AudienceEditorViewController implements Initializable {
     public void apply(ActionEvent actionEvent) throws IOException {
         AudienceTypeEntity type = audienceType.getSelectionModel().getSelectedItem();
         String num = this.num.getText();
-        int capacity = Integer.parseInt(this.capacity.getText());
+        if (num.length() == 0 || type == null || this.capacity.getText().length() == 0) {
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Ошибка")
+                    .setMsg("Данные не ведены").show();
+            return;
+        }
+
+        int capacity;
+        try {
+            capacity = Integer.parseInt(this.capacity.getText());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Ошибка")
+                    .setMsg("Данные некорректны").show();
+            return;
+        }
 
         if (audience == null) {
-            db.addAudience(num, type, capacity);
+            audience = db.addAudience(num, type, capacity);
             this.num.setText("");
             this.capacity.setText("");
+            stage.close();
         } else {
             db.editAudience(audience, num, type, capacity);
             new DialogController(stage, DialogController.Type.INFO)
@@ -83,5 +101,23 @@ public class AudienceEditorViewController implements Initializable {
 
     public void cancel(ActionEvent actionEvent) {
         stage.close();
+    }
+
+    public void addAudienceType(ActionEvent actionEvent) {
+        DialogController dialog = new DialogController(stage, DialogController.Type.INPUT);
+        dialog.setTitle("Добавить тип")
+                .setMsg("Введиите название")
+                .setInput("").show();
+
+        if (dialog.dialogResult().equals(ApiDialog.DialogResult.OK)) {
+            String name = dialog.getResultString();
+
+            AudienceTypeEntity type = db.addAudienceType(name);
+            audienceType.getSelectionModel().select(type);
+        }
+    }
+
+    public static AudienceEntity getAudience() {
+        return audience;
     }
 }

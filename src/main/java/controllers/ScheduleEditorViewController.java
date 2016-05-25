@@ -41,6 +41,7 @@ public class ScheduleEditorViewController implements Initializable {
     @FXML ComboBox<DisciplineTypeEntity> disciplineTypes;
     @FXML ComboBox<TeacherEntity> teachers;
     @FXML ComboBox<AudienceEntity> audiences;
+    private boolean wasWarning;
 
     public ScheduleEditorViewController() {
     }
@@ -137,11 +138,7 @@ public class ScheduleEditorViewController implements Initializable {
         disciplines.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DisciplineEntity>() {
             @Override
             public void changed(ObservableValue<? extends DisciplineEntity> observable, DisciplineEntity oldValue, DisciplineEntity newValue) {
-                /*try {
-                    checkNewSelect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
+                checkNewSelect();
             }
         });
     }
@@ -151,12 +148,8 @@ public class ScheduleEditorViewController implements Initializable {
         disciplineTypes.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DisciplineTypeEntity>() {
             @Override
             public void changed(ObservableValue<? extends DisciplineTypeEntity> observable, DisciplineTypeEntity oldValue, DisciplineTypeEntity newValue) {
-                /*try {
-                    checkNewSelect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                findFreeAudienceData();*/
+                checkNewSelect();
+                //findFreeAudienceData();
             }
         });
     }
@@ -166,11 +159,7 @@ public class ScheduleEditorViewController implements Initializable {
         audiences.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<AudienceEntity>() {
             @Override
             public void changed(ObservableValue<? extends AudienceEntity> observable, AudienceEntity oldValue, AudienceEntity newValue) {
-                /*try {
-                    checkNewSelect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
+                checkNewSelect();
             }
         });
 
@@ -184,16 +173,52 @@ public class ScheduleEditorViewController implements Initializable {
         teachers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TeacherEntity>() {
             @Override
             public void changed(ObservableValue<? extends TeacherEntity> observable, TeacherEntity oldValue, TeacherEntity newValue) {
-                /*try {
-                    checkNewSelect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }*/
+                checkNewSelect();
             }
         });
 
         if (teacher != null) {
             teachers.getSelectionModel().select(teacher);
+        }
+    }
+
+    private void checkNewSelect() {
+        AudienceEntity audience = audiences.getSelectionModel().getSelectedItem();
+        DisciplineEntity discipline = disciplines.getSelectionModel().getSelectedItem();
+        DisciplineTypeEntity disciplineType =  disciplineTypes.getSelectionModel().getSelectedItem();
+        TeacherEntity teacher = teachers.getSelectionModel().getSelectedItem();
+
+        if (audience == null) {
+            return;
+        }
+
+        NavigatorEntity navigator = db.getNavigator(dayOfWeek, time, weekOdd, audience);
+        if (navigator != null && !wasWarning) {
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Внимание")
+                    .setMsg("В ауд. " + navigator.getAudience() +
+                            " в это время проходит " +
+                            navigator.getMentor().getDiscipline().getName() +
+                            " (" + navigator.getMentor().getDisciplineType().getName() + "), " +
+                            "учитель - " + navigator.getMentor().getTeacher().shortName() +
+                            ". Группы: " + db.getGroupData(navigator)).show();
+            wasWarning = true;
+        }
+
+        if (navigator == null || (navigator.getMentor().getDiscipline().equals(discipline) &&
+                navigator.getMentor().getDisciplineType().equals(disciplineType) &&
+                navigator.getMentor().getTeacher().equals(teacher))) {
+            wasWarning = false;
+        } else if (!wasWarning) {
+            new DialogController(stage, DialogController.Type.INFO)
+                .setTitle("Внимание")
+                .setMsg("В ауд. " + navigator.getAudience() +
+                        " в это время проходит " +
+                        navigator.getMentor().getDiscipline().getName() +
+                        " (" + navigator.getMentor().getDisciplineType().getName() + "), " +
+                        "учитель - " + navigator.getMentor().getTeacher().shortName() +
+                        ". Группы: " + db.getGroupData(navigator)).show();
+            wasWarning = true;
         }
     }
 
@@ -211,6 +236,10 @@ public class ScheduleEditorViewController implements Initializable {
     public void addGroup(ActionEvent actionEvent) throws IOException {
         DirectionEntity direction = directions.getSelectionModel().getSelectedItem();
         new GroupEditorViewController(stage, direction);
+
+        GroupEntity group = GroupEditorViewController.getGroup();
+        directions.getSelectionModel().select(group.getDirection());
+        groups.getSelectionModel().select(group);
     }
 
     public void addDiscipline(ActionEvent actionEvent) {
@@ -220,8 +249,12 @@ public class ScheduleEditorViewController implements Initializable {
                 .setInput("").show();
         if (dialog.dialogResult() == DialogResult.OK) {
             String name = dialog.getResultString();
-            if (name.length() != 0) {
-                db.addDiscipline(name);
+            DisciplineEntity discipline = db.addDiscipline(name);
+            DirectionEntity direction = directions.getSelectionModel().getSelectedItem();
+            if (direction != null) {
+                db.addDisciplineToDirection(discipline, direction);
+                disciplines.setItems(db.getDisciplineData(direction));
+                disciplines.getSelectionModel().select(discipline);
             }
         }
     }
@@ -233,17 +266,21 @@ public class ScheduleEditorViewController implements Initializable {
                 .setInput("").show();
         if (dialog.dialogResult() == DialogResult.OK) {
             String name = dialog.getResultString();
-            if (name.length() == 0) return;
-
             DisciplineTypeEntity disciplineType = db.addDisciplineType(name);
             disciplineTypes.getSelectionModel().select(disciplineType);
         }
     }
 
-    public void addTeacher(ActionEvent actionEvent) {
+    public void addTeacher(ActionEvent actionEvent) throws IOException {
+        new TeacherEditorViewController(stage);
+        TeacherEntity teacher = TeacherEditorViewController.getTeacher();
+        teachers.getSelectionModel().select(teacher);
     }
 
-    public void addAudience(ActionEvent actionEvent) {
+    public void addAudience(ActionEvent actionEvent) throws IOException {
+        new AudienceEditorViewController(stage);
+        AudienceEntity audience = AudienceEditorViewController.getAudience();
+        audiences.getSelectionModel().select(audience);
     }
 
     public void apply(ActionEvent actionEvent) {
@@ -252,6 +289,18 @@ public class ScheduleEditorViewController implements Initializable {
         DisciplineTypeEntity type = disciplineTypes.getSelectionModel().getSelectedItem();
         GroupEntity group = groups.getSelectionModel().getSelectedItem();
         TeacherEntity teacher = teachers.getSelectionModel().getSelectedItem();
+
+        if (audience == null ||
+                discipline == null ||
+                type == null ||
+                group == null ||
+                teacher == null) {
+            new DialogController(stage, DialogController.Type.INFO)
+                    .setTitle("Ошибка")
+                    .setMsg("Данные не введены").show();
+            return;
+        }
+
         item = db.addScheduleItem(dayOfWeek, time, weekOdd, audience, discipline, type, group, teacher);
         result = DialogResult.OK;
         stage.close();

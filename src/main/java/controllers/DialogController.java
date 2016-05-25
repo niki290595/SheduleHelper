@@ -110,6 +110,11 @@ public class DialogController implements Initializable {
     }
 
     public void apply(ActionEvent actionEvent) {
+        if (type.equals(Type.INPUT) && inputTextField.getText().length() == 0) {
+            msgLabel.setText("Ошибка! Введите данные!");
+            return;
+        }
+
         input = inputTextField.getText();
         result = DialogResult.OK;
         stage.close();

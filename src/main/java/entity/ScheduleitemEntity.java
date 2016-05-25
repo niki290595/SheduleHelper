@@ -97,7 +97,7 @@ public class ScheduleItemEntity implements Comparable<ScheduleItemEntity> {
 
     public String toStringForTeacher() {
         List<GroupEntity> groupList = groupList();
-        return navigator.getMentor().getDiscipline() + " - " + groupsString();
+        return navigator.getMentor().getDiscipline() + " - " + groupsString() + " - " + navigator.getAudience();
     }
 
     public String toStringForAudience() {
