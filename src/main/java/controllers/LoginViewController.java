@@ -109,7 +109,8 @@ public class LoginViewController implements Initializable {
                     break;
                 case OWNER:
                 case STAFF:
-                    new MainPanelViewController(stage);
+                    controllers.generic.MainPanelViewController.open(stage);
+                    //new MainPanelViewController(stage);
             }
         } else {
             new Alert(Alert.AlertType.ERROR, "Авторизация не пройдена, пароль введен неверно", ButtonType.OK).showAndWait();

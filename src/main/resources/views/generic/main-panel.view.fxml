@@ -33,7 +33,7 @@
             </items>
         </Menu>
 
-        <Menu text="Таблицы"/>
+        <Menu text="Таблицы" fx:id="tablesMenu"/>
 
     </MenuBar>
 
@@ -45,5 +45,9 @@
 
     </TableView>
 
+   <HBox>
+       <Label text="Готов"
+              fx:id="status"/>
+   </HBox>
 
 </VBox>
