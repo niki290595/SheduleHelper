@@ -28,7 +28,10 @@ public class CategoryEntity implements Comparable<CategoryEntity> {
         }
     }
 
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Описание")
     private String description;
 
     public CategoryEntity() {

@@ -12,12 +12,26 @@ import java.sql.Date;
 @Table(name = "user1", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Пользователи")
 public class UserEntity implements Comparable<UserEntity> {
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Логин")
     private String login;
+
+    @Description(value = "Пароль")
     private String pass;
+
+    @Description(value = "Категория")
     private CategoryEntity category;
+
+    @Description(value = "Соль")
     private String salt;
+
+    @Description(value = "Дата создания")
     private Date dateCreation;
+
+    @Description(value = "Дата модификации")
     private Date dateModification;
 
     public UserEntity() {

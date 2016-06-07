@@ -11,9 +11,17 @@ import javax.persistence.*;
 @Table(name = "mentor", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Менторы")
 public class MentorEntity implements Comparable<MentorEntity> {
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Дисциплина")
     private DisciplineEntity discipline;
+
+    @Description(value = "Тип дисциплины")
     private DisciplineTypeEntity disciplineType;
+
+    @Description(value = "Преподаватель")
     private TeacherEntity teacher;
 
     public MentorEntity() {

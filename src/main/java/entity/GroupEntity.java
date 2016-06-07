@@ -11,9 +11,17 @@ import javax.persistence.*;
 @Table(name = "group1", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Группы")
 public class GroupEntity implements Comparable<GroupEntity>{
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Название")
     private String name;
+
+    @Description(value = "Направление")
     private DirectionEntity direction;
+
+    @Description(value = "Число студентов")
     private Integer studentsNumber;
 
     public GroupEntity() {

@@ -14,8 +14,14 @@ import java.util.stream.Collectors;
 @Table(name = "scheduleitem", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Позиция в расписании")
 public class ScheduleItemEntity implements Comparable<ScheduleItemEntity> {
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Навигатор")
     private NavigatorEntity navigator;
+
+    @Description(value = "Группа")
     private GroupEntity group;
 
     public ScheduleItemEntity() {

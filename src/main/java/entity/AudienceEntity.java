@@ -11,9 +11,16 @@ import javax.persistence.*;
 @Table(name = "audience", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Аудитории")
 public class AudienceEntity implements Comparable<AudienceEntity> {
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "№")
     private String num;
+
+    @Description(value = "Тип аудитории")
     private AudienceTypeEntity audienceType;
+
+    @Description(value = "Вместимость")
     private Integer capacity;
 
     public AudienceEntity() {

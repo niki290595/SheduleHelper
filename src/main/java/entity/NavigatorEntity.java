@@ -11,11 +11,23 @@ import javax.persistence.*;
 @Table(name = "navigator", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Навигаторы")
 public class NavigatorEntity implements Comparable<NavigatorEntity> {
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "День недели")
     private Integer dayOfWeek;
+
+    @Description(value = "Время")
     private TimeTableEntity time;
+
+    @Description(value = "Четность недели")
     private Integer weekOdd;
+
+    @Description(value = "Аудитория")
     private AudienceEntity audience;
+
+    @Description(value = "Ментор")
     private MentorEntity mentor;
 
     public NavigatorEntity() {

@@ -13,10 +13,20 @@ import javax.persistence.*;
 @Table(name = "teacher", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Преподаватели")
 public class TeacherEntity implements Comparable<TeacherEntity> {
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "ФИО")
     private StringProperty fio;
+
+    @Description(value = "Ученая степень")
     private String academicDegree;
+
+    @Description(value = "Должность")
     private String position;
+
+    @Description(value = "Телефон")
     private String phone;
 
     public TeacherEntity() {

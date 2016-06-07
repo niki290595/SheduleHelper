@@ -12,8 +12,14 @@ import java.sql.Time;
 @Table(name = "timetable", schema = "dbo", catalog = "scheduledb")
 @Description(value = "Время пар")
 public class TimeTableEntity implements Comparable<TimeTableEntity> {
+
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Время начала")
     private Time timeBegin;
+
+    @Description(value = "Время окончания")
     private Time timeEnd;
 
     public TimeTableEntity() {

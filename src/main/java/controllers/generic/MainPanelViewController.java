@@ -69,12 +69,9 @@ public class MainPanelViewController implements Initializable {
                 CustomRadioMenuItem item = new CustomRadioMenuItem(des, aClass);
                 item.setToggleGroup(group);
 
-                item.selectedProperty().addListener(new ChangeListener<Boolean>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                        initTable(item.getCl());
-                        status.setText("Открыта таблица \"" + item.getText() + "\"");
-                    }
+                item.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    initTable(item.getCl());
+                    status.setText("Открыта таблица \"" + item.getText() + "\"");
                 });
                 tablesMenu.getItems().add(item);
             }
