@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -8,6 +10,7 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = "user1", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Пользователи")
 public class UserEntity implements Comparable<UserEntity> {
     private Integer id;
     private String login;

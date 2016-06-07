@@ -1,5 +1,6 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
 import orm.Repository;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "scheduleitem", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Позиция в расписании")
 public class ScheduleItemEntity implements Comparable<ScheduleItemEntity> {
     private Integer id;
     private NavigatorEntity navigator;

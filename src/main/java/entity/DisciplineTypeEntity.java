@@ -1,5 +1,6 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
 import javafx.fxml.Initializable;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "disciplinetype", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Типы дисциплин")
 public class DisciplineTypeEntity implements Comparable<DisciplineTypeEntity> {
     private Integer id;
     private String name;

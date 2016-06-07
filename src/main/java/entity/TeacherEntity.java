@@ -1,5 +1,6 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "teacher", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Преподаватели")
 public class TeacherEntity implements Comparable<TeacherEntity> {
     private Integer id;
     private StringProperty fio;

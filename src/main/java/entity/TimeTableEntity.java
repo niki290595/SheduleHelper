@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 import java.sql.Time;
 
@@ -8,6 +10,7 @@ import java.sql.Time;
  */
 @Entity
 @Table(name = "timetable", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Время пар")
 public class TimeTableEntity implements Comparable<TimeTableEntity> {
     private Integer id;
     private Time timeBegin;

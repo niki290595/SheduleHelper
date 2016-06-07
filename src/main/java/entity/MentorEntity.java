@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "mentor", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Менторы")
 public class MentorEntity implements Comparable<MentorEntity> {
     private Integer id;
     private DisciplineEntity discipline;

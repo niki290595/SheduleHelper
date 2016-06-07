@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 
 /**
@@ -7,15 +9,26 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "academicplan", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Академический план")
 public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
+    @Description(value = "id")
     private Integer id;
+
+    @Description(value = "Направление")
     private DirectionEntity direction;
+
+    @Description(value = "Дисциплина")
     private DisciplineEntity discipline;
-    /*
+
+    @Description(value = "Лек. часы")
     private Integer lection;
+
+    @Description(value = "Прак. часы")
     private Integer practiсe;
+
+    @Description(value = "Лаб. часы")
     private Integer lab;
-*/
+
     public AcademicPlanEntity() {
     }
 
@@ -54,7 +67,7 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     public void setDiscipline(DisciplineEntity discipline) {
         this.discipline = discipline;
     }
-/*
+
     @Basic
     @Column(name = "lection")
     public Integer getLection() {
@@ -84,7 +97,7 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
     public void setLab(Integer lab) {
         this.lab = lab;
     }
-*/
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

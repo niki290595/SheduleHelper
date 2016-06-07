@@ -14,15 +14,10 @@ import java.util.List;
 /**
  * Created by User on 07.06.2016.
  */
-public class ClassCollector {
+public enum ClassCollector {
+    INSTANCE;
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        for (Class aClass : getClasses("entity")) {
-            System.out.println(aClass.getName());
-        }
-    }
-
-    private static Class[] getClasses(String packageName)
+    public Class[] getClasses(String packageName)
             throws ClassNotFoundException, IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         assert classLoader != null;
@@ -55,6 +50,24 @@ public class ClassCollector {
             }
         }
         return classes;
+    }
+
+    public String getDescription(Class aClass) {
+        Annotation[] annotations = aClass.getAnnotations();
+        return findDescription(annotations);
+    }
+
+    public String getDescription(Field field) {
+        Annotation[] annotations = field.getAnnotations();
+        return findDescription(annotations);
+    }
+
+    private String findDescription(Annotation[] annotations) {
+        for (Annotation annotation : annotations) {
+            if (annotation instanceof Description)
+                return ((Description) annotation).value();
+        }
+        return null;
     }
 
     public static void main1(String[] args) throws ClassNotFoundException {

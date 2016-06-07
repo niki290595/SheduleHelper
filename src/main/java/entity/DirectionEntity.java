@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "direction", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Направления")
 public class DirectionEntity implements Comparable<DirectionEntity> {
     private Integer id;
     private String name;

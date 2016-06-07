@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "navigator", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Навигаторы")
 public class NavigatorEntity implements Comparable<NavigatorEntity> {
     private Integer id;
     private Integer dayOfWeek;

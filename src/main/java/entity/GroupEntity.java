@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "group1", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Группы")
 public class GroupEntity implements Comparable<GroupEntity>{
     private Integer id;
     private String name;

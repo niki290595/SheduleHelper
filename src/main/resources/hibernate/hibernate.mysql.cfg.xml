@@ -23,7 +23,6 @@
     <mapping class="entity.TeacherEntity"/>
     <mapping class="entity.TimeTableEntity"/>
     <mapping class="entity.UserEntity"/>
-    <mapping class="entity.MainViewEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

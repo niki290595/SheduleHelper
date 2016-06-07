@@ -1,5 +1,7 @@
 package entity;
 
+import com.sun.org.glassfish.gmbal.Description;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "category", schema = "dbo", catalog = "scheduledb")
+@Description(value = "Категории пользователей")
 public class CategoryEntity implements Comparable<CategoryEntity> {
 
     public static enum CategoryType {
