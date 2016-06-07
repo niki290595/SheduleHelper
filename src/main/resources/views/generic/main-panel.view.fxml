@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox
+        prefWidth="640"
+        prefHeight="480"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="controllers.generic.MainPanelViewController">
+
+    <MenuBar>
+
+        <Menu text="Файл">
+            <items>
+                <MenuItem text="Выход"
+                        onAction="#exit"/>
+            </items>
+        </Menu>
+
+        <Menu text="Редактировать">
+            <items>
+                <MenuItem text="Добавить"
+                        onAction="#add"/>
+
+                <MenuItem text="Изменить"
+                          onAction="#edit"/>
+
+                <MenuItem text="Удалить"
+                          onAction="#del"/>
+            </items>
+        </Menu>
+
+        <Menu text="Таблицы"/>
+
+    </MenuBar>
+
+    <TableView
+            VBox.vgrow="ALWAYS">
+        <VBox.margin>
+            <Insets top="10" right="10.0" left="10" bottom="10"/>
+        </VBox.margin>
+
+    </TableView>
+
+
+</VBox>
