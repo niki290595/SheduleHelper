@@ -37,7 +37,7 @@
 
     </MenuBar>
 
-    <TableView
+    <TableView fx:id="table"
             VBox.vgrow="ALWAYS">
         <VBox.margin>
             <Insets top="10" right="10.0" left="10" bottom="10"/>

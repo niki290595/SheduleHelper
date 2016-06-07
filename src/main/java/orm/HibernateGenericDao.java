@@ -84,4 +84,10 @@ public class HibernateGenericDao<T, PK extends Serializable> implements GenericD
             return session.createCriteria(aClass).list();
         }
     }
+
+
+    //other
+    public static Collection readCollection(Class cl) {
+        return getSession().createCriteria(cl).list();
+    }
 }
