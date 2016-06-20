@@ -138,4 +138,13 @@ public class NavigatorEntity implements Comparable<NavigatorEntity> {
     public int compareTo(NavigatorEntity o) {
         return id.compareTo(o.getId());
     }
+
+    @Override
+    public String toString() {
+        return "Week: " + dayOfWeek +
+                ", " + time +
+                ", четность: " + weekOdd +
+                ", ауд. " + audience +
+                ", ментор: " + mentor;
+    }
 }

@@ -1,6 +1,5 @@
 package controllers;
 
-import entity.CategoryEntity;
 import entity.TeacherEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

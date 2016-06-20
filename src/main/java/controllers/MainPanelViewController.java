@@ -1,5 +1,6 @@
 package controllers;
 
+import authorization.UserEntity;
 import com.sun.jnlp.ApiDialog;
 import customgui.MenuItemGroup;
 import customgui.NewTreeItem;

@@ -136,4 +136,14 @@ public class AcademicPlanEntity implements Comparable<AcademicPlanEntity> {
                 discipline.compareTo(o.discipline) :
                 direction.compareTo(o.direction);
     }
+
+    @Override
+    public String toString() {
+        return direction + " - " +
+                discipline + "(" +
+                "лек. " + lection +
+                ", пр. " + practiсe +
+                ", лаб. " + lab +
+                ')';
+    }
 }

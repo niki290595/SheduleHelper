@@ -1,6 +1,6 @@
 package controllers;
 
-import entity.UserEntity;
+import authorization.UserEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

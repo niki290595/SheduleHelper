@@ -1,7 +1,7 @@
 package other;
 
-import entity.CategoryEntity;
-import entity.UserEntity;
+import authorization.CategoryEntity;
+import authorization.UserEntity;
 
 /**
  * Created by User on 24.05.2016.

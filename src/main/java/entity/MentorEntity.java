@@ -107,4 +107,11 @@ public class MentorEntity implements Comparable<MentorEntity> {
     public int compareTo(MentorEntity o) {
         return id.compareTo(o.getId());
     }
+
+    @Override
+    public String toString() {
+        return teacher + " - " +
+                discipline + " (" +
+                disciplineType + ")";
+    }
 }

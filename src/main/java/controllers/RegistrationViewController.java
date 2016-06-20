@@ -2,8 +2,8 @@ package controllers;
 
 import crypt.HashText;
 import crypt.SaltGenerator;
-import entity.CategoryEntity;
-import entity.UserEntity;
+import authorization.CategoryEntity;
+import authorization.UserEntity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

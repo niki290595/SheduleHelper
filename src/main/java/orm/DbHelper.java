@@ -1,5 +1,7 @@
 package orm;
 
+import authorization.CategoryEntity;
+import authorization.UserEntity;
 import entity.*;
 import org.hibernate.Session;
 
@@ -7,7 +9,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by User on 21.04.2016.

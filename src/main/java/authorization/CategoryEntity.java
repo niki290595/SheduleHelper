@@ -1,4 +1,4 @@
-package entity;
+package authorization;
 
 import com.sun.org.glassfish.gmbal.Description;
 

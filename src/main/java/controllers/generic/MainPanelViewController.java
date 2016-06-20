@@ -2,13 +2,10 @@ package controllers.generic;
 
 import controllers.DialogController;
 import customgui.CustomRadioMenuItem;
-import entity.UserEntity;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import authorization.UserEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,10 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.ResourceBundle;
-
-import static other.Session.user;
 
 /**
  * Created by User on 07.06.2016.
@@ -37,6 +31,7 @@ public class MainPanelViewController implements Initializable {
     private static Stage stage;
     private static UserEntity user;
     private static ClassCollector classCollector = ClassCollector.INSTANCE;
+    private static ToggleGroup group;
 
     @FXML Label status;
     @FXML Menu tablesMenu;
@@ -60,7 +55,7 @@ public class MainPanelViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ToggleGroup group = new ToggleGroup();
+        group = new ToggleGroup();
         try {
             for (Class aClass : classCollector.getClasses("entity")) {
                 String des = classCollector.getDescription(aClass);
@@ -97,13 +92,30 @@ public class MainPanelViewController implements Initializable {
     }
 
 
-    public void add(ActionEvent actionEvent) {
+    public void add(ActionEvent actionEvent) throws IOException {
+        Class aClass = ((CustomRadioMenuItem) group.getSelectedToggle()).getCl();
+        ItemEditorViewController.setClass(aClass);
+        ItemEditorViewController.open(stage);
     }
 
     public void edit(ActionEvent actionEvent) {
+        Object obj = table.getSelectionModel().getSelectedItem();
+        if (obj == null) {
+            status.setText("Ничего не выбрано");
+            return;
+        }
+
+        status.setText("Запись отредактирована");
     }
 
     public void del(ActionEvent actionEvent) {
+        Object obj = table.getSelectionModel().getSelectedItem();
+        if (obj == null) {
+            status.setText("Ничего не выбрано");
+            return;
+        }
+
+        status.setText("Запись удалена");
     }
 
     public void exit(ActionEvent actionEvent) {

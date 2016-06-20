@@ -1,5 +1,7 @@
 package orm;
 
+import authorization.CategoryEntity;
+import authorization.UserEntity;
 import crypt.HashText;
 import crypt.SaltGenerator;
 import entity.*;

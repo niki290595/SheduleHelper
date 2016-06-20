@@ -12,7 +12,7 @@
         <mapping class="entity.AcademicPlanEntity"/>
         <mapping class="entity.AudienceEntity"/>
         <mapping class="entity.AudienceTypeEntity"/>
-        <mapping class="entity.CategoryEntity"/>
+        <mapping class="authorization.CategoryEntity"/>
         <mapping class="entity.DirectionEntity"/>
         <mapping class="entity.DisciplineEntity"/>
         <mapping class="entity.DisciplineTypeEntity"/>
@@ -22,7 +22,7 @@
         <mapping class="entity.ScheduleItemEntity"/>
         <mapping class="entity.TeacherEntity"/>
         <mapping class="entity.TimeTableEntity"/>
-        <mapping class="entity.UserEntity"/>
+        <mapping class="authorization.UserEntity"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
