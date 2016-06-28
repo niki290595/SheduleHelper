@@ -9,6 +9,7 @@
         <property name="connection.username">sa</property>
         <property name="connection.password">1111</property>
         <property name="dialect">org.hibernate.dialect.SQLServer2012Dialect</property>
+        <property name="show_sql">true</property>
 
         <mapping class="entity.AcademicPlanEntity"/>
         <mapping class="entity.AudienceEntity"/>

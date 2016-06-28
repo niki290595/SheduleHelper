@@ -1,5 +1,7 @@
 package controllers.generic;
 
+import authorization.CategoryEntity;
+import com.sun.jnlp.ApiDialog;
 import controllers.DialogController;
 import customgui.CustomRadioMenuItem;
 import authorization.UserEntity;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 /**
@@ -33,6 +36,7 @@ public class MainPanelViewController implements Initializable {
     private static ClassCollector classCollector = ClassCollector.INSTANCE;
     private static ToggleGroup group;
 
+    @FXML Menu editMenu;
     @FXML Label status;
     @FXML Menu tablesMenu;
     @FXML TableView table;
@@ -41,16 +45,14 @@ public class MainPanelViewController implements Initializable {
     }
 
     public static void open(Stage parentStage) throws IOException {
+        MainPanelViewController.user = Session.user;
         Parent root = FXMLLoader.load(MainPanelViewController.class.getClassLoader().getResource("views/generic/main-panel.view.fxml"));
         stage = new Stage();
         stage.setTitle("Добро пожаловать " + Session.user.getLogin());
         stage.setScene(new Scene(root));
-        MainPanelViewController.user = Session.user;
         parentStage.hide();
         stage.show();
-        (new DialogController(stage, DialogController.Type.INFO))
-                .setTitle("Уведомление")
-                .setMsg("Добро пожаловать " + user.getLogin()).show();
+        new Alert(Alert.AlertType.INFORMATION, "Добро пожаловать " + user.getLogin()).show();
     }
 
     @Override
@@ -73,6 +75,11 @@ public class MainPanelViewController implements Initializable {
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
+
+        if (user.getCategory().categoryType().equals(CategoryEntity.CategoryType.STAFF)) {
+            editMenu.setVisible(false);
+        }
+        group.selectToggle(group.getToggles().get(1));
     }
 
     private void initTable(Class cl) {
@@ -85,9 +92,11 @@ public class MainPanelViewController implements Initializable {
             column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
             table.getColumns().add(column);
         }
+        ((TableColumn) table.getColumns().get(0)).setVisible(false);
         Collection collection = HibernateGenericDao.readCollection(cl);
         ObservableList list = FXCollections.observableArrayList();
         collection.forEach(list::add);
+        Collections.sort(list);
         table.setItems(list);
     }
 
@@ -95,17 +104,29 @@ public class MainPanelViewController implements Initializable {
     public void add(ActionEvent actionEvent) throws IOException {
         Class aClass = ((CustomRadioMenuItem) group.getSelectedToggle()).getCl();
         ItemEditorViewController.setClass(aClass);
-        ItemEditorViewController.open(stage);
+        ItemEditorViewController.open(stage, ItemEditorViewController.OperationType.ADD, aClass);
+        if (ItemEditorViewController.getResult() == ApiDialog.DialogResult.OK) {
+            status.setText("Запись добавлена");
+            Class selectedClass = ((CustomRadioMenuItem) group.getSelectedToggle()).getCl();
+            initTable(selectedClass);
+        } else
+            status.setText("Операция отменена");
     }
 
-    public void edit(ActionEvent actionEvent) {
+    public void edit(ActionEvent actionEvent) throws IOException {
         Object obj = table.getSelectionModel().getSelectedItem();
         if (obj == null) {
             status.setText("Ничего не выбрано");
             return;
         }
 
-        status.setText("Запись отредактирована");
+        ItemEditorViewController.open(stage, ItemEditorViewController.OperationType.EDIT, obj);
+        if (ItemEditorViewController.getResult() == ApiDialog.DialogResult.OK) {
+            status.setText("Запись отредактирована");
+            Class selectedClass = ((CustomRadioMenuItem) group.getSelectedToggle()).getCl();
+            initTable(selectedClass);
+        } else
+            status.setText("Операция отменена");
     }
 
     public void del(ActionEvent actionEvent) {
@@ -115,9 +136,13 @@ public class MainPanelViewController implements Initializable {
             return;
         }
 
+        HibernateGenericDao.delObject(obj);
+        Class selectedClass = ((CustomRadioMenuItem) group.getSelectedToggle()).getCl();
+        initTable(selectedClass);
         status.setText("Запись удалена");
     }
 
     public void exit(ActionEvent actionEvent) {
+        stage.close();
     }
 }

@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
 
@@ -82,6 +83,44 @@ public class HibernateGenericDao<T, PK extends Serializable> implements GenericD
     public static Collection getCollection(Class<AcademicPlanEntity> aClass) {
         try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
             return session.createCriteria(aClass).list();
+        }
+    }
+
+    public static void addObject(Object obj) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Integer id = ((Integer) session.save(obj));
+            Field field = obj.getClass().getDeclaredField("id");
+            field.setAccessible(true);
+            field.set(obj, id);
+            session.save(obj);
+            session.getTransaction().commit();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void editObject(Object obj) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            Field f = obj.getClass().getDeclaredField("id");
+            f.setAccessible(true);
+            Object old = session.get(obj.getClass(), (Integer) f.get(obj));
+            for (Field field : old.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                field.set(old, field.get(obj));
+            }
+            session.getTransaction().commit();
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void delObject(Object obj) {
+        try (Session session = HibernateGenericDao.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.delete(obj);
+            session.getTransaction().commit();
         }
     }
 

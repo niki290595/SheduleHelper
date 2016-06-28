@@ -1,6 +1,7 @@
 package controllers;
 
 import authorization.UserEntity;
+import controllers.generic.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -75,7 +76,7 @@ public class AdminViewController implements Initializable {
     }
 
     public void openMainPanel(ActionEvent actionEvent) throws IOException {
-        new MainPanelViewController(stage);
+        controllers.generic.MainPanelViewController.open(stage);
     }
 
     public void exit(ActionEvent actionEvent) {

@@ -63,7 +63,7 @@ public class TeachersPanelViewController implements Initializable {
     private void initTable() {
         teachersTable.setItems(null);
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        FIOColumn.setCellValueFactory(cellData -> cellData.getValue().fioProperty());
+        FIOColumn.setCellValueFactory(new PropertyValueFactory<>("fio"));//(cellData -> cellData.getValue().fioProperty());
         academicDegreeColumn.setCellValueFactory(new PropertyValueFactory<>("academicDegree"));
         positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));

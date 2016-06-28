@@ -69,20 +69,4 @@ public enum ClassCollector {
         }
         return null;
     }
-
-    public static void main1(String[] args) throws ClassNotFoundException {
-        Class aClass = Class.forName("entity.AcademicPlanEntity");
-
-        System.out.println("Class name: " + aClass.getName());
-        for (Field field : aClass.getDeclaredFields()) {
-            System.out.println(field.getName());
-            System.out.println(((Description) field.getAnnotations()[0]).value());
-            for (Annotation annotation : field.getAnnotations()) {
-                System.out.println(annotation.toString());
-            }
-            System.out.println();
-        }
-
-
-    }
 }

@@ -20,7 +20,7 @@
             </items>
         </Menu>
 
-        <Menu text="Редактировать">
+        <Menu text="Редактировать" fx:id="editMenu">
             <items>
                 <MenuItem text="Добавить"
                         onAction="#add"/>

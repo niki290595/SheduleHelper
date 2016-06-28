@@ -18,7 +18,7 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     private Integer id;
 
     @Description(value = "ФИО")
-    private StringProperty fio;
+    private String fio;
 
     @Description(value = "Ученая степень")
     private String academicDegree;
@@ -33,7 +33,7 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     }
 
     public TeacherEntity(String fio, String academicDegree, String position, String phone) {
-        this.fio = new SimpleStringProperty(fio);
+        this.fio = fio;
         this.academicDegree = academicDegree;
         this.position = position;
         this.phone = phone;
@@ -53,15 +53,11 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     @Basic
     @Column(name = "FIO")
     public String getFio() {
-        return fio.get();
-    }
-
-    public StringProperty fioProperty() {
         return fio;
     }
 
     public void setFio(String fio) {
-        this.fio = new SimpleStringProperty(fio);
+        this.fio = fio;
     }
 
     @Basic
@@ -126,20 +122,20 @@ public class TeacherEntity implements Comparable<TeacherEntity> {
     }
 
     public String shortName() {
-        String[] name = fio.get().replace("  ", " ").split(" ");
+        String[] name = fio.replace("  ", " ").split(" ");
         if (name.length < 3) return getFio();
 
         return name[0] + " " + name[1].substring(0,1) + ". " + name[2].substring(0,1) + ".";
     }
 
     public String firstName() {
-        String[] name = fio.get().split(" ");
+        String[] name = fio.split(" ");
         return name[0];
     }
 
     @Override
     public String toString() {
-        return fio.get();
+        return fio;
     }
 
     @Override

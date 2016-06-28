@@ -76,6 +76,7 @@ public class DirectionEntity implements Comparable<DirectionEntity> {
     }
 
     public int compareTo(DirectionEntity o) {
+        if (o == null) return 1;
         String s1 = this.getName();
         String s2 = o.getName();
         return s1.compareTo(s2);
